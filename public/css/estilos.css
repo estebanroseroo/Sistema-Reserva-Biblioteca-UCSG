@@ -1,0 +1,54 @@
+.my-navbar{
+	background-color: #8c0026;
+	font-size: larger;
+	border-style: none;
+	color: #FFFFFF;
+	line-height: 45px;
+}
+
+.my-logo{
+	margin-top: 10px;
+	width: 110px;
+	height: 35px;
+	margin-bottom: 10px;
+	margin-left: 20px;
+}
+
+.my-button{
+	background-color: #cc002e;
+    border: none;
+    color: white;
+    padding: 8px;
+    text-align: center;
+    font-size: 14px;
+    border-radius: 5px;
+    display:inline-block;
+}
+
+.my-button:hover {
+	background-color: #da0025; 
+	opacity:0.95;
+}
+
+.my-button:active {
+  	background-color: #8c0026; 
+	opacity:1;
+}
+
+.my-alert {
+	display:inline-block;
+	background-color: #de0024;
+    border: none;
+    color: white;
+    border-radius: 5px;
+    width: 530px;
+    margin-bottom: 10px;
+    padding-top: 10px;
+    font-weight: bold;
+}
+
+.my-modal-header{
+	background-color: #cc002e; 
+	color: white;
+	padding: 10px;
+}
