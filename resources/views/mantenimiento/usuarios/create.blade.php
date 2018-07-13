@@ -15,6 +15,7 @@
 
 	{!!Form::open(array('url'=>'mantenimiento/usuarios', 'method'=>'POST', 'autocomplete'=>'off'))!!}
 	{{Form::token()}}
+    {{ csrf_field() }}
 	<div class="form-group row">
         <label for="name" class="col-md-4 col-form-label text-md-right">{{ __('Nombre') }}</label>
 
@@ -28,7 +29,7 @@
         <label for="email" class="col-md-4 col-form-label text-md-right">{{ __('Correo') }}</label>
 
         <div class="col-md-6">
-        <input id="email" type="email" placeholder="Email" class="form-control{{ $errors->has('email') ? ' is-invalid' : '' }}" name="email">
+        <input id="email" type="email" placeholder="Correo" class="form-control{{ $errors->has('email') ? ' is-invalid' : '' }}" name="email">
         </div>
     </div>
 
@@ -38,6 +39,28 @@
         <div class="col-md-6">
         <input id="telefono" type="number" placeholder="Teléfono" class="form-control" name="telefono">
         </div>
+    </div>
+
+    <div class="form-group row">
+        <label class="col-md-4 col-form-label text-md-right">Facultad</label>
+        <div class="col-md-6">
+        <select id="idfacultad" name="idfacultad" class="form-control">
+            <option value="">--- Seleccione una facultad ---</option>
+            @foreach ($facultades as $fac=>$value)
+            <option value="{{$fac}}">{{$value}}</option>
+            @endforeach
+        </select>
+        </div>
+    </div>
+
+     <div class="form-group row">
+        <label class="col-md-4 col-form-label text-md-right">Carrera</label>
+        <div class="col-md-6">
+        <select id="idcarrera" name="idcarrera" class="form-control">
+            <option value="">--- Seleccione una carrera ---</option>
+        </select>
+        </div>
+        <span id="loader"><i class="fa fa-spinner fa-2x fa-spin"></i></span>
     </div>
 
     <div class="form-group row">
@@ -58,10 +81,11 @@
 
 	<div class="form-group">
 		<button class="my-button" type="submit"><i class="fa fa-save"><b> Guardar</b></i></button>
-		<button class="my-button" type="reset"><i class="fa fa-eraser"><b> Limpiar</b></i></button>
+		<button class="my-button" type="reset" id="bt_limpiar"><i class="fa fa-eraser"><b> Limpiar</b></i></button>
 	</div>
 
 	{!!Form::close()!!}
 	</div>
 </div>
 @endsection
+

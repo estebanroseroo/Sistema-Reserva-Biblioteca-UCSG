@@ -15,6 +15,7 @@
 
 	{!!Form::model($usuario,['method'=>'PATCH','route'=>['usuarios.update', $usuario->id]])!!}
 	{{Form::token()}}
+    {{ csrf_field() }}
 	<div class="form-group row">
         <label for="name" class="col-md-4 col-form-label text-md-right">{{ __('Nombre') }}</label>
 
@@ -41,6 +42,37 @@
     </div>
 
     <div class="form-group row">
+        <label class="col-md-4 col-form-label text-md-right">Facultad</label>
+        <div class="col-md-6">
+        <select id="idfacultadedit" name="idfacultadedit" class="form-control">
+                @foreach ($facultades as $fac)
+                @if($fac->idfacultad==$usuario->idfacultad)
+                <option value="{{$fac->idfacultad}}" selected>{{$fac->nombre}}</option>
+                @else
+                <option value="{{$fac->idfacultad}}">{{$fac->nombre}}</option>
+                @endif
+                @endforeach
+        </select>
+        </div>
+    </div>
+
+    <div class="form-group row">
+        <label class="col-md-4 col-form-label text-md-right">Carrera</label>
+        <div class="col-md-6">
+        <select id="idcarreraedit" name="idcarreraedit" class="form-control">
+                @foreach ($carreras as $car)
+                @if($car->idcarrera==$usuario->idcarrera)
+                <option value="{{$car->idcarrera}}" selected>{{$car->nombre}}</option>
+                @else
+                <option value="{{$car->idcarrera}}">{{$car->nombre}}</option>
+                @endif
+                @endforeach
+        </select>
+        </div>
+        <span id="loader"><i class="fa fa-spinner fa-2x fa-spin"></i></span>
+    </div>
+
+    <div class="form-group row">
         <label for="password" class="col-md-4 col-form-label text-md-right">{{ __('Contraseña') }}</label>
 
         <div class="col-md-6">
@@ -57,7 +89,6 @@
     </div>
 	<div class="form-group">
 		<button class="my-button" type="submit"><i class="fa fa-save"><b> Guardar</b></i></button>
-		<button class="my-button" type="reset"><i class="fa fa-eraser"><b> Limpiar</b></i></button>
 	</div>
 
 	{!!Form::close()!!}

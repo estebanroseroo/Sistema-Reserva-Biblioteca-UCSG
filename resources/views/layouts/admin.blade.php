@@ -12,6 +12,9 @@
     <link rel="stylesheet" href="{{asset('css/estilos.css')}}">
     <link rel="iconoucsg" href="{{asset('img/iconoucsg.png')}}">
     <link rel="icon" href="{{asset('img/icono.ico')}}">
+    <link href=" https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
+    <style>#loader{visibility:hidden;}
+  </style>
   </head>
 
   <body class="hold-transition skin-blue sidebar-mini">
@@ -119,6 +122,7 @@
     <script src="{{asset('js/bootstrap.min.js')}}"></script>
     <!-- AdminLTE App -->
     <script src="{{asset('js/app.min.js')}}"></script>
-    
+    <script src="{{asset('js/my-select.js')}}"></script>
+
   </body>
 </html>
