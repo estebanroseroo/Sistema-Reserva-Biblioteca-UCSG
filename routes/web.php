@@ -18,6 +18,7 @@ Route::resource('mantenimiento/areas','AreaController');
 Route::resource('mantenimiento/facultades','FacultadController');
 Route::resource('mantenimiento/carreras','CarreraController');
 Route::resource('mantenimiento/usuarios','UsuarioController');
+Route::resource('mantenimiento/roles','RolController');
 
 Auth::routes();
 Route::get('/home', 'HomeController@index')->name('home');

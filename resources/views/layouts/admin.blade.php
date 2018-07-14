@@ -20,22 +20,18 @@
   <body class="hold-transition skin-blue sidebar-mini">
     <div class="wrapper">
       <header class="main-header">
-        <nav class="navbar1 navbar-static-top" role="navigation">
+        <nav class="navbar1" role="navigation">
           <img src="{{asset('img/logo.png')}}" class="my-logo" alt="logo"/>
           <div class="navbar-custom-menu">
             <ul class="nav navbar-nav">
-              <li class="dropdown user user-menu">
-                <a href="#" class="dropdown-toggle" data-toggle="dropdown">
-                  <span>Administrador</span>
+              <li class="user-menu">
+                <a href="#" class="dropdown-toggle my-div" data-toggle="dropdown">
+                  <span><b>Administrador</b></span>
                 </a>
                 <ul class="dropdown-menu">
-                  <li class="user-header">
-                    <span>www.incanatoit.com</span>
-                  </li>
-                  <li class="user-footer">
-                    <div class="pull-right">
-                    <a href="{{url('/logout')}}" class="btn btn-default btn-flat">Cerrar</a>
-                    </div>
+                  <li class="treeview-menu">
+                    <a href="#"><i class="fa fa-user"></i><span>Editar Perfil</span></a>
+                    <a href="{{url('/logout')}}"><i class="fa fa-power-off"></i><span>Cerrar Sesión</span></a>
                   </li>
                 </ul>
               </li>
@@ -69,6 +65,7 @@
                 <li><a href="{{url('mantenimiento/facultades')}}"><i class="fa fa-circle-o"></i>Facultades</a></li>
                 <li><a href="{{url('mantenimiento/carreras')}}"><i class="fa fa-circle-o"></i>Carreras</a></li>
                 <li><a href="{{url('mantenimiento/usuarios')}}"><i class="fa fa-circle-o"></i>Usuarios</a></li>
+                <li><a href="{{url('mantenimiento/roles')}}"><i class="fa fa-circle-o"></i>Roles</a></li>
               </ul>
             </li>
                         

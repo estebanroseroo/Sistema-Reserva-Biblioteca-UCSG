@@ -6,6 +6,12 @@
 	line-height: 45px;
 }
 
+.my-div{
+	width:160px;
+	height:55px;
+    background-color:#ffffff;
+}
+
 .my-logo{
 	margin-top: 10px;
 	width: 110px;
@@ -52,3 +58,5 @@
 	color: white;
 	padding: 10px;
 }
+
+

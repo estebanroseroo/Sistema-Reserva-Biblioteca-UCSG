@@ -25,7 +25,7 @@ class CarreraFormRequest extends FormRequest
     {
         return [
             'idfacultad'=>'required',
-            'nombre'=>'required|max:60',
+            'nombre'=>'required|max:100',
         ];
     }
 }

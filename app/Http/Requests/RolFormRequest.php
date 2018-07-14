@@ -4,7 +4,7 @@ namespace sistemaReserva\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class UsuarioFormRequest extends FormRequest
+class RolFormRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -24,13 +24,7 @@ class UsuarioFormRequest extends FormRequest
     public function rules()
     {
         return [
-            'name' => 'required|string|max:255',
-            'email' => 'required|string|email|max:255|unique:users',
-            'password' => 'required|string|min:6|confirmed',
-            'telefono' => 'nullable|min:7|max:10',
-            'idfacultad'=>'nullable',
-            'idcarrera'=>'nullable',
-            'idtipousuario'=>'required',
+        'nombre'=>'required|max:100',
         ];
     }
 }

@@ -42,6 +42,17 @@
     </div>
 
     <div class="form-group row">
+        <label class="col-md-4 col-form-label text-md-right">Rol</label>
+        <div class="col-md-6">
+        <select id="idtipousuario" name="idtipousuario" class="form-control">
+            @foreach ($roles as $rol=>$value)
+            <option value="{{$rol}}">{{$value}}</option>
+            @endforeach
+        </select>
+        </div>
+    </div>
+
+    <div class="form-group row">
         <label class="col-md-4 col-form-label text-md-right">Facultad</label>
         <div class="col-md-6">
         <select id="idfacultad" name="idfacultad" class="form-control">

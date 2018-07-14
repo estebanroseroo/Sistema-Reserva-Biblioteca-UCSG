@@ -18,6 +18,7 @@
 					<th>Teléfono</th>
 					<th>Facultad</th>
 					<th>Carrera</th>
+					<th>Rol</th>
 					<th></th>
 				</thead>
 
@@ -29,6 +30,7 @@
 					<td>{{$u->telefono}}</td>
 					<td>{{$u->facultad}}</td>
 					<td>{{$u->carrera}}</td>
+					<td>{{$u->rol}}</td>
 					<td><a href="{{URL::action('UsuarioController@edit', $u->id)}}"><button class="my-button"><i class="fa fa-pencil"> <b>Editar</b></i></button></a>
 						<a href="" data-target="#modal-delete-{{$u->id}}" data-toggle="modal">
 						<button class="my-button"><i class="fa fa-trash"> <b>Eliminar</b></i></button></a></td>

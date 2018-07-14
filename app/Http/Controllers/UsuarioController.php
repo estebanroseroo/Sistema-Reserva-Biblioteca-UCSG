@@ -20,15 +20,15 @@ class UsuarioController extends Controller
    	if($request){
    		$query=trim($request->get('searchText'));
    		$usuarios=DB::table('users as u')
-         ->join('facultad as f','u.idfacultad','=','f.idfacultad')
-         ->join('carrera as c','c.idcarrera','=','u.idcarrera')
-         ->select('u.id','u.name','u.email','u.telefono','f.nombre as facultad','c.nombre as carrera')
-         ->where('u.name','LIKE','%'.$query.'%')
-         ->where('u.estado','=','A')
-         ->orwhere('f.nombre','LIKE','%'.$query.'%')
-         ->where('u.estado','=','A')
-         ->orwhere('c.nombre','LIKE','%'.$query.'%')
-         ->where('u.estado','=','A')
+      ->leftjoin('facultad as f','u.idfacultad','=','f.idfacultad')
+      ->leftjoin('carrera as c','u.idcarrera','=','c.idcarrera')
+      ->leftjoin('tipousuario as t','u.idtipousuario','=','t.idtipousuario')
+      ->select('u.id','u.name','u.email','u.telefono','f.nombre as facultad','c.nombre as carrera','t.nombre as rol')
+      ->where('u.name','LIKE','%'.$query.'%')
+      ->where('u.estado','=','A')
+      ->orwhere('f.nombre','LIKE','%'.$query.'%')
+      ->orwhere('c.nombre','LIKE','%'.$query.'%')
+      ->orwhere('t.nombre','LIKE','%'.$query.'%')
    		->orderBy('u.id','asc')
    		->paginate(9);
    		return view('mantenimiento.usuarios.index',["usuarios"=>$usuarios,"searchText"=>$query]);
@@ -47,7 +47,10 @@ class UsuarioController extends Controller
         $facultades=DB::table('facultad')
         ->where('estado','=','A')
         ->pluck('nombre','idfacultad');
-        return view("mantenimiento.usuarios.create",compact('facultades'));
+        $roles=DB::table('tipousuario')
+        ->where('estado','=','A')
+        ->pluck('nombre','idtipousuario');
+        return view("mantenimiento.usuarios.create",["facultades"=>$facultades,"roles"=>$roles]);
     }
 
    public function store(UsuarioFormRequest $request){
@@ -58,6 +61,7 @@ class UsuarioController extends Controller
     $usuario->telefono=$request->get('telefono');
     $usuario->idfacultad=$request->get('idfacultad');
     $usuario->idcarrera=$request->get('idcarrera');
+    $usuario->idtipousuario=$request->get('idtipousuario');
     $usuario->estado='A';
    	$usuario->save();
    	return Redirect::to('mantenimiento/usuarios');
@@ -80,8 +84,9 @@ class UsuarioController extends Controller
       $usuario->email=$request->get('email');
       $usuario->password=bcrypt($request->get('password'));
       $usuario->telefono=$request->get('telefono');
-      $usuario->idfacultad=$request->get('idfacultad');
-      $usuario->idcarrera=$request->get('idcarrera');
+      $usuario->idfacultad=$request->get('idfacultadedit');
+      $usuario->idcarrera=$request->get('idcarreraedit');
+      $usuario->idtipousuario=$request->get('idtipousuario');
       $usuario->update();
       return Redirect::to('mantenimiento/usuarios');
    }
