@@ -19,10 +19,10 @@ Route::resource('mantenimiento/facultades','FacultadController');
 Route::resource('mantenimiento/carreras','CarreraController');
 Route::resource('mantenimiento/usuarios','UsuarioController');
 Route::resource('mantenimiento/roles','RolController');
-
 Auth::routes();
+Route::get('mantenimiento/usuarios/create', 'UsuarioController@create');
+Route::get('states/get/{id}', 'UsuarioController@getStates');
 Route::get('/home', 'HomeController@index')->name('home');
 Route::get('/logout','Auth\LoginController@logout');
 Route::get('/{slug?}', 'HomeController@index');
-Route::get('mantenimiento/usuarios/create', 'UsuarioController@create');
-Route::get('states/get/{id}', 'UsuarioController@getStates');
+
