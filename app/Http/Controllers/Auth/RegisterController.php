@@ -18,7 +18,16 @@ class RegisterController extends Controller
 
     use RegistersUsers;
 
+<<<<<<< HEAD
     protected $redirectTo = '/logout';
+=======
+    /**
+     * Where to redirect users after registration.
+     *
+     * @var string
+     */
+    protected $redirectTo = '/';
+>>>>>>> 6f1b6b1aac6c00ef1c47b5b3af997e166c257e80
 
     public function __construct()
     {
@@ -52,6 +61,7 @@ class RegisterController extends Controller
         ]);
     }
 
+<<<<<<< HEAD
     public function showRegistrationForm(){
         $facultades = DB::table('facultad')
         ->where("estado","=","A")
@@ -70,4 +80,9 @@ class RegisterController extends Controller
         ->pluck("nombre","idcarrera");
         return json_encode($carreras);
     }
+=======
+    /*public function showRegistrationForm(){
+        return redirect('login'); //deshabilita register
+    }*/
+>>>>>>> 6f1b6b1aac6c00ef1c47b5b3af997e166c257e80
 }

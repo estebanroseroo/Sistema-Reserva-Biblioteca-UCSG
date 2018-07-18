@@ -7,8 +7,14 @@
     <!-- CSRF Token -->
     <meta name="csrf-token" content="{{ csrf_token() }}">
     <title>Universidad Católica de Santiago de Guayaquil:Entrar al sitio</title>
+<<<<<<< HEAD
     <script src="{{ asset('js/app.js') }}"></script>
     <script src="{{ asset('js/my-select-register.js') }}"></script>
+=======
+    <!-- Scripts -->
+    <script src="{{ asset('js/app.js') }}" defer></script>
+    <!-- Fonts -->
+>>>>>>> 6f1b6b1aac6c00ef1c47b5b3af997e166c257e80
     <link rel="dns-prefetch" href="https://fonts.gstatic.com">
     <link href="https://fonts.googleapis.com/css?family=Raleway:300,400,600" rel="stylesheet" type="text/css">
     <link rel="stylesheet" href="{{asset('css/estilos.css')}}">
