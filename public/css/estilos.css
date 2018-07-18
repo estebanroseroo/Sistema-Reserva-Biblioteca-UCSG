@@ -20,6 +20,11 @@
 	margin-left: 20px;
 }
 
+.my-logo-login{
+	width: 250px;
+	height: 60px;
+}
+
 .my-button{
 	background-color: #cc002e;
     border: none;
@@ -57,6 +62,29 @@
 	background-color: #cc002e; 
 	color: white;
 	padding: 10px;
+}
+
+.my-bg{
+	 background-image: url(/img/fondoucsg.jpg);
+    -moz-background-size: cover;
+    -webkit-background-size: cover;
+    -o-background-size: cover;
+    background-size: cover;
+}
+
+.my-center {
+  position: fixed;
+  top: 35%;
+}
+
+.my-center-register {
+  /*position: fixed;
+  top: 50%;*/
+}
+
+.my-center-email {
+  position: fixed;
+  top: 50%;
 }
 
 

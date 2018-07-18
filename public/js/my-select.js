@@ -3,7 +3,7 @@
         var ID = $(this).val();
         if(ID) {
             $.ajax({
-                url: '/states/get/'+ID ,
+                url: '/get/'+ID ,
                 type:"GET",
                 dataType:"json",
                 beforeSend: function(){
@@ -27,11 +27,13 @@
             }
     });
 
+    $('select[name="idcarreraedit"]').empty();
+    document.getElementById("idcarreraedit").insertBefore(new Option('--- Seleccione una carrera ---', ''), document.getElementById("idcarreraedit").firstChild);
     $('select[name="idfacultadedit"]').on('change', function(){
         var ID = $(this).val();
         if(ID) {
             $.ajax({
-                url: '/states/get/'+ID ,
+                url: '/get/'+ID ,
                 type:"GET",
                 dataType:"json",
                 beforeSend: function(){

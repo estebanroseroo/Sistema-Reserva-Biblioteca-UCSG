@@ -2,75 +2,72 @@
 
 namespace sistemaReserva\Http\Controllers\Auth;
 
+use Illuminate\Http\Request;
+
 use sistemaReserva\User;
+use Illuminate\Support\Facades\DB;
 use sistemaReserva\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Foundation\Auth\RegistersUsers;
 
+
+
 class RegisterController extends Controller
 {
-    /*
-    |--------------------------------------------------------------------------
-    | Register Controller
-    |--------------------------------------------------------------------------
-    |
-    | This controller handles the registration of new users as well as their
-    | validation and creation. By default this controller uses a trait to
-    | provide this functionality without requiring any additional code.
-    |
-    */
 
     use RegistersUsers;
 
-    /**
-     * Where to redirect users after registration.
-     *
-     * @var string
-     */
-    protected $redirectTo = '/home';
+    protected $redirectTo = '/logout';
 
-    /**
-     * Create a new controller instance.
-     *
-     * @return void
-     */
     public function __construct()
     {
         $this->middleware('guest');
     }
 
-    /**
-     * Get a validator for an incoming registration request.
-     *
-     * @param  array  $data
-     * @return \Illuminate\Contracts\Validation\Validator
-     */
     protected function validator(array $data)
     {
         return Validator::make($data, [
             'name' => 'required|string|max:255',
             'email' => 'required|string|email|max:255|unique:users',
             'password' => 'required|string|min:6|confirmed',
+            'telefono' => 'nullable|min:7|max:10',
+            'idfacultad'=>'nullable',
+            'idcarrera'=>'nullable',
+            'idtipousuario'=>'required',
         ]);
     }
 
-    /**
-     * Create a new user instance after a valid registration.
-     *
-     * @param  array  $data
-     * @return \sistemaReserva\User
-     */
     protected function create(array $data)
     {
         return User::create([
             'name' => $data['name'],
             'email' => $data['email'],
             'password' => Hash::make($data['password']),
+            'telefono' => $data['telefono'],
+            'idfacultad' => $data['idfacultad'],
+            'idcarrera' => $data['idcarrera'],
+            'idtipousuario' => $data['idtipousuario'],
+            'estado'=>$data['estado'],
         ]);
     }
 
     public function showRegistrationForm(){
-        return redirect('login');
+        $facultades = DB::table('facultad')
+        ->where("estado","=","A")
+        ->pluck("nombre","idfacultad");
+        $roles = DB::table('tipousuario')
+        ->where("estado","=","A")
+        ->where("idtipousuario",">","1")
+        ->pluck("nombre","idtipousuario");
+        return view('auth.register',['facultades'=>$facultades,'roles'=>$roles]);
+    }
+
+     public function getStates($id) {
+        $carreras = DB::table("carrera")
+        ->where("idfacultad",$id)
+        ->where("estado","=","A")
+        ->pluck("nombre","idcarrera");
+        return json_encode($carreras);
     }
 }
