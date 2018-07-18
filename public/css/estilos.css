@@ -1,32 +1,32 @@
 .my-navbar{
-	background-color: #8c0026;
-	font-size: larger;
-	border-style: none;
-	color: #FFFFFF;
-	line-height: 45px;
+  background-color: #8c0026;
+  font-size: larger;
+  border-style: none;
+  color: #FFFFFF;
+  line-height: 45px;
 }
 
 .my-div{
-	width:160px;
-	height:55px;
+  width:160px;
+  height:55px;
     background-color:#ffffff;
 }
 
 .my-logo{
-	margin-top: 10px;
-	width: 110px;
-	height: 35px;
-	margin-bottom: 10px;
-	margin-left: 20px;
+  margin-top: 10px;
+  width: 110px;
+  height: 35px;
+  margin-bottom: 10px;
+  margin-left: 20px;
 }
 
 .my-logo-login{
-	width: 250px;
-	height: 60px;
+  width: 250px;
+  height: 60px;
 }
 
 .my-button{
-	background-color: #cc002e;
+  background-color: #cc002e;
     border: none;
     color: white;
     padding: 8px;
@@ -37,18 +37,18 @@
 }
 
 .my-button:hover {
-	background-color: #da0025; 
-	opacity:0.95;
+  background-color: #da0025; 
+  opacity:0.95;
 }
 
 .my-button:active {
-  	background-color: #8c0026; 
-	opacity:1;
+    background-color: #8c0026; 
+  opacity:1;
 }
 
 .my-alert {
-	display:inline-block;
-	background-color: #de0024;
+  display:inline-block;
+  background-color: #de0024;
     border: none;
     color: white;
     border-radius: 5px;
@@ -59,13 +59,13 @@
 }
 
 .my-modal-header{
-	background-color: #cc002e; 
-	color: white;
-	padding: 10px;
+  background-color: #cc002e; 
+  color: white;
+  padding: 10px;
 }
 
 .my-bg{
-	 background-image: url(/img/fondoucsg.jpg);
+   background-image: url(/img/fondoucsg.jpg);
     -moz-background-size: cover;
     -webkit-background-size: cover;
     -o-background-size: cover;
@@ -86,5 +86,3 @@
   position: fixed;
   top: 50%;
 }
-
-
