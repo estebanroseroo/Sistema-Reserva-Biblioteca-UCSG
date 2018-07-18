@@ -26,7 +26,7 @@
             <ul class="nav navbar-nav">
               <li class="user-menu">
                 <a href="#" class="dropdown-toggle my-div" data-toggle="dropdown">
-                  <span><b>Administrador</b></span>
+                  <span><b>{{ Auth::user()->name }}</b></span>
                 </a>
                 <ul class="dropdown-menu">
                   <li class="treeview-menu">
