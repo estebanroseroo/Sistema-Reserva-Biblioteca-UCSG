@@ -19,6 +19,8 @@ Route::resource('mantenimiento/facultades','FacultadController');
 Route::resource('mantenimiento/carreras','CarreraController');
 Route::resource('mantenimiento/usuarios','UsuarioController');
 Route::resource('mantenimiento/roles','RolController');
+Route::resource('menu/perfiles','PerfilController');
+Route::resource('menu/change','ContrasenaController');
 Auth::routes();
 Route::get('mantenimiento/usuarios/create', 'UsuarioController@create');
 Route::get('get/{id}', 'UsuarioController@getStates');

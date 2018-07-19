@@ -32,7 +32,7 @@
 		</div>
 		<div class="container">
 			<div class="content">
-				<p style="font-size:30px"><b>Enlace de ayuda</b></p>
+				<p style="font-size:25px"><b>Enlace de ayuda</b></p>
 				<a href="{{url('/logout')}}"><i class="fa fa-home" style="font-size:30px; color:#3d4244"></i>
 					<span style="font-size:20px; color:#3d4244">Inicio de sesión</span></a>
 			</div>

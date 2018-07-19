@@ -13,8 +13,7 @@
     <link rel="iconoucsg" href="{{asset('img/iconoucsg.png')}}">
     <link rel="icon" href="{{asset('img/icono.ico')}}">
     <link href=" https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
-    <style>#loader{visibility:hidden;}
-  </style>
+    <style>#loader{visibility:hidden;}</style>
   </head>
 
   <body class="hold-transition skin-blue sidebar-mini">
@@ -30,6 +29,7 @@
                 </a>
                 <ul class="dropdown-menu">
                   <li class="treeview-menu">
+                    <a href="{{URL::action('PerfilController@edit', Auth::user()->id)}}"><i class="fa fa-user"></i><span>Editar Perfil</span></a>
                     <a href="{{url('/logout')}}"><i class="fa fa-power-off"></i><span>Cerrar Sesión</span></a>
                   </li>
                 </ul>
@@ -41,7 +41,7 @@
         <a href="#" class="sidebar-toggle" data-toggle="offcanvas" role="button"></a>
 
         <nav class="navbar my-navbar">
-          <span>Sistema de gestión de reservas de áreas de estudio en la Biblioteca General de la UCSG</span>
+          <span>Sistema de gestión de reserva de áreas de estudio de la Biblioteca General</span>
         </nav>
       </header>
 
@@ -55,28 +55,27 @@
             
             <li class="treeview">
               <a href="#">
-                <i class="fa fa-wrench"></i>
-                <span>Mantenimiento</span>
+                <i class="fa fa-university"></i>
+                <span>Menú</span>
                 <i class="fa fa-angle-down pull-right"></i>
               </a>
               <ul class="treeview-menu">
-                <li><a href="{{url('mantenimiento/areas')}}"><i class="fa fa-circle-o"></i>Áreas de estudio</a></li>
-                <li><a href="{{url('mantenimiento/facultades')}}"><i class="fa fa-circle-o"></i>Facultades</a></li>
-                <li><a href="{{url('mantenimiento/carreras')}}"><i class="fa fa-circle-o"></i>Carreras</a></li>
-                <li><a href="{{url('mantenimiento/usuarios')}}"><i class="fa fa-circle-o"></i>Usuarios</a></li>
-                <li><a href="{{url('mantenimiento/roles')}}"><i class="fa fa-circle-o"></i>Roles</a></li>
+                <li><a href="{{url('mantenimiento/areas')}}"><i class="fa fa-circle-o"></i>Mi Reserva</a></li>
+                <li><a href="{{url('mantenimiento/facultades')}}"><i class="fa fa-circle-o"></i>Nueva Reserva</a></li>
+                <li><a href="{{url('mantenimiento/carreras')}}"><i class="fa fa-circle-o"></i>Editar Reserva</a></li>
+                <li><a href="{{url('mantenimiento/usuarios')}}"><i class="fa fa-circle-o"></i>Eliminar Reserva</a></li>
               </ul>
             </li>
                         
             <li class="treeview">
               <a href="#">
-                <i class="fa fa-th"></i>
-                <span>Reservas</span>
+                <i class="fa fa-graduation-cap"></i>
+                <span>Perfil</span>
                  <i class="fa fa-angle-down pull-right"></i>
               </a>
               <ul class="treeview-menu">
-                <li><a href="compras/ingreso"><i class="fa fa-circle-o"></i>Ingresos</a></li>
-                <li><a href="compras/proveedor"><i class="fa fa-circle-o"></i>Proveedores</a></li>
+                <li><a href="{{URL::action('PerfilController@edit', Auth::user()->id)}}"><i class="fa fa-circle-o"></i>Editar Perfil</a></li>
+                <li><a href="{{URL::action('ContrasenaController@edit', Auth::user()->id)}}"><i class="fa fa-circle-o"></i>Cambiar contraseña</a></li>
               </ul>
             </li>
                                                      
@@ -88,24 +87,9 @@
         <section class="content">
           <div class="row">
             <div class="col-md-12">
-              <div class="box">
-
-                <div class="box-header with-border">
-                  <i class="fa fa-wrench"></i>
-                  <h3 class="box-title"><b>Mantenimiento</b></h3>
-                </div>
-                <!-- /.box-header -->
-                    <div class="box-body">
-                  	   <div class="row">
-	                  	    <div class="col-md-12">
 		                          <!--Contenido-->
                               @yield('contenido')
 		                          <!--Fin Contenido-->
-                          </div>
-                       </div>
-                  	</div>
-
-              </div><!-- /.box -->
             </div><!-- /.col -->
           </div><!-- /.row -->
         </section><!-- /.content -->
@@ -119,6 +103,6 @@
     <!-- AdminLTE App -->
     <script src="{{asset('js/app.min.js')}}"></script>
     <script src="{{asset('js/my-select.js')}}"></script>
-
+    <!--<script type="text/javascript">function muestraPerfil(){document.formulario.submit();}</script>-->
   </body>
 </html>

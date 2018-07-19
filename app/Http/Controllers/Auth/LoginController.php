@@ -5,6 +5,8 @@ namespace sistemaReserva\Http\Controllers\Auth;
 use sistemaReserva\Http\Controllers\Controller;
 use Illuminate\Foundation\Auth\AuthenticatesUsers;
 use Illuminate\Http\Request;
+use sistemaReserva\User;
+use Illuminate\Support\Facades\DB;
 
 class LoginController extends Controller
 {
@@ -21,14 +23,14 @@ class LoginController extends Controller
 
     use AuthenticatesUsers;
 
-    /*protected function authenticated(Request $request, $user){
-        if ( $user->isAdmin() ) {
-        return redirect('/mantenimiento/areas');
+    protected function authenticated(Request $request, $user){
+        if($user->idtipousuario == '1') {
+            return redirect('/mantenimiento/areas');
         }
-        return redirect('/menu/reservas');
-    }*/
+            return redirect('/menu/perfiles');
+    }
 
-    protected $redirectTo = '/mantenimiento/areas';
+    //protected $redirectTo = '/mantenimiento/areas';
 
     public function __construct()
     {
