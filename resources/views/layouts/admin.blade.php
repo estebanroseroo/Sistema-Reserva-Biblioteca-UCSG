@@ -13,8 +13,13 @@
     <link rel="iconoucsg" href="{{asset('img/iconoucsg.png')}}">
     <link rel="icon" href="{{asset('img/icono.ico')}}">
     <link href=" https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
-    <style>#loader{visibility:hidden;}
-  </style>
+    <style>#loader{visibility:hidden;}</style>
+
+    <script src="//code.jquery.com/jquery-1.11.3.min.js"></script>
+    <link rel="stylesheet" href="{{asset('datePicker/css/bootstrap-datepicker3.css')}}">
+    <link rel="stylesheet" href="{{asset('datePicker/css/bootstrap-standalone.css')}}">
+    <script src="{{asset('datePicker/js/bootstrap-datepicker.js')}}"></script>
+    <script src="{{asset('datePicker/locales/bootstrap-datepicker.es.min.js')}}"></script>
   </head>
 
   <body class="hold-transition skin-blue sidebar-mini">
@@ -71,12 +76,11 @@
             <li class="treeview">
               <a href="#">
                 <i class="fa fa-th"></i>
-                <span>Reservas</span>
+                <span>Reserva</span>
                  <i class="fa fa-angle-down pull-right"></i>
               </a>
               <ul class="treeview-menu">
-                <li><a href="compras/ingreso"><i class="fa fa-circle-o"></i>Ingresos</a></li>
-                <li><a href="compras/proveedor"><i class="fa fa-circle-o"></i>Proveedores</a></li>
+                <li><a href="{{url('operacion/adminreservas')}}"><i class="fa fa-circle-o"></i>Reservas</a></li>
               </ul>
             </li>
                                                      
@@ -88,24 +92,11 @@
         <section class="content">
           <div class="row">
             <div class="col-md-12">
-              <div class="box">
 
-                <div class="box-header with-border">
-                  <i class="fa fa-wrench"></i>
-                  <h3 class="box-title"><b>Mantenimiento</b></h3>
-                </div>
-                <!-- /.box-header -->
-                    <div class="box-body">
-                  	   <div class="row">
-	                  	    <div class="col-md-12">
 		                          <!--Contenido-->
                               @yield('contenido')
 		                          <!--Fin Contenido-->
-                          </div>
-                       </div>
-                  	</div>
-
-              </div><!-- /.box -->
+                         
             </div><!-- /.col -->
           </div><!-- /.row -->
         </section><!-- /.content -->
@@ -119,6 +110,5 @@
     <!-- AdminLTE App -->
     <script src="{{asset('js/app.min.js')}}"></script>
     <script src="{{asset('js/my-select.js')}}"></script>
-
   </body>
 </html>

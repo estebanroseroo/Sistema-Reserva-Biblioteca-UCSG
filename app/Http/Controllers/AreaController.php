@@ -35,6 +35,7 @@ class AreaController extends Controller
     	$area=new Area;
     	$area->nombre=$request->get('nombre');
     	$area->disponibilidad=$request->get('disponibilidad');
+        $area->capacidad=$request->get('capacidad');
     	$area->estado='A';
     	$area->save();
     	return Redirect::to('mantenimiento/areas');
@@ -52,6 +53,7 @@ class AreaController extends Controller
     	$area=Area::findOrFail($id);
     	$area->nombre=$request->get('nombre');
     	$area->disponibilidad=$request->get('disponibilidad');
+        $area->capacidad=$request->get('capacidad');
     	$area->update();
     	return Redirect::to('mantenimiento/areas');
     }

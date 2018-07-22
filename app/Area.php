@@ -10,7 +10,7 @@ class Area extends Model
     protected $primaryKey='idarea';
     public $timestamps=false;
     protected $fillable=[
-	'nombre','disponibilidad','estado'
+	'nombre','disponibilidad','estado','capacidad',
     ];
     protected $guarded=[
     	
