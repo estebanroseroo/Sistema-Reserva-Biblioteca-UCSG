@@ -14,6 +14,12 @@
     <link rel="icon" href="{{asset('img/icono.ico')}}">
     <link href=" https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
     <style>#loader{visibility:hidden;}</style>
+
+    <script src="//code.jquery.com/jquery-1.11.3.min.js"></script>
+    <link rel="stylesheet" href="{{asset('datePicker/css/bootstrap-datepicker3.css')}}">
+    <link rel="stylesheet" href="{{asset('datePicker/css/bootstrap-standalone.css')}}">
+    <script src="{{asset('datePicker/js/bootstrap-datepicker.js')}}"></script>
+    <script src="{{asset('datePicker/locales/bootstrap-datepicker.es.min.js')}}"></script>
   </head>
 
   <body class="hold-transition skin-blue sidebar-mini">
@@ -29,8 +35,8 @@
                 </a>
                 <ul class="dropdown-menu">
                   <li class="treeview-menu">
-                    <a href="{{URL::action('PerfilController@edit', Auth::user()->id)}}"><i class="fa fa-user"></i><span>Editar Perfil</span></a>
-                    <a href="{{url('/logout')}}"><i class="fa fa-power-off"></i><span>Cerrar Sesión</span></a>
+                    <a href="{{URL::action('PerfilController@edit', Auth::user()->id)}}"><i class="fa fa-user"></i><span>Editar perfil</span></a>
+                    <a href="{{url('/logout')}}"><i class="fa fa-power-off"></i><span>Cerrar sesión</span></a>
                   </li>
                 </ul>
               </li>
@@ -60,10 +66,8 @@
                 <i class="fa fa-angle-down pull-right"></i>
               </a>
               <ul class="treeview-menu">
-                <li><a href="{{url('mantenimiento/areas')}}"><i class="fa fa-circle-o"></i>Mi Reserva</a></li>
-                <li><a href="{{url('mantenimiento/facultades')}}"><i class="fa fa-circle-o"></i>Nueva Reserva</a></li>
-                <li><a href="{{url('mantenimiento/carreras')}}"><i class="fa fa-circle-o"></i>Editar Reserva</a></li>
-                <li><a href="{{url('mantenimiento/usuarios')}}"><i class="fa fa-circle-o"></i>Eliminar Reserva</a></li>
+                <li><a href="{{url('menu/reservas')}}"><i class="fa fa-circle-o"></i>Mis reservas</a></li>
+                <li><a href="{{url('menu/reservas/create')}}"><i class="fa fa-circle-o"></i>Nueva reserva</a></li>
               </ul>
             </li>
                         
@@ -74,7 +78,8 @@
                  <i class="fa fa-angle-down pull-right"></i>
               </a>
               <ul class="treeview-menu">
-                <li><a href="{{URL::action('PerfilController@edit', Auth::user()->id)}}"><i class="fa fa-circle-o"></i>Editar Perfil</a></li>
+                <li><a href="{{url('menu/perfiles')}}"><i class="fa fa-circle-o"></i>Mi perfil</a></li>
+                <li><a href="{{URL::action('PerfilController@edit', Auth::user()->id)}}"><i class="fa fa-circle-o"></i>Editar perfil</a></li>
                 <li><a href="{{URL::action('ContrasenaController@edit', Auth::user()->id)}}"><i class="fa fa-circle-o"></i>Cambiar contraseña</a></li>
               </ul>
             </li>
@@ -103,6 +108,5 @@
     <!-- AdminLTE App -->
     <script src="{{asset('js/app.min.js')}}"></script>
     <script src="{{asset('js/my-select.js')}}"></script>
-    <!--<script type="text/javascript">function muestraPerfil(){document.formulario.submit();}</script>-->
   </body>
 </html>

@@ -11,9 +11,7 @@
 
 <div class="row">
 <div class="col-lg-8 col-md-8 col-sm-8 col-xs-12">
-<form name="formulario" method="GET" action="{{ url('menu/perfiles') }}">
-<h2>Mi Perfil</h2><input name="variable" value="{{Auth::user()->email}}" type="hidden">
- </form>
+<h2>Mi perfil</h2>
 </div>
 </div>
 <div class="row">

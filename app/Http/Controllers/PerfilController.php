@@ -8,6 +8,7 @@ use sistemaReserva\Http\Requests;
 use Illuminate\Support\Facades\Redirect;
 use sistemaReserva\Http\Requests\PerfilFormRequest;
 use sistemaReserva\User;
+use Auth;
 use DB;
 
 class PerfilController extends Controller
@@ -18,14 +19,13 @@ class PerfilController extends Controller
 
    public function index(Request $request){
    	if($request){
-   		$query=trim($request->get('variable'));
    		$usuarios=DB::table('users as u')
       ->leftjoin('facultad as f','u.idfacultad','=','f.idfacultad')
       ->leftjoin('carrera as c','u.idcarrera','=','c.idcarrera')
       ->select('u.id','u.name','u.email','u.telefono','f.nombre as facultad','c.nombre as carrera')
-      ->where('u.email','=', $query)
+      ->where('u.email','=', Auth::user()->email)
       ->where('u.estado','=','A')->get();
-   		return view('menu.perfiles.index',["usuarios"=>$usuarios,"variable"=>$query]);
+   		return view('menu.perfiles.index',["usuarios"=>$usuarios]);
    	}
    }
 
@@ -56,13 +56,6 @@ class PerfilController extends Controller
       $usuario->idfacultad=$request->get('idfacultadedit');
       $usuario->idcarrera=$request->get('idcarreraedit');
       $usuario->update();
-
-      $usuarios=DB::table('users as u')
-      ->leftjoin('facultad as f','u.idfacultad','=','f.idfacultad')
-      ->leftjoin('carrera as c','u.idcarrera','=','c.idcarrera')
-      ->select('u.id','u.name','u.email','u.telefono','f.nombre as facultad','c.nombre as carrera')
-      ->where('u.id','=', $id)
-      ->where('u.estado','=','A')->get();
-      return view('menu.perfiles.index',["usuarios"=>$usuarios]);
+      return Redirect::to('menu/perfiles');
    }
 }

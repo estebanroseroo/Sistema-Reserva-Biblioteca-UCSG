@@ -1,102 +1,167 @@
-@extends ('layouts.admin')
+@extends ('layouts.usu')
 @section('contenido')
-<div class="row">
-	<div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
-		<h2>Nuevo usuario</h2>
-		@if (count($errors)>0)
-		<div class="my-alert">
-			<ul>
-				@foreach ($errors->all() as $error)
-				<li>{{$error}}</li>
-				@endforeach
-			</ul>
-		</div>
-		@endif
-
-	{!!Form::open(array('url'=>'mantenimiento/usuarios', 'method'=>'POST', 'autocomplete'=>'off'))!!}
-	{{Form::token()}}
-    {{ csrf_field() }}
-	<div class="form-group row">
-        <label for="name" class="col-md-4 col-form-label text-md-right">{{ __('Nombre') }}</label>
-
-         <div class="col-md-6">
-         <input id="name" type="text" placeholder="Nombre" 
-        onkeyup="this.value = this.value.replace(/\b\w/g, l => l.toUpperCase());" class="form-control{{ $errors->has('name') ? ' is-invalid' : '' }}" name="name">
-        </div>
-     </div>
-
-    <div class="form-group row">
-        <label for="email" class="col-md-4 col-form-label text-md-right">{{ __('Correo') }}</label>
-
-        <div class="col-md-6">
-        <input id="email" type="email" placeholder="Correo" class="form-control{{ $errors->has('email') ? ' is-invalid' : '' }}" name="email">
-        </div>
-    </div>
-
-     <div class="form-group row">
-        <label for="telefono" class="col-md-4 col-form-label text-md-right">{{ __('Teléfono') }}</label>
-
-        <div class="col-md-6">
-        <input id="telefono" type="number" placeholder="Teléfono" class="form-control" name="telefono">
-        </div>
-    </div>
-
-    <div class="form-group row">
-        <label class="col-md-4 col-form-label text-md-right">Rol</label>
-        <div class="col-md-6">
-        <select id="idtipousuario" name="idtipousuario" class="form-control">
-            @foreach ($roles as $rol=>$value)
-            <option value="{{$rol}}">{{$value}}</option>
-            @endforeach
-        </select>
-        </div>
-    </div>
-
-    <div class="form-group row">
-        <label class="col-md-4 col-form-label text-md-right">Facultad</label>
-        <div class="col-md-6">
-        <select id="idfacultad" name="idfacultad" class="form-control">
-            <option value="">--- Seleccione una facultad ---</option>
-            @foreach ($facultades as $fac=>$value)
-            <option value="{{$fac}}">{{$value}}</option>
-            @endforeach
-        </select>
-        </div>
-    </div>
-
-     <div class="form-group row">
-        <label class="col-md-4 col-form-label text-md-right">Carrera</label>
-        <div class="col-md-6">
-        <select id="idcarrera" name="idcarrera" class="form-control">
-            <option value="">--- Seleccione una carrera ---</option>
-        </select>
-        </div>
-        <span id="loader"><i class="fa fa-spinner fa-2x fa-spin"></i></span>
-    </div>
-
-    <div class="form-group row">
-        <label for="password" class="col-md-4 col-form-label text-md-right">{{ __('Contraseña') }}</label>
-
-        <div class="col-md-6">
-        <input id="password" type="password" placeholder="Contraseña" class="form-control{{ $errors->has('password') ? ' is-invalid' : '' }}" name="password">
-        </div>
-    </div>
-
-    <div class="form-group row">
-        <label for="password-confirm" class="col-md-4 col-form-label text-md-right">{{ __('Confirmar Contraseña') }}</label>
-
-        <div class="col-md-6">
-        <input id="password-confirm" type="password" placeholder="Confirmar contraseña" class="form-control" name="password_confirmation">
-        </div>
-    </div>
-
-	<div class="form-group">
-		<button class="my-button" type="submit"><i class="fa fa-save"><b> Guardar</b></i></button>
-		<button class="my-button" type="reset" id="bt_limpiar"><i class="fa fa-eraser"><b> Limpiar</b></i></button>
-	</div>
-
-	{!!Form::close()!!}
-	</div>
+<div class="box">
+<div class="box-header with-border">
+<i class="fa fa-university"></i>
+<h3 class="box-title"><b>Menú</b></h3>
 </div>
-@endsection
+<!-- /.box-header -->
+<div class="box-body">
+<div class="row">
+<div class="col-md-12">
 
+<div class="row">
+<div class="col-lg-8 col-md-8 col-sm-8 col-xs-12">
+<h2>Nueva reserva</h2>
+
+ <div class="form-group row">
+    <div class="col-md-6"> 
+    </div>
+</div>
+
+    {!! Form::open(array('url'=>'menu/reservas/create','method'=>'GET','autocomplete'=>'off','role'=>'search')) !!}
+    <div class="form-group row">
+        <label for="fecha" class="col-md-2 col-form-label text-md-right">{{ __('Fecha') }}</label>
+        <div class="col-md-6">  
+        <div class="input-group">
+            <div class="input-group-addon">
+            <i class="fa fa-calendar"></i>
+            </div>  
+            <input type="text" class="form-control datepicker" placeholder="Fecha" name="fecha">
+        </div>
+        </div>
+        <span class="input-group-btn">
+            <button type="submit" class="my-button"><i class="fa fa-search"> <b>Buscar</b></i></button>
+        </span>
+    </div>
+    {{Form::close()}}
+
+</div>
+</div>
+
+<div class="row">
+    <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+        <div class="table-responsive">
+            <table class="table table-striped table-bordered table-condensed table-hover">
+                <thead>
+                    <th>Horarios</th>
+                    @foreach($areas as $a)
+                    <th>Área</th>
+                    @endforeach
+                </thead>
+
+                <tr>
+                    <td></td>
+                    @foreach($areas as $a)
+                    <td>
+                    {{$a->nombre}}
+                    </td>
+                    @endforeach
+                </tr>
+
+                <tr>
+                    <td>08:00-09:00</td>
+                    @foreach($areas as $a)
+                    <td>{{$a->disponibilidad}}
+                        <a href="{{URL::action('UsureservaController@create', $a->idarea)}}"><button class="my-button"><b>Reservar</b></button></a></td>
+                    @endforeach
+                </tr>
+                <tr>
+                    <td>09:00-10:00</td>
+                    @foreach($areas as $a)
+                    <td>{{$a->disponibilidad}}
+                        <a href="{{URL::action('UsureservaController@create', $a->idarea)}}"><button class="my-button"><b>Reservar</b></button></a></td>
+                    @endforeach
+                </tr>
+                <tr>
+                    <td>10:00-11:00</td>
+                    @foreach($areas as $a)
+                    <td>{{$a->disponibilidad}}
+                        <a href="{{URL::action('UsureservaController@create', $a->idarea)}}"><button class="my-button"><b>Reservar</b></button></a></td>
+                    @endforeach
+                </tr>
+                <tr>
+                    <td>11:00-12:00</td>
+                    @foreach($areas as $a)
+                    <td>{{$a->disponibilidad}}
+                        <a href="{{URL::action('UsureservaController@create', $a->idarea)}}"><button class="my-button"><b>Reservar</b></button></a></td>
+                    @endforeach
+                </tr>
+                <tr>
+                    <td>12:00-13:00</td>
+                    @foreach($areas as $a)
+                    <td>{{$a->disponibilidad}}
+                        <a href="{{URL::action('UsureservaController@create', $a->idarea)}}"><button class="my-button"><b>Reservar</b></button></a></td>
+                    @endforeach
+                </tr>
+                <tr>
+                    <td>13:00-14:00</td>
+                    @foreach($areas as $a)
+                    <td>{{$a->disponibilidad}}
+                        <a href="{{URL::action('UsureservaController@create', $a->idarea)}}"><button class="my-button"><b>Reservar</b></button></a></td>
+                    @endforeach
+                </tr>
+                <tr>
+                    <td>14:00-15:00</td>
+                    @foreach($areas as $a)
+                    <td>{{$a->disponibilidad}}
+                        <a href="{{URL::action('UsureservaController@create', $a->idarea)}}"><button class="my-button"><b>Reservar</b></button></a></td>
+                    @endforeach
+                </tr>
+                 <tr>
+                    <td>15:00-16:00</td>
+                    @foreach($areas as $a)
+                    <td>{{$a->disponibilidad}}
+                        <a href="{{URL::action('UsureservaController@create', $a->idarea)}}"><button class="my-button"><b>Reservar</b></button></a></td>
+                    @endforeach
+                </tr>
+                <tr>
+                    <td>16:00-17:00</td>
+                    @foreach($areas as $a)
+                    <td>{{$a->disponibilidad}}
+                        <a href="{{URL::action('UsureservaController@create', $a->idarea)}}"><button class="my-button"><b>Reservar</b></button></a></td>
+                    @endforeach
+                </tr>
+                <tr>
+                    <td>17:00-18:00</td>
+                    @foreach($areas as $a)
+                    <td>{{$a->disponibilidad}}
+                        <a href="{{URL::action('UsureservaController@create', $a->idarea)}}"><button class="my-button"><b>Reservar</b></button></a></td>
+                    @endforeach
+                </tr>
+                <tr>
+                    <td>18:00-19:00</td>
+                    @foreach($areas as $a)
+                    <td>{{$a->disponibilidad}}
+                        <a href="{{URL::action('UsureservaController@create', $a->idarea)}}"><button class="my-button"><b>Reservar</b></button></a></td>
+                    @endforeach
+                </tr>
+                <tr>
+                    <td>19:00-20:00</td>
+                    @foreach($areas as $a)
+                    <td>{{$a->disponibilidad}}
+                        <a href="{{URL::action('UsureservaController@create', $a->idarea)}}"><button class="my-button"><b>Reservar</b></button></a></td>
+                    @endforeach
+                </tr>
+            </table>
+        </div>
+    </div>
+</div>
+
+</div>
+</div>
+</div>
+</div><!-- /.box -->
+<script>
+    $('.datepicker').datepicker({
+        format: "dd/mm/yyyy",
+        language: "es",
+        autoclose: true,
+        orientation: "bottom",
+        todayHighlight: true,
+        setDate: null,
+        minDate: null,
+        maxDate: null
+    });
+</script>
+@endsection
