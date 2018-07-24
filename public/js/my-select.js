@@ -27,10 +27,10 @@
             }
     });
 
-    $('select[name="idcarreraedit"]').empty();
-    document.getElementById("idcarreraedit").insertBefore(new Option('--- Seleccione una carrera ---', ''), document.getElementById("idcarreraedit").firstChild);
+    
     $('select[name="idfacultadedit"]').on('change', function(){
         var ID = $(this).val();
+        $('#idcarreraedit').removeAttr('disabled');
         if(ID) {
             $.ajax({
                 url: '/get/'+ID ,

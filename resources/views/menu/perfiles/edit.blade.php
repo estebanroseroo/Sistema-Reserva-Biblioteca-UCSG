@@ -41,7 +41,7 @@
         <label for="email" class="col-md-3 col-form-label text-md-right">{{ __('Correo') }}</label>
 
         <div class="col-md-8">
-        <input id="email" type="email" class="form-control{{ $errors->has('email') ? ' is-invalid' : '' }}" name="email" value="{{ $usuario->email }}">
+        <input id="email" type="email" class="form-control{{ $errors->has('email') ? ' is-invalid' : '' }}" name="email" value="{{ $usuario->email }}" placeholder="Correo">
         </div>
     </div>
 
@@ -71,7 +71,7 @@
     <div class="form-group row">
         <label class="col-md-3 col-form-label text-md-right">Carrera</label>
         <div class="col-md-8">
-        <select id="idcarreraedit" name="idcarreraedit" class="form-control">
+        <select id="idcarreraedit" name="idcarreraedit" class="form-control" disabled>
                 @foreach ($carreras as $car)
                 @if($car->idcarrera==$usuario->idcarrera)
                 <option value="{{$car->idcarrera}}" selected>{{$car->nombre}}</option>

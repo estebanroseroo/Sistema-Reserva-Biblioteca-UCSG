@@ -18,6 +18,11 @@
                             <label for="name" class="col-md-4 col-form-label text-md-right">{{ __('Nombre') }}</label>
                             <div class="col-md-6">
                                 <input id="name" type="text" class="form-control{{ $errors->has('name') ? ' is-invalid' : '' }}" name="name" onkeyup="this.value = this.value.replace(/\b\w/g, l => l.toUpperCase());" placeholder="Nombre">
+                                 @if ($errors->has('name'))
+                                    <span class="invalid-feedback" role="alert">
+                                        <strong>{{ $errors->first('name') }}</strong>
+                                    </span>
+                                @endif
                             </div>
                         </div>
 
@@ -25,6 +30,11 @@
                             <label for="email" class="col-md-4 col-form-label text-md-right">{{ __('Correo') }}</label>
                             <div class="col-md-6">
                                 <input id="email" type="email" class="form-control{{ $errors->has('email') ? ' is-invalid' : '' }}" name="email" placeholder="Correo">
+                                 @if ($errors->has('email'))
+                                    <span class="invalid-feedback" role="alert">
+                                        <strong>{{ $errors->first('email') }}</strong>
+                                    </span>
+                                @endif
                             </div>
                         </div>
 
@@ -50,7 +60,6 @@
                             <label for="idfacultad" class="col-md-4 col-form-label text-md-right">{{ __('Facultad') }}</label>
                             <div class="col-md-6">
                             <select id="idfacultad" name="idfacultad" class="form-control">
-                                <option value="">--- Seleccione una facultad ---</option>
                                 @foreach ($facultades as $fac => $value)
                                 <option value="{{ $fac }}"> {{ $value }}</option>   
                                 @endforeach
@@ -61,8 +70,8 @@
                          <div class="form-group row">
                             <label for="idcarrera" class="col-md-4 col-form-label text-md-right">{{ __('Carrera') }}</label>
                             <div class="col-md-6">
-                            <select id="idcarrera" name="idcarrera" class="form-control">
-                                <option value="">--- Seleccione una carrera ---</option>
+                            <select id="idcarrera" name="idcarrera" class="form-control" disabled>
+                                <option value="1">Computacion</option>
                             </select>
                             </div>
                             <span id="loader"><i class="fa fa-spinner fa-2x fa-spin"></i></span>
@@ -72,6 +81,11 @@
                             <label for="password" class="col-md-4 col-form-label text-md-right">{{ __('Contraseña') }}</label>
                             <div class="col-md-6">
                                 <input id="password" type="password" class="form-control{{ $errors->has('password') ? ' is-invalid' : '' }}" name="password" placeholder="Contraseña">
+                                 @if ($errors->has('password'))
+                                    <span class="invalid-feedback" role="alert">
+                                        <strong>{{ $errors->first('password') }}</strong>
+                                    </span>
+                                @endif
                             </div>
                         </div>
 
@@ -97,4 +111,18 @@
         </div>
     </div>
  </div>
+ <script>
+ $(function() {
+  $('#name').keydown(function (e) {
+    if (e.shiftKey || e.ctrlKey || e.altKey) {
+      e.preventDefault();
+    } else {
+      var key = e.keyCode;
+      if (!((key == 8) || (key == 32) || (key == 46) || (key >= 35 && key <= 40) || (key >= 65 && key <= 90))) {
+        e.preventDefault();
+      }
+    }
+  });
+});
+</script>
 @endsection

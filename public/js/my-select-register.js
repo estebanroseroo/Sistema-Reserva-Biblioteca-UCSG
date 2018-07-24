@@ -1,6 +1,7 @@
  $(document).ready(function() {
     $('select[name="idfacultad"]').on('change', function(){
         var ID = $(this).val();
+        $('#idcarrera').removeAttr('disabled');
         if(ID) {
             $.ajax({
                 url: '/states/get/'+ID,
@@ -11,7 +12,6 @@
                 },
                 success:function(data) {
                     $('select[name="idcarrera"]').empty();
-                    document.getElementById("idcarrera").insertBefore(new Option('--- Seleccione una carrera ---', ''), document.getElementById("idcarrera").firstChild);
                     $.each(data, function(key, value){
                         $('select[name="idcarrera"]').append('<option value="'+ key +'">' + value + '</option>');
                     });
@@ -22,7 +22,6 @@
             });
         } else {
             $('select[name="idcarrera"]').empty();
-            document.getElementById("idcarrera").insertBefore(new Option('--- Seleccione una carrera ---', ''), document.getElementById("idcarrera").firstChild);
         }
     });
 });

@@ -16,7 +16,7 @@
 
                         <div class="form-group row">
                             <div class="col-md-6 offset-md-2">
-                                <input id="email" type="email" class="form-control{{ $errors->has('email') ? ' is-invalid' : '' }}" name="email" placeholder="Correo de usuario" value="{{ old('email') }}" required autofocus>
+                                <input id="email" type="email" class="form-control{{ $errors->has('email') ? ' is-invalid' : '' }}" name="email" placeholder="Correo de usuario" value="{{ old('email') }}">
                                 @if ($errors->has('email'))
                                     <span class="invalid-feedback" role="alert">
                                         <strong>{{ $errors->first('email') }}</strong>
@@ -27,7 +27,7 @@
 
                         <div class="form-group row">
                             <div class="col-md-6 offset-md-2">
-                                <input id="password" type="password" class="form-control{{ $errors->has('password') ? ' is-invalid' : '' }}" name="password" placeholder="Contraseña" required>
+                                <input id="password" type="password" class="form-control{{ $errors->has('password') ? ' is-invalid' : '' }}" name="password" placeholder="Contraseña">
 
                                 @if ($errors->has('password'))
                                     <span class="invalid-feedback" role="alert">
