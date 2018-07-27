@@ -17,6 +17,7 @@ Route::resource('mantenimiento/facultades','FacultadController');
 Route::resource('mantenimiento/carreras','CarreraController');
 Route::resource('mantenimiento/usuarios','UsuarioController');
 Route::resource('mantenimiento/roles','RolController');
+Route::resource('mantenimiento/horarios','HorarioController');
 Route::resource('menu/perfiles','PerfilController');
 Route::resource('menu/change','ContrasenaController');
 Route::resource('operacion/adminreservas','AdminreservaController');
