@@ -12,7 +12,7 @@
 
 <div class="row">
 <div class="col-lg-8 col-md-8 col-sm-8 col-xs-12">
-<h2>Reservas	<a href="adminreservas/create"><button class="my-button"><i class="fa fa-plus"><b> Agregar</b></i></button></a></h2>
+<h2>Reservas</h2>
 @include('operacion.adminreservas.search')
 </div>
 </div>

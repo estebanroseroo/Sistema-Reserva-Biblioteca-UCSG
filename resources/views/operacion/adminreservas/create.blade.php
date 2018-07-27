@@ -11,149 +11,109 @@
 <div class="col-md-12">
 
 <div class="row">
-	<div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
-		<h2>Nueva reserva</h2>
-		@if (count($errors)>0)
-		<div class="my-alert">
-			<ul>
-				@foreach ($errors->all() as $error)
-				<li>{{$error}}</li>
-				@endforeach
-			</ul>
-		</div>
-		@endif
+<div class="col-lg-8 col-md-8 col-sm-8 col-xs-12">
+<h2>Nueva reserva</h2>
 
-	{!!Form::open(array('url'=>'operacion/adminreservas', 'method'=>'POST', 'autocomplete'=>'off'))!!}
-	{{Form::token()}}
-    {{ csrf_field() }}
+ <div class="form-group row">
+    <div class="col-md-6"> 
+    </div>
+</div>
+
+    {!! Form::open(array('url'=>'operacion/adminreservas/create','method'=>'GET','autocomplete'=>'off','role'=>'search')) !!}
     <div class="form-group row">
-        <label for="fecha" class="col-md-4 col-form-label text-md-right">{{ __('Fecha') }}</label>
+        <label for="fecha" class="col-md-2 col-form-label text-md-right">{{ __('Fecha') }}</label>
         <div class="col-md-6">  
         <div class="input-group">
             <div class="input-group-addon">
             <i class="fa fa-calendar"></i>
             </div>  
-            <input type="text" class="form-control datepicker" placeholder="Fecha" name="fecha">
+            <input type="text" class="form-control datepicker" placeholder="Fecha" name="fecha" value="{{$fecha}}">
         </div>
         </div>
+        <span class="input-group-btn">
+            <button type="submit" class="my-button"><i class="fa fa-search"> <b>Buscar</b></i></button>
+        </span>
     </div>
 
     <div class="form-group row">
-        <label for="horainicio" class="col-md-4 col-form-label text-md-right">{{ __('Hora Inicio') }}</label>
+        <label for="horarios" class="col-md-2 col-form-label text-md-right">{{ __('Horario') }}</label>
         <div class="col-md-6">  
             <div class="input-group">
             <div class="input-group-addon">
             <i class="fa fa-clock-o"></i>
-            </div>  
-            <select name="horainicio" class="form-control">
-            <option value="80000">08:00 AM</option>
-            <option value="90000">09:00 AM</option>
-            <option value="100000">10:00 AM</option>
-            <option value="110000">11:00 AM</option>
-            <option value="120000">12:00 PM</option>
-            <option value="130000">13:00 PM</option>
-            <option value="140000">14:00 PM</option>
-            <option value="150000">15:00 PM</option>
-            <option value="160000">16:00 PM</option>
-            <option value="170000">17:00 PM</option>
-            <option value="180000">18:00 PM</option>
-            <option value="190000">19:00 PM</option>
-            <option value="200000">20:00 PM</option>
+            </div>
+
+            <select id="horarios" name="horarios" class="form-control">
+            @foreach ($horarios as $hor)
+            <option value="{{$hor->horainicio}}-{{$hor->horafinal}}" 
+            @if($hor->horainicio."-".$hor->horafinal==$inicio) selected="selected" @endif>
+            {{$horainicio=substr($hor->horainicio,0,5)}}-{{$horafinal=substr($hor->horafinal,0,5)}}
+            </option>
+             @endforeach
             </select>
             </div> 
         </div>
     </div>
+    {{Form::close()}}
 
-    <div class="form-group row">
-        <label for="horafinal" class="col-md-4 col-form-label text-md-right">{{ __('Hora Final') }}</label>
-        <div class="col-md-6">  
-            <div class="input-group">
-            <div class="input-group-addon">
-            <i class="fa fa-clock-o"></i>
-            </div>  
-            <select name="horafinal" class="form-control">
-            <option value="90000">09:00 AM</option>
-            <option value="100000">10:00 AM</option>
-            <option value="110000">11:00 AM</option>
-            <option value="120000">12:00 PM</option>
-            <option value="130000">13:00 PM</option>
-            <option value="140000">14:00 PM</option>
-            <option value="150000">15:00 PM</option>
-            <option value="160000">16:00 PM</option>
-            <option value="170000">17:00 PM</option>
-            <option value="180000">18:00 PM</option>
-            <option value="190000">19:00 PM</option>
-            <option value="200000">20:00 PM</option>
-            </select>
-            </div> 
+</div>
+</div>
+
+<div class="row">
+    <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+        <div class="table-responsive">
+            <table class="table table-striped table-bordered table-condensed table-hover">
+                @if($inicio!="" && $fecha!="")
+                <thead>
+                    <th>Área</th>
+                    <th>Capacidad</th>
+                    <th>Disponibilidad</th>
+                    <th>Hora Inicio</th>
+                    <th>Hora Final</th>
+                </thead>
+                @foreach($diferentes as $d)
+        {!! Form::open(array('url'=>'operacion/adminreservas/edit','method'=>'GET','autocomplete'=>'off','role'=>'search')) !!}
+                <tr>
+                    <td>{{$d->nombre}}<input name="enombre" value="{{$d->nombre}}" type="hidden"></td>
+                    <td>{{$d->capacidad}}<input name="ecapacidad" value="{{$d->capacidad}}" type="hidden"></td>
+
+                    @if($d->fecha==$fecha)
+                    <td>Ocupado</td>
+                    <td>{{$d->horainicio}}</td>
+                    <td>{{$d->horafinal}}</td>
+                    @else
+                    <td>
+                        Disponible<input name="efecha" value="{{$fecha}}" type="hidden">
+                        <button type="submit" class="my-button"><b>Reservar</b></button>
+                    </td>
+                    <td>-<input name="ehorainicio" value="{{$inicio}}" type="hidden"></td>
+                    <td>-</td>
+                    @endif
+
+                </tr>
+                {{Form::close()}}
+                @endforeach
+                @else
+                @endif
+            </table>
         </div>
     </div>
-
-    <div class="form-group row">
-        <label for="tiempoespera" class="col-md-4 col-form-label text-md-right">{{ __('Hora Espera') }}</label>
-        <div class="col-md-6">  
-        <input type="text" id="tiempoespera" readonly="readonly" class="form-control" placeholder="Hora Espera" name="tiempoespera">
-        </div>
-    </div>
-
-    <div class="form-group row">
-        <label for="tiempocancelar" class="col-md-4 col-form-label text-md-right">{{ __('Hora Cancelación') }}</label>
-        <div class="col-md-6">  
-        <input type="text" id="tiempocancelar" readonly="readonly" class="form-control" placeholder="Hora Cancelación" name="tiempocancelar">
-        </div>
-    </div>
-
-    <div class="form-group row">
-        <label for="id" class="col-md-4 col-form-label text-md-right">{{ __('Usuario') }}</label>
-        <div class="col-md-6">
-        <select id="id" name="id" class="form-control">
-            @foreach ($usuarios as $usu)
-            <option value="{{$usu->id}}">{{$usu->name}}</option>
-            @endforeach
-        </select>
-        </div>
-    </div>
-
-    <div class="form-group row">
-        <label for="idarea" class="col-md-4 col-form-label text-md-right">{{ __('Área') }}</label>
-        <div class="col-md-6">
-        <select id="idarea" name="idarea" class="form-control">
-            @foreach ($areas as $are)
-            <option value="{{$are->idarea}}">{{$are->nombre}}</option>
-            @endforeach
-        </select>
-        </div>
-    </div>
-
-    <div class="form-group row"> 
-        <label for="cantidad" class="col-md-4 col-form-label text-md-right">{{ __('Cantidad de ocupantes') }}</label>
-         <div class="col-md-6">
-         <input id="cantidad" type="number" placeholder="Cantidad de ocupantes"  class="form-control" name="cantidad">
-        </div>
-    </div>
-
-	<div class="form-group">
-		<button class="my-button" type="submit"><i class="fa fa-save"><b> Guardar</b></i></button>
-		<button class="my-button" type="reset" id="bt_limpiar"><i class="fa fa-eraser"><b> Limpiar</b></i></button>
-	</div>
-
-	{!!Form::close()!!}
-	</div>
 </div>
 
 </div>
 </div>
 </div>
 </div><!-- /.box -->
-
 <script>
     $('.datepicker').datepicker({
         format: "dd/mm/yyyy",
         language: "es",
         autoclose: true,
         orientation: "bottom",
-        todayHighlight: true
-    });
+        todayHighlight: true,
+        setDate: null,
+        minDate: null,
+        maxDate: null
+    }); 
 </script>
 @endsection
-

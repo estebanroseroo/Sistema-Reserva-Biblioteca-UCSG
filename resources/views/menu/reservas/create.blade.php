@@ -63,6 +63,7 @@
     <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
         <div class="table-responsive">
             <table class="table table-striped table-bordered table-condensed table-hover">
+                @if($inicio!="" && $fecha!="")
                 <thead>
                     <th>Área</th>
                     <th>Capacidad</th>
@@ -70,7 +71,6 @@
                     <th>Hora Inicio</th>
                     <th>Hora Final</th>
                 </thead>
-                @if(count($diferentes)>0)
                 @foreach($diferentes as $d)
         {!! Form::open(array('url'=>'menu/reservas/edit','method'=>'GET','autocomplete'=>'off','role'=>'search')) !!}
                 <tr>

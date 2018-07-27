@@ -81,6 +81,7 @@
               </a>
               <ul class="treeview-menu">
                 <li><a href="{{url('operacion/adminreservas')}}"><i class="fa fa-circle-o"></i>Reservas</a></li>
+                <li><a href="{{url('operacion/adminreservas/create')}}"><i class="fa fa-circle-o"></i>Nueva reserva</a></li>
               </ul>
             </li>
                                                      
