@@ -27,12 +27,32 @@
             <div class="input-group-addon">
             <i class="fa fa-calendar"></i>
             </div>  
-            <input type="text" class="form-control datepicker" placeholder="Fecha" name="fecha">
+            <input type="text" class="form-control datepicker" placeholder="Fecha" name="fecha" value="{{$fecha}}">
         </div>
         </div>
         <span class="input-group-btn">
             <button type="submit" class="my-button"><i class="fa fa-search"> <b>Buscar</b></i></button>
         </span>
+    </div>
+
+    <div class="form-group row">
+        <label for="horarios" class="col-md-2 col-form-label text-md-right">{{ __('Horario') }}</label>
+        <div class="col-md-6">  
+            <div class="input-group">
+            <div class="input-group-addon">
+            <i class="fa fa-clock-o"></i>
+            </div>
+
+            <select id="horarios" name="horarios" class="form-control">
+            @foreach ($horarios as $hor)
+            <option value="{{$hor->horainicio}}-{{$hor->horafinal}}" 
+            @if($hor->horainicio."-".$hor->horafinal==$inicio) selected="selected" @endif>
+            {{$horainicio=substr($hor->horainicio,0,5)}}-{{$horafinal=substr($hor->horafinal,0,5)}}
+            </option>
+             @endforeach
+            </select>
+            </div> 
+        </div>
     </div>
     {{Form::close()}}
 
@@ -44,105 +64,37 @@
         <div class="table-responsive">
             <table class="table table-striped table-bordered table-condensed table-hover">
                 <thead>
-                    <th>Horarios</th>
-                    @foreach($areas as $a)
                     <th>Área</th>
-                    @endforeach
+                    <th>Capacidad</th>
+                    <th>Disponibilidad</th>
+                    <th>Hora Inicio</th>
+                    <th>Hora Final</th>
                 </thead>
-
+                @if(count($diferentes)>0)
+                @foreach($diferentes as $d)
+        {!! Form::open(array('url'=>'menu/reservas/edit','method'=>'GET','autocomplete'=>'off','role'=>'search')) !!}
                 <tr>
-                    <td></td>
-                    @foreach($areas as $a)
+                    <td>{{$d->nombre}}<input name="enombre" value="{{$d->nombre}}" type="hidden"></td>
+                    <td>{{$d->capacidad}}<input name="ecapacidad" value="{{$d->capacidad}}" type="hidden"></td>
+
+                    @if($d->fecha==$fecha)
+                    <td>Ocupado</td>
+                    <td>{{$d->horainicio}}</td>
+                    <td>{{$d->horafinal}}</td>
+                    @else
                     <td>
-                    {{$a->nombre}}
+                        Disponible<input name="efecha" value="{{$fecha}}" type="hidden">
+                        <button type="submit" class="my-button"><b>Reservar</b></button>
                     </td>
-                    @endforeach
-                </tr>
+                    <td>-<input name="ehorainicio" value="{{$inicio}}" type="hidden"></td>
+                    <td>-</td>
+                    @endif
 
-                <tr>
-                    <td>08:00-09:00</td>
-                    @foreach($areas as $a)
-                    <td>{{$a->disponibilidad}}
-                        <a href="{{URL::action('UsureservaController@create', $a->idarea)}}"><button class="my-button"><b>Reservar</b></button></a></td>
-                    @endforeach
                 </tr>
-                <tr>
-                    <td>09:00-10:00</td>
-                    @foreach($areas as $a)
-                    <td>{{$a->disponibilidad}}
-                        <a href="{{URL::action('UsureservaController@create', $a->idarea)}}"><button class="my-button"><b>Reservar</b></button></a></td>
-                    @endforeach
-                </tr>
-                <tr>
-                    <td>10:00-11:00</td>
-                    @foreach($areas as $a)
-                    <td>{{$a->disponibilidad}}
-                        <a href="{{URL::action('UsureservaController@create', $a->idarea)}}"><button class="my-button"><b>Reservar</b></button></a></td>
-                    @endforeach
-                </tr>
-                <tr>
-                    <td>11:00-12:00</td>
-                    @foreach($areas as $a)
-                    <td>{{$a->disponibilidad}}
-                        <a href="{{URL::action('UsureservaController@create', $a->idarea)}}"><button class="my-button"><b>Reservar</b></button></a></td>
-                    @endforeach
-                </tr>
-                <tr>
-                    <td>12:00-13:00</td>
-                    @foreach($areas as $a)
-                    <td>{{$a->disponibilidad}}
-                        <a href="{{URL::action('UsureservaController@create', $a->idarea)}}"><button class="my-button"><b>Reservar</b></button></a></td>
-                    @endforeach
-                </tr>
-                <tr>
-                    <td>13:00-14:00</td>
-                    @foreach($areas as $a)
-                    <td>{{$a->disponibilidad}}
-                        <a href="{{URL::action('UsureservaController@create', $a->idarea)}}"><button class="my-button"><b>Reservar</b></button></a></td>
-                    @endforeach
-                </tr>
-                <tr>
-                    <td>14:00-15:00</td>
-                    @foreach($areas as $a)
-                    <td>{{$a->disponibilidad}}
-                        <a href="{{URL::action('UsureservaController@create', $a->idarea)}}"><button class="my-button"><b>Reservar</b></button></a></td>
-                    @endforeach
-                </tr>
-                 <tr>
-                    <td>15:00-16:00</td>
-                    @foreach($areas as $a)
-                    <td>{{$a->disponibilidad}}
-                        <a href="{{URL::action('UsureservaController@create', $a->idarea)}}"><button class="my-button"><b>Reservar</b></button></a></td>
-                    @endforeach
-                </tr>
-                <tr>
-                    <td>16:00-17:00</td>
-                    @foreach($areas as $a)
-                    <td>{{$a->disponibilidad}}
-                        <a href="{{URL::action('UsureservaController@create', $a->idarea)}}"><button class="my-button"><b>Reservar</b></button></a></td>
-                    @endforeach
-                </tr>
-                <tr>
-                    <td>17:00-18:00</td>
-                    @foreach($areas as $a)
-                    <td>{{$a->disponibilidad}}
-                        <a href="{{URL::action('UsureservaController@create', $a->idarea)}}"><button class="my-button"><b>Reservar</b></button></a></td>
-                    @endforeach
-                </tr>
-                <tr>
-                    <td>18:00-19:00</td>
-                    @foreach($areas as $a)
-                    <td>{{$a->disponibilidad}}
-                        <a href="{{URL::action('UsureservaController@create', $a->idarea)}}"><button class="my-button"><b>Reservar</b></button></a></td>
-                    @endforeach
-                </tr>
-                <tr>
-                    <td>19:00-20:00</td>
-                    @foreach($areas as $a)
-                    <td>{{$a->disponibilidad}}
-                        <a href="{{URL::action('UsureservaController@create', $a->idarea)}}"><button class="my-button"><b>Reservar</b></button></a></td>
-                    @endforeach
-                </tr>
+                {{Form::close()}}
+                @endforeach
+                @else
+                @endif
             </table>
         </div>
     </div>
@@ -162,6 +114,6 @@
         setDate: null,
         minDate: null,
         maxDate: null
-    });
+    }); 
 </script>
 @endsection
