@@ -73,6 +73,9 @@ class AdminreservaController extends Controller
         $query=trim($request->get('fecha'));
         $queryinicio=trim($request->get('horarios'));
 
+        $hi=explode("-",$queryinicio);
+        $h=$hi[0];
+
         $horarios=DB::table('horario')->where('estado','=','A')->get();
 
         $areas = DB::table("area as a")
@@ -84,7 +87,7 @@ class AdminreservaController extends Controller
         ->leftjoin('area as a','a.idarea','=','r.idarea')
         ->select("a.nombre","a.capacidad","r.fecha","r.horainicio","r.horafinal")
         ->where('r.fecha','=',$query)
-        ->where('r.horainicio','=',$queryinicio)
+        ->where('r.horainicio','=',$h)
         ->where('r.estado','=','A')
         ->union($areas)
         ->get();
