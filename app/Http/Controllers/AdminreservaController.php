@@ -18,26 +18,26 @@ use Carbon\Carbon;
 class AdminreservaController extends Controller
 {
     public function __construct(){
-   	$this->middleware('auth');
+    $this->middleware('auth');
    }
 
    public function index(Request $request){
-   	if($request){
-   		$query=trim($request->get('searchText'));
-   		$reservas=DB::table('reserva as r')
-      	->leftjoin('users as u','u.id','=','r.id')
-      	->leftjoin('area as a','a.idarea','=','r.idarea')
-      	->select('r.idreserva','u.name as nombreusuario','a.nombre as nombrearea','r.fecha','r.horainicio','r.horafinal','r.cantidad')
+    if($request){
+      $query=trim($request->get('searchText'));
+      $reservas=DB::table('reserva as r')
+        ->leftjoin('users as u','u.id','=','r.id')
+        ->leftjoin('area as a','a.idarea','=','r.idarea')
+        ->select('r.idreserva','u.name as nombreusuario','a.nombre as nombrearea','r.fecha','r.horainicio','r.horafinal','r.cantidad')
         ->where('r.fecha','LIKE','%'.$query.'%')
-      	->where('r.estado','=','A')
+        ->where('r.estado','=','A')
         ->orwhere('u.name','LIKE','%'.$query.'%')
         ->where('r.estado','=','A')
         ->orwhere('a.nombre','LIKE','%'.$query.'%')
         ->where('r.estado','=','A')
-   		  ->orderBy('r.fecha','asc')
-   		  ->paginate(9);
-   		return view("operacion.adminreservas.index",["reservas"=>$reservas,"searchText"=>$query]);
-   	}
+        ->orderBy('r.fecha','asc')
+        ->paginate(9);
+      return view("operacion.adminreservas.index",["reservas"=>$reservas,"searchText"=>$query]);
+    }
    }
 
    function showDate(Request $request){
@@ -73,6 +73,9 @@ class AdminreservaController extends Controller
         $query=trim($request->get('fecha'));
         $queryinicio=trim($request->get('horarios'));
 
+        $hi=explode("-",$queryinicio);
+        $h=$hi[0];
+
         $horarios=DB::table('horario')->where('estado','=','A')->get();
 
         $areas = DB::table("area as a")
@@ -84,7 +87,7 @@ class AdminreservaController extends Controller
         ->leftjoin('area as a','a.idarea','=','r.idarea')
         ->select("a.nombre","a.capacidad","r.fecha","r.horainicio","r.horafinal")
         ->where('r.fecha','=',$query)
-        ->where('r.horainicio','=',$queryinicio)
+        ->where('r.horainicio','=',$h)
         ->where('r.estado','=','A')
         ->union($areas)
         ->get();

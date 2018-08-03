@@ -27,6 +27,7 @@
 					<th>Hora Inicio</th>
 					<th>Hora Fin</th>
 					<th>Ocupantes</th>
+					<th>Código</th>
 					<th></th>
 				</thead>
 
@@ -38,10 +39,13 @@
 					<td>{{$r->horainicio}}</td>
 					<td>{{$r->horafinal}}</td>
 					<td>{{$r->cantidad}}</td>
+					<td><a href="" data-target="#modal-qr-{{$cod=$r->idreserva}}" data-toggle="modal">
+						<button class="my-button"><i class="fa fa-qrcode"> <b>QR</b></i></button></td>
 					<td><a href="" data-target="#modal-delete-{{$r->idreserva}}" data-toggle="modal">
 						<button class="my-button"><i class="fa fa-trash"> <b>Eliminar</b></i></button></a></td>
 				</tr>
 				@include('menu.reservas.modal')
+				@include('menu.reservas.qrmodal')
 				@endforeach
 			</table>
 		</div>

@@ -92,9 +92,9 @@
         <section class="content">
           <div class="row">
             <div class="col-md-12">
-		                          <!--Contenido-->
+                              <!--Contenido-->
                               @yield('contenido')
-		                          <!--Fin Contenido-->
+                              <!--Fin Contenido-->
             </div><!-- /.col -->
           </div><!-- /.row -->
         </section><!-- /.content -->

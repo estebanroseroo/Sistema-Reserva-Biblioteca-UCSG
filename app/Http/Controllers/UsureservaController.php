@@ -17,20 +17,21 @@ use Carbon\Carbon;
 
 class UsureservaController extends Controller
 {
-	public function __construct(){
-   	$this->middleware('auth');
-   	}
+  public function __construct(){
+    $this->middleware('auth');
+    }
 
-	public function index(Request $request){
-   	if($request){
-   		$reservas=DB::table('reserva as r')
-      	->leftjoin('users as u','u.id','=','r.id')
-      	->leftjoin('area as a','a.idarea','=','r.idarea')
-      	->select('r.idreserva','u.name as nombreusuario','a.nombre as nombrearea','r.fecha','r.horainicio','r.horafinal','r.cantidad')
+  public function index(Request $request){
+    if($request){
+      $reservas=DB::table('reserva as r')
+        ->leftjoin('users as u','u.id','=','r.id')
+        ->leftjoin('area as a','a.idarea','=','r.idarea')
+        ->select('r.idreserva','u.name as nombreusuario','a.nombre as nombrearea','r.fecha','r.horainicio','r.horafinal','r.cantidad','r.codigoqr')
         ->where('u.email','=',Auth::user()->email)
         ->where('r.estado','=','A')->get();
-   		return view('menu.reservas.index',["reservas"=>$reservas]);
-   	}
+
+        return view('menu.reservas.index',["reservas"=>$reservas]);
+    }
    }
 
    function showDate(Request $request){
@@ -59,10 +60,13 @@ class UsureservaController extends Controller
       }
     }
 
-	public function create(Request $request){
+  public function create(Request $request){
     if($request){
         $query=trim($request->get('fecha'));
         $queryinicio=trim($request->get('horarios'));
+
+        $hi=explode("-",$queryinicio);
+        $h=$hi[0];
 
         $horarios=DB::table('horario')->where('estado','=','A')->get();
 
@@ -75,14 +79,14 @@ class UsureservaController extends Controller
         ->leftjoin('area as a','a.idarea','=','r.idarea')
         ->select("a.nombre","a.capacidad","r.fecha","r.horainicio","r.horafinal")
         ->where('r.fecha','=',$query)
-        ->where('r.horainicio','=',$queryinicio)
+        ->where('r.horainicio','=',$h)
         ->where('r.estado','=','A')
         ->union($areas)
         ->get();
 
         $diferentes=$reservas->unique('nombre');
         $diferentes->values()->all();
-        //print_r($diferentes);
+        //print_r($reservas);
 
         return view("menu.reservas.create",["fecha"=>$query,"inicio"=>$queryinicio,"horarios"=>$horarios,"reservas"=>$reservas,"areas"=>$areas,"diferentes"=>$diferentes]);
       }
@@ -100,7 +104,23 @@ class UsureservaController extends Controller
     $reserva->id=Auth::user()->id;
     $reserva->idarea=$request->get('idarea');
     $reserva->estado='A';
+    $reserva->codigoqr='temporal';
     $reserva->save();
+
+    $fin = $reserva->horainicio;
+    $separa=explode(":",$fin);//16 00 00
+    $separa[0];//16
+    $ms=":".$separa[1].":".$separa[2];//:00:00
+    $quince = strtotime("+15 minutes", strtotime($ms));//:15:00
+    $uno=date(':i:s', $quince);
+    $espera=$separa[0].$uno;//16:15:00
+
+    $QR=$reserva->idreserva;
+
+    $reserva->tiempoespera=$espera;
+    $reserva->codigoqr=$QR;
+    $reserva->update();
+
     return Redirect::to('menu/reservas');
    }
 

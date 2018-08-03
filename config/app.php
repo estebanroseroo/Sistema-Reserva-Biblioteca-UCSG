@@ -160,6 +160,7 @@ return [
         // sistemaReserva\Providers\BroadcastServiceProvider::class,
         sistemaReserva\Providers\EventServiceProvider::class,
         sistemaReserva\Providers\RouteServiceProvider::class,
+        SimpleSoftwareIO\QrCode\QrCodeServiceProvider::class, 
 
     ],
 
@@ -211,6 +212,7 @@ return [
         'View' => Illuminate\Support\Facades\View::class,
         'Form'=>Collective\Html\FormFacade::class, 
         'Html'=>Collective\HtmlFacade::class,
+        'QrCode' => SimpleSoftwareIO\QrCode\Facades\QrCode::class,
 
     ],
 

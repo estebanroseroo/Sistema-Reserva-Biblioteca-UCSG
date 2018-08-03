@@ -83,6 +83,7 @@
               <ul class="treeview-menu">
                 <li><a href="{{url('operacion/adminreservas')}}"><i class="fa fa-circle-o"></i>Reservas</a></li>
                 <li><a href="{{url('operacion/adminreservas/create')}}"><i class="fa fa-circle-o"></i>Nueva reserva</a></li>
+                <li><a href="{{url('operacion/consultas')}}"><i class="fa fa-circle-o"></i>Consulta QR</a></li>
               </ul>
             </li>
                                                      
@@ -95,9 +96,9 @@
           <div class="row">
             <div class="col-md-12">
 
-		                          <!--Contenido-->
+                              <!--Contenido-->
                               @yield('contenido')
-		                          <!--Fin Contenido-->
+                              <!--Fin Contenido-->
                          
             </div><!-- /.col -->
           </div><!-- /.row -->

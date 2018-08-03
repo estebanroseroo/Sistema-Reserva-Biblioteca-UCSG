@@ -22,6 +22,8 @@ Route::resource('menu/perfiles','PerfilController');
 Route::resource('menu/change','ContrasenaController');
 Route::resource('operacion/adminreservas','AdminreservaController');
 Route::resource('menu/reservas','UsureservaController');
+Route::resource('operacion/consultas', 'QrLoginController');
+
 Auth::routes();
 Route::get('mantenimiento/usuarios/create', 'UsuarioController@create');
 Route::get('get/{id}', 'UsuarioController@getStates');
@@ -35,4 +37,6 @@ Route::post('/test/save', ['as' => 'save-date',
                             function () {
                                 return '';
                             }]);
+
+Route::post('qrLogin', ['uses' => 'QrLoginController@check']);
 
