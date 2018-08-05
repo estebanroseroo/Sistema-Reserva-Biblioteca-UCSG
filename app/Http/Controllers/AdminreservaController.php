@@ -14,6 +14,8 @@ use sistemaReserva\Horario;
 use DB;
 use Auth;
 use Carbon\Carbon;
+use sistemaReserva\User;
+use Mail;
 
 class AdminreservaController extends Controller
 {
@@ -23,6 +25,16 @@ class AdminreservaController extends Controller
 
    public function index(Request $request){
     if($request){
+      $monitorear=Reserva::where('estado','A')->get();
+      $hoy = Carbon::now()->format('d/m/Y');
+      $hora = Carbon::now()->format('H:i:s');
+      foreach ($monitorear as $m) {
+         if ($m->fecha==$hoy && $m->tiempoespera<$hora && is_null($m->horallegada)==1){
+             $m->estado='I';
+             $m->update();
+         }
+      }
+      
       $query=trim($request->get('searchText'));
       $reservas=DB::table('reserva as r')
         ->leftjoin('users as u','u.id','=','r.id')
@@ -107,7 +119,6 @@ class AdminreservaController extends Controller
     $reserva->horafinal=$request->get('horafinal');
     $reserva->horallegada=$request->get('horallegada');
     $reserva->tiempoespera=$request->get('tiempoespera');
-    $reserva->tiempocancelar=$request->get('tiempocancelar');
     $reserva->cantidad=$request->get('cantidad');
     $reserva->id=$request->get('id');
     $reserva->idarea=$request->get('idarea');
@@ -125,6 +136,17 @@ class AdminreservaController extends Controller
 
     $reserva->tiempoespera=$espera;
     $reserva->update();
+
+    $reservas=DB::table('reserva')->where('estado','=','A')->get();
+    $qrcod = $reserva->codigoqr;
+    $usu = User::findOrFail($request->get('id'));
+    Mail::send('email.mensajeqr',['usu' => $usu,'reservas' => $reservas,'qrcod' => $qrcod],
+                    function ($m) use ($usu) {
+                        $m->to($usu->email, $usu->name)
+                          ->subject('Código QR de su reserva')
+                          ->from('roseroesteban@gmail.com', 'Administrador');
+                      }
+                    );
     
     return Redirect::to('operacion/adminreservas');
    }

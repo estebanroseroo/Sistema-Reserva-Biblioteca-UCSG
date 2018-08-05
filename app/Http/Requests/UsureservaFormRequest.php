@@ -29,7 +29,6 @@ class UsureservaFormRequest extends FormRequest
             'horafinal' => 'required',
             'horallegada' => 'nullable',
             'tiempoespera'=>'nullable',
-            'tiempocancelar'=>'nullable',
             'cantidad'=>'required',
             'id'=>'nullable',
             'idarea'=>'required',

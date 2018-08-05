@@ -10,7 +10,7 @@ class Reserva extends Model
     protected $primaryKey='idreserva';
     public $timestamps=false;
     protected $fillable=[
-	'fecha','horainicio','horafinal','horallegada','tiempoespera','tiempocancelar','cantidad','estado','id','idarea'
+	'fecha','horainicio','horafinal','horallegada','tiempoespera','cantidad','estado','id','idarea'
     ];
     protected $guarded=[
     	
