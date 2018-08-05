@@ -104,7 +104,7 @@ class UsureservaController extends Controller
     $reserva->id=Auth::user()->id;
     $reserva->idarea=$request->get('idarea');
     $reserva->estado='A';
-    $reserva->codigoqr='temporal';
+    $reserva->codigoqr=str_random(40);
     $reserva->save();
 
     $fin = $reserva->horainicio;
@@ -115,10 +115,7 @@ class UsureservaController extends Controller
     $uno=date(':i:s', $quince);
     $espera=$separa[0].$uno;//16:15:00
 
-    $QR=$reserva->idreserva;
-
     $reserva->tiempoespera=$espera;
-    $reserva->codigoqr=$QR;
     $reserva->update();
 
     return Redirect::to('menu/reservas');

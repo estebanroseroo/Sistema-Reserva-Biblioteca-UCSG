@@ -41,7 +41,7 @@ class QrLoginController extends Controller
 
    public function create(Request $request){
     $cod=$request->get('cod');
-    $res = Reserva::where('idreserva',$cod)->first();
+    $res = Reserva::where('codigoqr',$cod)->first();
     $codfecha=$res->fecha;
     $codhorario=$res->horainicio."-".$res->horafinal;
     $codcantidad=$res->cantidad;
@@ -61,7 +61,7 @@ class QrLoginController extends Controller
     $hoy = Carbon::now()->format('d/m/Y');
     $hora = Carbon::now()->format('H:i:s');
     if ($request->data) {
-        $res = Reserva::where('idreserva',$request->data)->where('estado','A')->first();
+        $res = Reserva::where('codigoqr',$request->data)->where('estado','A')->first();
         if($res){//verifica reserva activa
           if ($res->fecha==$hoy && $res->tiempoespera>$hora) {//verifica reserva es hoy y llega puntual
             if($res->horainicio<$hora){//llega impuntual
@@ -73,7 +73,7 @@ class QrLoginController extends Controller
               $res->horallegada=$hora;
               $res->update();//se queda con estado A porque aun no empieza su reserva
               }
-              $result =$res->idreserva;
+              $result =$res->codigoqr;
               return $result;
           }
         }

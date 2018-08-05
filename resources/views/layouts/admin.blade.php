@@ -81,7 +81,8 @@
                  <i class="fa fa-angle-down pull-right"></i>
               </a>
               <ul class="treeview-menu">
-                <li><a href="{{url('operacion/adminreservas')}}"><i class="fa fa-circle-o"></i>Reservas</a></li>
+                <li><a href="{{url('operacion/adminreservas')}}"><i class="fa fa-circle-o"></i>Reservas pendientes</a></li>
+                <li><a href="{{url('operacion/reservasconfirmadas')}}"><i class="fa fa-circle-o"></i>Reservas confirmadas</a></li>
                 <li><a href="{{url('operacion/adminreservas/create')}}"><i class="fa fa-circle-o"></i>Nueva reserva</a></li>
                 <li><a href="{{url('operacion/consultas')}}"><i class="fa fa-circle-o"></i>Consulta QR</a></li>
               </ul>

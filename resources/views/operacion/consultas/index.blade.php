@@ -56,9 +56,9 @@
                     data: {"_token": "{{ csrf_token() }}",data:data},
                         success: function(data) {
                           if (data!=0) {
-                            var id=data;
-                            var url = '{{ URL::action("QrLoginController@create", "cod=id") }}';
-                            url = url.replace('id', id);
+                            var variable=data;
+                            var url = '{{ URL::action("QrLoginController@create", "cod=variable") }}';
+                            url = url.replace('variable', variable);
                             $(location).attr('href',url);  
                           }
                           else{

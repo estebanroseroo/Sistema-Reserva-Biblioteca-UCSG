@@ -23,6 +23,7 @@ Route::resource('menu/change','ContrasenaController');
 Route::resource('operacion/adminreservas','AdminreservaController');
 Route::resource('menu/reservas','UsureservaController');
 Route::resource('operacion/consultas', 'QrLoginController');
+Route::resource('operacion/reservasconfirmadas', 'AdminreservaconfirmadaController');
 
 Auth::routes();
 Route::get('mantenimiento/usuarios/create', 'UsuarioController@create');

@@ -11,8 +11,8 @@
 <div class="col-md-12">
 <div class="row">
 <div class="col-lg-8 col-md-8 col-sm-8 col-xs-12">
-<h2>Reservas pendientes</h2>
-@include('operacion.adminreservas.search')
+<h2>Reservas confirmadas</h2>
+@include('operacion.reservasconfirmadas.search')
 </div>
 </div>
 
@@ -26,6 +26,7 @@
 					<th>Fecha</th>
 					<th>Hora Inicio</th>
 					<th>Hora Fin</th>
+					<th>Hora LLegada</th>
 					<th>Ocupantes</th>
 					<th>Código</th>
 					<th></th>
@@ -38,14 +39,15 @@
 					<td>{{$r->fecha}}</td>
 					<td>{{$r->horainicio}}</td>
 					<td>{{$r->horafinal}}</td>
+					<td>{{$r->horallegada}}</td>
 					<td>{{$r->cantidad}}</td>
 					<td><a href="" data-target="#modal-qr-{{$cod=$r->idreserva}}" data-toggle="modal">
 						<button class="my-button"><i class="fa fa-qrcode"> <b>QR</b></i></button></td>
 					<td><a href="" data-target="#modal-delete-{{$r->idreserva}}" data-toggle="modal">
 						<button class="my-button"><i class="fa fa-trash"> <b>Eliminar</b></i></button></a></td>
 				</tr>
-				@include('operacion.adminreservas.modal')
-				@include('operacion.adminreservas.qrmodal')
+				@include('operacion.reservasconfirmadas.modal')
+				@include('operacion.reservasconfirmadas.qrmodal')
 				@endforeach
 			</table>
 		</div>

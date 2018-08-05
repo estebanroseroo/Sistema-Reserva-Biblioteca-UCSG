@@ -27,7 +27,7 @@ class AdminreservaController extends Controller
       $reservas=DB::table('reserva as r')
         ->leftjoin('users as u','u.id','=','r.id')
         ->leftjoin('area as a','a.idarea','=','r.idarea')
-        ->select('r.idreserva','u.name as nombreusuario','a.nombre as nombrearea','r.fecha','r.horainicio','r.horafinal','r.cantidad')
+        ->select('r.idreserva','u.name as nombreusuario','a.nombre as nombrearea','r.fecha','r.horainicio','r.horafinal','r.cantidad','r.codigoqr')
         ->where('r.fecha','LIKE','%'.$query.'%')
         ->where('r.estado','=','A')
         ->orwhere('u.name','LIKE','%'.$query.'%')
@@ -112,7 +112,20 @@ class AdminreservaController extends Controller
     $reserva->id=$request->get('id');
     $reserva->idarea=$request->get('idarea');
     $reserva->estado='A';
+    $reserva->codigoqr=str_random(40);
     $reserva->save();
+
+    $fin = $reserva->horainicio;
+    $separa=explode(":",$fin);//16 00 00
+    $separa[0];//16
+    $ms=":".$separa[1].":".$separa[2];//:00:00
+    $quince = strtotime("+15 minutes", strtotime($ms));//:15:00
+    $uno=date(':i:s', $quince);
+    $espera=$separa[0].$uno;//16:15:00
+
+    $reserva->tiempoespera=$espera;
+    $reserva->update();
+    
     return Redirect::to('operacion/adminreservas');
    }
 

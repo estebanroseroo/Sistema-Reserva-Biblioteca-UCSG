@@ -33,6 +33,7 @@ class AdminreservaFormRequest extends FormRequest
             'cantidad'=>'required',
             'id'=>'required',
             'idarea'=>'required',
+            'codigoqr'=>'nullable',
         ];
     }
 }
