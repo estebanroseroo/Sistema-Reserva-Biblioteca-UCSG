@@ -20,6 +20,8 @@
     <link rel="stylesheet" href="{{asset('datePicker/css/bootstrap-standalone.css')}}">
     <script src="{{asset('datePicker/js/bootstrap-datepicker.js')}}"></script>
     <script src="{{asset('datePicker/locales/bootstrap-datepicker.es.min.js')}}"></script>
+
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.3/css/select2.min.css" rel="stylesheet" />
   </head>
 
   <body class="hold-transition skin-blue sidebar-mini">
@@ -114,5 +116,6 @@
     <!-- AdminLTE App -->
     <script src="{{asset('js/app.min.js')}}"></script>
     <script src="{{asset('js/my-select.js')}}"></script>
+
   </body>
 </html>

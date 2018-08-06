@@ -97,5 +97,9 @@ return [
     | of "email". This simply helps us make messages a little cleaner.
     |
     */
-    'attributes' => [],
+    'attributes' => [
+        'name' => 'nombre',
+        'email' => 'correo',
+        'password' => 'contraseña',
+    ],
 ];
