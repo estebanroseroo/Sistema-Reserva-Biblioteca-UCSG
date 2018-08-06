@@ -9,6 +9,7 @@
     <title>Universidad Católica de Santiago de Guayaquil:Entrar al sitio</title>
     <script src="{{ asset('js/app.js') }}"></script>
     <script src="{{ asset('js/my-select-register.js') }}"></script>
+    <script src="{{ asset('js/my-select-register2.js') }}"></script>
     <link rel="dns-prefetch" href="https://fonts.gstatic.com">
     <link href="https://fonts.googleapis.com/css?family=Raleway:300,400,600" rel="stylesheet" type="text/css">
     <link rel="stylesheet" href="{{asset('css/estilos.css')}}">

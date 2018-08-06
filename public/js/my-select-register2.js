@@ -1,5 +1,6 @@
  $(document).ready(function() {
-        var ID = $('select[name="idfacultad"] option:selected').val();
+        $('select[name="idfacultad"]').on('change', function(){
+        var ID = $(this).val();
         $('#idcarrera').removeAttr('disabled');
         if(ID) {
             $.ajax({
@@ -19,10 +20,8 @@
                     $('#loader').css("visibility", "hidden");
                 }
             });
-        } 
-        else {
+        } else {
             $('select[name="idcarrera"]').empty();
         }
-
-        
+    });
 });
