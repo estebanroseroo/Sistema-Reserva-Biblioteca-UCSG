@@ -1,8 +1,8 @@
-@extends ('layouts.usu')
+@extends(Auth::user()->idtipousuario==1 ? 'layouts.admin' : 'layouts.usu')
 @section('contenido')
 <div class="box">
 <div class="box-header with-border">
-<i class="fa fa-graduation-cap"></i>
+<i class="fa fa-user"></i>
 <h3 class="box-title"><b>Perfil</b></h3>
 </div>
 <div class="box-body">
@@ -23,7 +23,7 @@
 		</div>
 		@endif
 
-	{!!Form::model($usuario,['method'=>'PATCH','route'=>['change.update', $usuario->id]])!!}
+	{!!Form::model($usuario,['method'=>'PATCH','route'=>['change.update', Auth::user()->id]])!!}
 	{{Form::token()}}
     {{ csrf_field() }}
      <div class="form-group row">

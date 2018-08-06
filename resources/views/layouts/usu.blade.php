@@ -35,7 +35,7 @@
                 </a>
                 <ul class="dropdown-menu">
                   <li class="treeview-menu">
-                    <a href="{{URL::action('PerfilController@edit', Auth::user()->id)}}"><i class="fa fa-user"></i><span>Editar perfil</span></a>
+                    <a href="{{URL::action('ContrasenaController@edit', Auth::user()->id)}}"><i class="fa fa-user"></i><span>Cambiar contraseña</span></a>
                     <a href="{{url('/logout')}}"><i class="fa fa-power-off"></i><span>Cerrar sesión</span></a>
                   </li>
                 </ul>
@@ -61,7 +61,7 @@
             
             <li class="treeview">
               <a href="#">
-                <i class="fa fa-university"></i>
+                <i class="fa fa-graduation-cap"></i>
                 <span>Menú</span>
                 <i class="fa fa-angle-down pull-right"></i>
               </a>
@@ -73,7 +73,7 @@
                         
             <li class="treeview">
               <a href="#">
-                <i class="fa fa-graduation-cap"></i>
+                <i class="fa fa-user"></i>
                 <span>Perfil</span>
                  <i class="fa fa-angle-down pull-right"></i>
               </a>

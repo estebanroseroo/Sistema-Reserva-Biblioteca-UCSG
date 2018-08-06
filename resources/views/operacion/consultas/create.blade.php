@@ -2,7 +2,7 @@
 @section('contenido')
 <div class="box">
 <div class="box-header with-border">
-<i class="fa fa-th"></i>
+<i class="fa fa-university"></i>
 <h3 class="box-title"><b>Reserva</b></h3>
 </div>
 <!-- /.box-header -->

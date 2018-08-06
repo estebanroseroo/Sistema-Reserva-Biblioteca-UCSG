@@ -2,7 +2,7 @@
 @section('contenido')
 <div class="box">
 <div class="box-header with-border">
-<i class="fa fa-university"></i>
+<i class="fa fa-graduation-cap"></i>
 <h3 class="box-title"><b>Menú</b></h3>
 </div>
 <!-- /.box-header -->

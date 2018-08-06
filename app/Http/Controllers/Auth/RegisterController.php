@@ -41,12 +41,16 @@ class RegisterController extends Controller
     protected function create(array $data)
     {
         $cont=0;
+        $nuevoemail=$data['email'];
         $separa=explode("@",$data['email']);
+
         $repetido=DB::table('users')->select('email')->where('email','LIKE',$separa[0].'%')->get();
-        foreach($repetido as $r){
+        if($repetido){
+            foreach($repetido as $r){
             $cont++;
+            $nuevoemail=$separa[0].$cont."@".$separa[1];
+            }
         }
-        $nuevoemail=$separa[0].$cont."@".$separa[1];
         
         return User::create([
             'name' => $data['name'].".".$data['apellido'],

@@ -37,6 +37,7 @@
                 </a>
                 <ul class="dropdown-menu">
                   <li class="treeview-menu">
+                    <a href="{{URL::action('ContrasenaController@edit', Auth::user()->id)}}"><i class="fa fa-user"></i><span>Cambiar contraseña</span></a>
                     <a href="{{url('/logout')}}"><i class="fa fa-power-off"></i><span>Cerrar Sesión</span></a>
                   </li>
                 </ul>
@@ -78,7 +79,7 @@
                         
             <li class="treeview">
               <a href="#">
-                <i class="fa fa-th"></i>
+                <i class="fa fa-university"></i>
                 <span>Reserva</span>
                  <i class="fa fa-angle-down pull-right"></i>
               </a>
@@ -87,6 +88,17 @@
                 <li><a href="{{url('operacion/reservasconfirmadas')}}"><i class="fa fa-circle-o"></i>Reservas confirmadas</a></li>
                 <li><a href="{{url('operacion/adminreservas/create')}}"><i class="fa fa-circle-o"></i>Nueva reserva</a></li>
                 <li><a href="{{url('operacion/consultas')}}"><i class="fa fa-circle-o"></i>Consulta QR</a></li>
+              </ul>
+            </li>
+
+            <li class="treeview">
+              <a href="#">
+                <i class="fa fa-user"></i>
+                <span>Perfil</span>
+                 <i class="fa fa-angle-down pull-right"></i>
+              </a>
+              <ul class="treeview-menu">
+                <li><a href="{{URL::action('ContrasenaController@edit', Auth::user()->id)}}"><i class="fa fa-circle-o"></i>Cambiar contraseña</a></li>
               </ul>
             </li>
                                                      

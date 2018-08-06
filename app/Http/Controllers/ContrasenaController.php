@@ -9,6 +9,7 @@ use Illuminate\Support\Facades\Redirect;
 use sistemaReserva\Http\Requests\ContrasenaFormRequest;
 use sistemaReserva\User;
 use DB;
+use Auth;
 
 class ContrasenaController extends Controller
 {
@@ -25,7 +26,7 @@ class ContrasenaController extends Controller
       ->select('u.id','u.name','u.email','u.telefono','f.nombre as facultad','c.nombre as carrera')
       ->where('u.email','=', $query)
       ->where('u.estado','=','A')->get();
-   		return view('menu.perfil.index',["usuarios"=>$usuarios,"variable"=>$query]);
+   		return view('menu.perfiles.index',["usuarios"=>$usuarios,"variable"=>$query]);
    	}
    }
 
@@ -45,6 +46,25 @@ class ContrasenaController extends Controller
       ->select('u.id','u.name','u.email','u.telefono','f.nombre as facultad','c.nombre as carrera')
       ->where('u.id','=', $id)
       ->where('u.estado','=','A')->get();
-      return view('menu.perfiles.index',["usuarios"=>$usuarios]);
+
+      if(Auth::user()->idtipousuario==1){
+         $query='';
+         $reservas=DB::table('reserva as r')
+        ->leftjoin('users as u','u.id','=','r.id')
+        ->leftjoin('area as a','a.idarea','=','r.idarea')
+        ->select('r.idreserva','u.name as nombreusuario','a.nombre as nombrearea','r.fecha','r.horainicio','r.horafinal','r.cantidad','r.codigoqr')
+        ->where('r.fecha','LIKE','%'.$query.'%')
+        ->where('r.estado','=','A')
+        ->orwhere('u.name','LIKE','%'.$query.'%')
+        ->where('r.estado','=','A')
+        ->orwhere('a.nombre','LIKE','%'.$query.'%')
+        ->where('r.estado','=','A')
+        ->orderBy('r.fecha','asc')
+        ->paginate(9);
+      return view("operacion.adminreservas.index",["reservas"=>$reservas,"searchText"=>$query]);
+      }
+      else{
+         return view('menu.perfiles.index',["usuarios"=>$usuarios]);
+      }
    }
 }
