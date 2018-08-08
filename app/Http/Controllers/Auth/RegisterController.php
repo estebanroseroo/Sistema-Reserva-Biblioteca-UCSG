@@ -29,7 +29,7 @@ class RegisterController extends Controller
     {
         return Validator::make($data, [
             'name' => 'required|string|max:255',
-            'email' => 'required|string|email|max:255',
+            'email' => 'required|string|email|max:255|unique:users',
             'password' => 'required|string|min:6|confirmed',
             'telefono' => 'nullable|min:7|max:10',
             'idfacultad'=>'nullable',
@@ -40,21 +40,9 @@ class RegisterController extends Controller
 
     protected function create(array $data)
     {
-        $cont=0;
-        $nuevoemail=$data['email'];
-        $separa=explode("@",$data['email']);
-
-        $repetido=DB::table('users')->select('email')->where('email','LIKE',$separa[0].'%')->get();
-        if($repetido){
-            foreach($repetido as $r){
-            $cont++;
-            $nuevoemail=$separa[0].$cont."@".$separa[1];
-            }
-        }
-        
         return User::create([
             'name' => $data['name'].".".$data['apellido'],
-            'email' => $nuevoemail,
+            'email' => $data['email'],
             'password' => Hash::make($data['password']),
             'telefono' => $data['telefono'],
             'idfacultad' => $data['idfacultad'],

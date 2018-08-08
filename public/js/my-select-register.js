@@ -1,6 +1,5 @@
  $(document).ready(function() {
         var ID = $('select[name="idfacultad"] option:selected').val();
-        $('#idcarrera').removeAttr('disabled');
         if(ID) {
             $.ajax({
                 url: '/states/get/'+ID,

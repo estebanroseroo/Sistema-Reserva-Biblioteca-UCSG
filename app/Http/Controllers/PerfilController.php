@@ -39,19 +39,20 @@ class PerfilController extends Controller
 
    public function edit($id){
       $usuario=User::findOrFail($id);
+      $separa=explode(".",$usuario->name);
+      $usunombre=$separa[0];
+      $usuapellido=$separa[1];
       $facultades=DB::table('facultad')->where('estado','=','A')->get();
       $carreras=DB::table('carrera as c')
-      ->join('facultad as f','f.idfacultad','=','c.idfacultad')
-      ->join('users as u', 'c.idcarrera','=','u.idcarrera')
-      ->select('c.idcarrera','c.nombre')
-      ->where('c.estado','=','A')->get();
-      return view("menu.perfiles.edit",["usuario"=>$usuario,"facultades"=>$facultades,"carreras"=>$carreras]);
+      ->select('c.idcarrera','c.nombre','c.idfacultad')
+      ->where('c.estado','=','A')
+      ->where('c.idfacultad','=',$usuario->idfacultad)->get();
+      return view("menu.perfiles.edit",["usuario"=>$usuario,"facultades"=>$facultades,"carreras"=>$carreras,"usunombre"=>$usunombre,"usuapellido"=>$usuapellido]);
    }
 
    public function update(PerfilFormRequest $request, $id){
       $usuario=User::findOrFail($id);
-      $usuario->name=$request->get('name');
-      $usuario->email=$request->get('email');
+      $usuario->name=$request->get('name').".".$request->get('apellido');
       $usuario->telefono=$request->get('telefono');
       $usuario->idfacultad=$request->get('idfacultadedit');
       $usuario->idcarrera=$request->get('idcarreraedit');

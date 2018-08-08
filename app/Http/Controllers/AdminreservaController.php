@@ -62,6 +62,7 @@ class AdminreservaController extends Controller
         $qcapacidad=trim($request->get('ecapacidad'));
         $qfecha=trim($request->get('efecha'));
         $qhorainicio=trim($request->get('ehorainicio'));
+        $qhoraid=trim($request->get('ehoraid'));
 
         $usuarios=DB::table('users')->where('estado','=','A')->get();
 
@@ -76,7 +77,7 @@ class AdminreservaController extends Controller
         //var_dump($horarioinicio);
         //die();
  
-        return view("operacion.adminreservas.edit",["enombre"=>$qnombre,"ecapacidad"=>$qcapacidad,"efecha"=>$qfecha,"ehorainicio"=>$qhorainicio,"usuarios"=>$usuarios,"areas"=>$areas,"horarioinicio"=>$horarioinicio]);
+        return view("operacion.adminreservas.edit",["enombre"=>$qnombre,"ecapacidad"=>$qcapacidad,"efecha"=>$qfecha,"ehorainicio"=>$qhorainicio,"usuarios"=>$usuarios,"areas"=>$areas,"horarioinicio"=>$horarioinicio,"ehoraid"=>$qhoraid]);
       }
     }
 
@@ -89,6 +90,8 @@ class AdminreservaController extends Controller
         $h=$hi[0];
 
         $horarios=DB::table('horario')->where('estado','=','A')->get();
+
+        $horaid=DB::table('horario')->where('horainicio','=',$h)->where('estado','=','A')->first();
 
         $areas = DB::table("area as a")
         ->select("a.nombre","a.capacidad","a.disponibilidad","a.estado","a.idarea")
@@ -108,7 +111,7 @@ class AdminreservaController extends Controller
         $diferentes->values()->all();
         //print_r($diferentes);
 
-        return view("operacion.adminreservas.create",["fecha"=>$query,"inicio"=>$queryinicio,"horarios"=>$horarios,"reservas"=>$reservas,"areas"=>$areas,"diferentes"=>$diferentes]);
+        return view("operacion.adminreservas.create",["fecha"=>$query,"inicio"=>$queryinicio,"horarios"=>$horarios,"reservas"=>$reservas,"areas"=>$areas,"diferentes"=>$diferentes,"horaid"=>$horaid]);
       }
     }
 
@@ -124,6 +127,7 @@ class AdminreservaController extends Controller
     $reserva->idarea=$request->get('idarea');
     $reserva->estado='A';
     $reserva->codigoqr=str_random(40);
+    $reserva->idhora=$request->get('horaid');
     $reserva->save();
 
     $fin = $reserva->horainicio;

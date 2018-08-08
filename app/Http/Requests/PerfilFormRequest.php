@@ -25,7 +25,7 @@ class PerfilFormRequest extends FormRequest
     {
         return [
             'name' => 'required|string|max:255',
-            'email' => 'required|string|email|max:255|unique:users',
+            'email' => 'nullable',
             'telefono' => 'nullable|min:7|max:10',
             'idfacultad'=>'nullable',
             'idcarrera'=>'nullable',

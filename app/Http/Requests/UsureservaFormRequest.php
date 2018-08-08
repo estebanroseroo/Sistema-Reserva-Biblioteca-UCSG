@@ -33,6 +33,7 @@ class UsureservaFormRequest extends FormRequest
             'id'=>'nullable',
             'idarea'=>'required',
             'codigoqr'=>'nullable',
+            'idhora'=>'nullable',
         ];
     }
 }

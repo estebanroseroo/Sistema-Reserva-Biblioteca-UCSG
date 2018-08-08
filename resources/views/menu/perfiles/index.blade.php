@@ -19,7 +19,7 @@
 		<div class="table-responsive">
 			<table class="table table-striped table-bordered table-condensed table-hover">
 				<thead>
-					<th>NOMBRE</th>
+					<th>USUARIO</th>
 					<th>CORREO</th>
 					<th>TELÉFONO</th>
 					<th>FACULTAD</th>

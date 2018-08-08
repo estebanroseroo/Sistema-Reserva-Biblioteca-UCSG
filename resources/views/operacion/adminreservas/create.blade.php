@@ -84,6 +84,7 @@
                     @else
                     <td>
                         Disponible<input name="efecha" value="{{$fecha}}" type="hidden">
+                        <input name="ehoraid" value="{{$horaid->idhora}}" type="hidden">
                         <button type="submit" class="my-button"><b>Reservar</b></button>
                     </td>
                     <td>-<input name="ehorainicio" value="{{$inicio}}" type="hidden"></td>

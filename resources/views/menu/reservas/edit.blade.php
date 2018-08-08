@@ -53,6 +53,7 @@
         <input type="text" id="horario" readonly="readonly" class="form-control" name="horario" value="{{$ehorainicio}}">
         <input type="hidden" name="horainicio" value="{{$horarioinicio->horainicio}}">
         <input type="hidden" name="horafinal" value="{{$horarioinicio->horafinal}}">
+        <input type="hidden" name="horaid" value="{{$ehoraid}}">
         </div>
     </div>
 

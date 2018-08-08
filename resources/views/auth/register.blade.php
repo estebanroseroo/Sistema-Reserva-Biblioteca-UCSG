@@ -17,28 +17,28 @@
     <div class="form-group row">
     <label for="name" class="col-md-4 col-form-label text-md-right">{{ __('Nombre') }}</label>
     <div class="col-md-6">
-    <input id="name" type="text" class="form-control" name="name" onkeyup="this.value = this.value.replace(/\b\w/g, l => l.toUpperCase());" onkeypress="return lettersOnly(event)" placeholder="Nombre" value="{{ old('name') }}">
+    <input id="name" type="text" class="form-control" name="name" onkeyup="this.value = this.value.replace(/\b\w/g, l => l.toUpperCase());" oncopy="return false" onpaste="return false" onkeypress="return lettersOnly(event)" placeholder="Nombre" value="{{ old('name') }}">
     </div>
     </div>
 
     <div class="form-group row">
     <label for="apellido" class="col-md-4 col-form-label text-md-right">{{ __('Apellido') }}</label>
     <div class="col-md-6">
-    <input id="apellido" type="text" class="form-control" name="apellido" onkeyup="this.value = this.value.replace(/\b\w/g, l => l.toUpperCase());" onkeypress="return lettersOnly(event)" placeholder="Apellido" value="{{ old('apellido') }}">
+    <input id="apellido" type="text" class="form-control" name="apellido" onkeyup="this.value = this.value.replace(/\b\w/g, l => l.toUpperCase());" oncopy="return false" onpaste="return false" onkeypress="return lettersOnly(event)" placeholder="Apellido" value="{{ old('apellido') }}">
     </div>
     </div>
 
     <div class="form-group row">
     <label for="email" class="col-md-4 col-form-label text-md-right">{{ __('Correo') }}</label>
     <div class="col-md-6">
-    <input id="email" type="email" class="form-control" name="email" placeholder="Correo" value="{{ old('name').".".old('apellido')."@cu.ucsg.edu.ec" }}" disabled>
+    <input id="email" type="email" class="form-control" name="email" oncopy="return false" onpaste="return false" placeholder="Correo" value="{{ old('email')}}">
     </div>
     </div>
 
     <div class="form-group row">
     <label for="telefono" class="col-md-4 col-form-label text-md-right">{{ __('Teléfono') }}</label>
     <div class="col-md-6">
-    <input id="telefono" type="text" placeholder="Teléfono" class="form-control" name="telefono" onkeypress="return isNumberKey(event)" maxlength="10" value="{{ old('telefono') }}">
+    <input id="telefono" type="text" placeholder="Teléfono" oncopy="return false" onpaste="return false" class="form-control" name="telefono" onkeypress="return isNumberKey(event)" maxlength="10" value="{{ old('telefono') }}">
     </div>
     </div>
 
@@ -67,7 +67,7 @@
     <div class="form-group row">
     <label for="idcarrera" class="col-md-4 col-form-label text-md-right">{{ __('Carrera') }}</label>
     <div class="col-md-6">
-    <select id="idcarrera" name="idcarrera" class="form-control" disabled>
+    <select id="idcarrera" name="idcarrera" class="form-control">
     </select>
     </div>
         <span id="loader"><i class="fa fa-spinner fa-2x fa-spin"></i></span>
@@ -76,14 +76,14 @@
     <div class="form-group row">
     <label for="password" class="col-md-4 col-form-label text-md-right">{{ __('Contraseña') }}</label>
     <div class="col-md-6">
-    <input id="password" type="password" class="form-control" name="password" placeholder="Contraseña">
+    <input id="password" type="password" oncopy="return false" onpaste="return false" class="form-control" name="password" placeholder="Contraseña">
     </div>
     </div>
 
     <div class="form-group row">
     <label for="password-confirm" class="col-md-4 col-form-label text-md-right">{{ __('Confirmar Contraseña') }}</label>
     <div class="col-md-6">
-    <input id="password-confirm" type="password" class="form-control" name="password_confirmation" placeholder="Confirmar Contraseña">
+    <input id="password-confirm" type="password" oncopy="return false" onpaste="return false" class="form-control" name="password_confirmation" placeholder="Confirmar Contraseña">
     </div>
     </div>
 
@@ -141,9 +141,17 @@
         document.getElementById('mensaje').innerHTML = 'El campo contraseña no es igual a confirmar contraseña';
         return false;
         }
-    document.getElementById('email').value = document.getElementById('name').value+"."+document.getElementById('apellido').value+"@cu.ucsg.edu.ec"; 
-    document.getElementById('email').disabled = false;
-    document.getElementById('idcarrera').disabled = false;
+    if(!document.getElementById('email').value.endsWith('@cu.ucsg.edu.ec')){
+        document.getElementById('mensaje').innerHTML = 'El campo correo debe terminar en @cu.ucsg.edu.ec';
+        return false;
+        }
+    }
+    if(document.getElementById('name').value!="" &&
+    document.getElementById('apellido').value!="" &&
+    document.getElementById('password').value==document.getElementById('password-confirm').value &&
+    document.getElementById('email').value.endsWith('@cu.ucsg.edu.ec') &&
+    validateForm()==false){
+        document.getElementById('mensaje').innerHTML = 'El campo correo ya existe';
     }
 </script>
 @endsection
