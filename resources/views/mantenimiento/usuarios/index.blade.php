@@ -22,13 +22,13 @@
 		<div class="table-responsive">
 			<table class="table table-striped table-bordered table-condensed table-hover">
 				<thead>
-					<th>Nombre</th>
+					<th>Usuario</th>
 					<th>Correo</th>
 					<th>Teléfono</th>
 					<th>Facultad</th>
 					<th>Carrera</th>
 					<th>Rol</th>
-					<th></th>
+					<th colspan="2"></th>
 				</thead>
 
 				@foreach($usuarios as $u)
@@ -39,9 +39,9 @@
 					<td>{{$u->facultad}}</td>
 					<td>{{$u->carrera}}</td>
 					<td>{{$u->rol}}</td>
-					<td><a href="{{URL::action('UsuarioController@edit', $u->id)}}"><button class="my-button"><i class="fa fa-pencil"> <b>Editar</b></i></button></a>
-						<a href="" data-target="#modal-delete-{{$u->id}}" data-toggle="modal">
-						<button class="my-button"><i class="fa fa-trash"> <b>Eliminar</b></i></button></a></td>
+					<td><a href="{{URL::action('UsuarioController@edit', $u->id)}}"><button class="my-button"><i class="fa fa-pencil"> <b>Editar</b></i></button></a></td>
+					<td><a href="" data-target="#modal-delete-{{$u->id}}" data-toggle="modal">
+					<button class="my-button"><i class="fa fa-trash"> <b>Eliminar</b></i></button></a></td>
 				</tr>
 				@include('mantenimiento.usuarios.modal')
 				@endforeach

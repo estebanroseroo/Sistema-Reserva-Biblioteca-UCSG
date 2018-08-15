@@ -31,16 +31,11 @@
 		onkeyup="this.value = this.value.replace(/\b\w/g, l => l.toUpperCase());">
 	</div>
 	<div class="form-group">
-		<label for="disponibilidad">Disponibilidad</label>
-		<input type="Text" name="disponibilidad" class="form-control" placeholder="Disponibilidad">
-	</div>
-	<div class="form-group">
 		<label for="capacidad">Capacidad</label>
 		<input type="number" min="0" name="capacidad" class="form-control" placeholder="Capacidad">
 	</div>
 	<div class="form-group">
 		<button class="my-button" type="submit"><i class="fa fa-save"><b> Guardar</b></i></button>
-		<button class="my-button" type="reset"><i class="fa fa-eraser"><b> Limpiar</b></i></button>
 	</div>
 
 	{!!Form::close()!!}

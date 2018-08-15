@@ -65,12 +65,11 @@
     </div>
 
     <div class="form-group row">
-    <label for="idcarrera" class="col-md-4 col-form-label text-md-right">{{ __('Carrera') }}</label>
+    <label for="idcarrera" class="col-md-4 col-form-label text-md-right">Carrera</label>
     <div class="col-md-6">
     <select id="idcarrera" name="idcarrera" class="form-control">
     </select>
     </div>
-        <span id="loader"><i class="fa fa-spinner fa-2x fa-spin"></i></span>
     </div>
 
     <div class="form-group row">

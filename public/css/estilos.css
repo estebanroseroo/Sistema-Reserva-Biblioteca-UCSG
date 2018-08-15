@@ -3,7 +3,8 @@
   font-size: larger;
   border-style: none;
   color: #FFFFFF;
-  line-height: 45px;
+  line-height: 50px;
+  max-height: 45px;
 }
 
 .my-div{
@@ -23,6 +24,7 @@
 .my-logo-login{
   width: 250px;
   height: 60px;
+  position: center;
 }
 
 .my-button{
@@ -65,11 +67,13 @@
 }
 
 .my-bg{
-   background-image: url(/img/fondoucsg.jpg);
-    -moz-background-size: cover;
-    -webkit-background-size: cover;
-    -o-background-size: cover;
-    background-size: cover;
+  background-image: url(/img/fondoucsg.jpg);
+  -moz-background-size: cover;
+  -webkit-background-size: cover;
+  -o-background-size: cover;
+  background-size: cover;
+  background-repeat: no-repeat;
+  height: 100vh;
 }
 
 .my-center {

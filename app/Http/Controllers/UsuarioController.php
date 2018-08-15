@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use sistemaReserva\Http\Requests;
 use Illuminate\Support\Facades\Redirect;
 use sistemaReserva\Http\Requests\UsuarioFormRequest;
+use sistemaReserva\Http\Requests\PerfilFormRequest;
 use sistemaReserva\User;
 use DB;
 
@@ -55,7 +56,7 @@ class UsuarioController extends Controller
 
    public function store(UsuarioFormRequest $request){
     $usuario=new User;
-    $usuario->name=$request->get('name');
+    $usuario->name=$request->get('name').".".$request->get('apellido');
     $usuario->email=$request->get('email');
     $usuario->password=bcrypt($request->get('password'));
     $usuario->telefono=$request->get('telefono');
@@ -69,20 +70,24 @@ class UsuarioController extends Controller
 
    public function edit($id){
       $usuario=User::findOrFail($id);
+      $separa=explode(".",$usuario->name);
+      $usunombre=$separa[0];
+      $usuapellido=$separa[1];
       $facultades=DB::table('facultad')->where('estado','=','A')->get();
       $carreras=DB::table('carrera as c')
       ->join('facultad as f','f.idfacultad','=','c.idfacultad')
       ->join('users as u', 'c.idcarrera','=','u.idcarrera')
       ->select('c.idcarrera','c.nombre')
       ->where('c.estado','=','A')->get();
-      return view("mantenimiento.usuarios.edit",["usuario"=>$usuario,"facultades"=>$facultades,"carreras"=>$carreras]);
+       $roles=DB::table('tipousuario')
+        ->where('estado','=','A')
+        ->pluck('nombre','idtipousuario');
+      return view("mantenimiento.usuarios.edit",["usuario"=>$usuario,"facultades"=>$facultades,"carreras"=>$carreras,"usunombre"=>$usunombre,"usuapellido"=>$usuapellido,"roles"=>$roles]);
    }
 
-   public function update(UsuarioFormRequest $request, $id){
+   public function update(PerfilFormRequest $request, $id){
       $usuario=User::findOrFail($id);
-      $usuario->name=$request->get('name');
-      $usuario->email=$request->get('email');
-      $usuario->password=bcrypt($request->get('password'));
+      $usuario->name=$request->get('name').".".$request->get('apellido');
       $usuario->telefono=$request->get('telefono');
       $usuario->idfacultad=$request->get('idfacultadedit');
       $usuario->idcarrera=$request->get('idcarreraedit');

@@ -36,6 +36,15 @@
      </div>
 
     <div class="form-group row">
+        <label for="apellido" class="col-md-4 col-form-label text-md-right">{{ __('Apellido') }}</label>
+
+         <div class="col-md-6">
+         <input id="apellido" type="text" placeholder="Apellido" 
+        onkeyup="this.value = this.value.replace(/\b\w/g, l => l.toUpperCase());" class="form-control" name="apellido">
+        </div>
+     </div>
+
+    <div class="form-group row">
         <label for="email" class="col-md-4 col-form-label text-md-right">{{ __('Correo') }}</label>
 
         <div class="col-md-6">
@@ -66,7 +75,6 @@
         <label class="col-md-4 col-form-label text-md-right">Facultad</label>
         <div class="col-md-6">
         <select id="idfacultad" name="idfacultad" class="form-control">
-            <option value="">--- Seleccione una facultad ---</option>
             @foreach ($facultades as $fac=>$value)
             <option value="{{$fac}}">{{$value}}</option>
             @endforeach
@@ -76,12 +84,11 @@
 
      <div class="form-group row">
         <label class="col-md-4 col-form-label text-md-right">Carrera</label>
+        <span id="loader"><i class="fa fa-spinner fa-2x fa-spin"></i></span>
         <div class="col-md-6">
         <select id="idcarrera" name="idcarrera" class="form-control">
-            <option value="">--- Seleccione una carrera ---</option>
         </select>
         </div>
-        <span id="loader"><i class="fa fa-spinner fa-2x fa-spin"></i></span>
     </div>
 
     <div class="form-group row">

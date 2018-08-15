@@ -26,23 +26,20 @@
 	{!!Form::open(array('url'=>'mantenimiento/horarios', 'method'=>'POST', 'autocomplete'=>'off'))!!}
 	{{Form::token()}}
     {{ csrf_field() }}
-	<div class="form-group row">
-        <label for="horainicio" class="col-md-4 col-form-label text-md-right">{{ __('Hora Inicio') }}</label>
-         <div class="col-md-6">
+	<div class="form-group">
+        <label for="horainicio">Hora Inicio</label>
          <input id="horainicio" type="text" placeholder="Hora Inicio" class="form-control{{ $errors->has('horainicio') ? ' is-invalid' : '' }}" name="horainicio">
-        </div>
      </div>
 
-    <div class="form-group row">
-        <label for="horafinal" class="col-md-4 col-form-label text-md-right">{{ __('Hora Final') }}</label>
-        <div class="col-md-6">
+    <div class="form-group">
+        <label for="horafinal">Hora Final</label>
         <input id="horafinal" type="text" placeholder="Hora Final" class="form-control{{ $errors->has('horafinal') ? ' is-invalid' : '' }}" name="horafinal">
-        </div>
     </div>
 
 	<div class="form-group">
 		<button class="my-button" type="submit"><i class="fa fa-save"><b> Guardar</b></i></button>
 	</div>
+
 	{!!Form::close()!!}
 	</div>
 </div>

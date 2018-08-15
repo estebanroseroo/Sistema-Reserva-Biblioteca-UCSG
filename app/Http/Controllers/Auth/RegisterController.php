@@ -58,7 +58,7 @@ class RegisterController extends Controller
         ->pluck("nombre","idfacultad");
         $roles = DB::table('tipousuario')
         ->where("estado","=","A")
-        ->where("idtipousuario",">","1")
+        ->where("idtipousuario",">","2")
         ->pluck("nombre","idtipousuario");
         return view('auth.register',['facultades'=>$facultades,'roles'=>$roles]);
     }

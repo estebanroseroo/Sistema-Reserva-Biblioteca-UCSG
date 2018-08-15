@@ -34,7 +34,7 @@ class AreaController extends Controller
     public function store(AreaFormRequest $request){
     	$area=new Area;
     	$area->nombre=$request->get('nombre');
-    	$area->disponibilidad=$request->get('disponibilidad');
+    	$area->disponibilidad='Disponible';
         $area->capacidad=$request->get('capacidad');
     	$area->estado='A';
     	$area->save();
@@ -52,7 +52,7 @@ class AreaController extends Controller
     public function update(AreaFormRequest $request, $id){
     	$area=Area::findOrFail($id);
     	$area->nombre=$request->get('nombre');
-    	$area->disponibilidad=$request->get('disponibilidad');
+    	$area->disponibilidad='Disponible';
         $area->capacidad=$request->get('capacidad');
     	$area->update();
     	return Redirect::to('mantenimiento/areas');

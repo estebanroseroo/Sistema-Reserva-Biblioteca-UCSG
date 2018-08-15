@@ -49,7 +49,9 @@ class QrLoginController extends Controller
     $reservas=DB::table('reserva as r')
         ->leftjoin('users as u','u.id','=','r.id')
         ->leftjoin('area as a','a.idarea','=','r.idarea')
-        ->select('u.name as nombreusuario','a.nombre as nombrearea')->first();
+        ->select('u.name as nombreusuario','a.nombre as nombrearea')
+        ->where('codigoqr',$cod)->first();
+
     $codnombre=$reservas->nombreusuario;
     $codarea=$reservas->nombrearea;
 

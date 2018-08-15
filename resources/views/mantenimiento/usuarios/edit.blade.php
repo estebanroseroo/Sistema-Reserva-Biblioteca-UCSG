@@ -31,23 +31,35 @@
 
          <div class="col-md-6">
          <input id="name" type="text" placeholder="Nombre" 
-         onkeyup="this.value = this.value.replace(/\b\w/g, l => l.toUpperCase());" class="form-control{{ $errors->has('name') ? ' is-invalid' : '' }}" name="name" value="{{ $usuario->name }}">
+         onkeyup="this.value = this.value.replace(/\b\w/g, l => l.toUpperCase());" class="form-control{{ $errors->has('name') ? ' is-invalid' : '' }}" name="name" value="{{ $usunombre }}">
         </div>
      </div>
 
-    <div class="form-group row">
-        <label for="email" class="col-md-4 col-form-label text-md-right">{{ __('Correo') }}</label>
+     <div class="form-group row">
+        <label for="apellido" class="col-md-4 col-form-label text-md-right">{{ __('Apellido') }}</label>
 
-        <div class="col-md-6">
-        <input id="email" type="email" class="form-control{{ $errors->has('email') ? ' is-invalid' : '' }}" name="email" value="{{ $usuario->email }}">
+         <div class="col-md-6">
+         <input id="apellido" type="text" placeholder="Apellido" 
+        onkeyup="this.value = this.value.replace(/\b\w/g, l => l.toUpperCase());" class="form-control" name="apellido" value="{{ $usuapellido }}">
         </div>
-    </div>
+     </div>
 
       <div class="form-group row">
         <label for="telefono" class="col-md-4 col-form-label text-md-right">{{ __('Teléfono') }}</label>
 
         <div class="col-md-6">
         <input id="telefono" type="number" placeholder="Teléfono" class="form-control" name="telefono" value="{{ $usuario->telefono }}">
+        </div>
+    </div>
+
+     <div class="form-group row">
+        <label class="col-md-4 col-form-label text-md-right">Rol</label>
+        <div class="col-md-6">
+        <select id="idtipousuario" name="idtipousuario" class="form-control">
+            @foreach ($roles as $rol=>$value)
+            <option value="{{$rol}}">{{$value}}</option>
+            @endforeach
+        </select>
         </div>
     </div>
 
@@ -68,6 +80,7 @@
 
     <div class="form-group row">
         <label class="col-md-4 col-form-label text-md-right">Carrera</label>
+        <span id="loader"><i class="fa fa-spinner fa-2x fa-spin"></i></span>
         <div class="col-md-6">
         <select id="idcarreraedit" name="idcarreraedit" class="form-control">
                 @foreach ($carreras as $car)
@@ -78,23 +91,6 @@
                 @endif
                 @endforeach
         </select>
-        </div>
-        <span id="loader"><i class="fa fa-spinner fa-2x fa-spin"></i></span>
-    </div>
-
-    <div class="form-group row">
-        <label for="password" class="col-md-4 col-form-label text-md-right">{{ __('Contraseña') }}</label>
-
-        <div class="col-md-6">
-        <input id="password" type="password" placeholder="Contraseña" class="form-control{{ $errors->has('password') ? ' is-invalid' : '' }}" name="password">
-        </div>
-    </div>
-
-    <div class="form-group row">
-        <label for="password-confirm" class="col-md-4 col-form-label text-md-right">{{ __('Confirmar Contraseña') }}</label>
-
-        <div class="col-md-6">
-        <input id="password-confirm" type="password" placeholder="Confirmar contraseña" class="form-control" name="password_confirmation">
         </div>
     </div>
 	<div class="form-group">

@@ -45,12 +45,7 @@
             </ul>
           </div>
         </nav>
-
         <a href="#" class="sidebar-toggle" data-toggle="offcanvas" role="button"></a>
-
-        <nav class="navbar my-navbar">
-          <span>Sistema de gestión de reservas de áreas de estudio en la Biblioteca General de la UCSG</span>
-        </nav>
       </header>
 
       <aside class="main-sidebar">
@@ -60,7 +55,6 @@
                <a href="#"></a>
                <a href="#"></a>
             </li>
-            
             <li class="treeview">
               <a href="#">
                 <i class="fa fa-wrench"></i>
@@ -107,6 +101,9 @@
       </aside>
 
       <div class="content-wrapper">
+        <nav class="my-navbar">
+          <span>Sistema de gestión de reservas de áreas de estudio</span>
+        </nav>
         <section class="content">
           <div class="row">
             <div class="col-md-12">

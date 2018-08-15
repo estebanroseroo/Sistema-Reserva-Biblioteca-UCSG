@@ -40,7 +40,8 @@
 					<td>{{$r->horafinal}}</td>
 					<td>{{$r->cantidad}}</td>
 					<td><a href="" data-target="#modal-qr-{{$cod=$r->idreserva}}" data-toggle="modal">
-						<button class="my-button"><i class="fa fa-qrcode"> <b>QR</b></i></button></td>
+						<button class="my-button"><i class="fa fa-qrcode"> <b>QR</b></i></button>
+					</td>
 					<td><a href="" data-target="#modal-delete-{{$r->idreserva}}" data-toggle="modal">
 						<button class="my-button"><i class="fa fa-trash"> <b>Eliminar</b></i></button></a></td>
 				</tr>

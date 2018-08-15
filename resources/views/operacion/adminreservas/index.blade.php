@@ -21,7 +21,7 @@
 		<div class="table-responsive">
 			<table class="table table-striped table-bordered table-condensed table-hover">
 				<thead>
-					<th>Nombre</th>
+					<th>Usuario</th>
 					<th>Área</th>
 					<th>Fecha</th>
 					<th>Hora Inicio</th>
@@ -40,9 +40,9 @@
 					<td>{{$r->horafinal}}</td>
 					<td>{{$r->cantidad}}</td>
 					<td><a href="" data-target="#modal-qr-{{$cod=$r->idreserva}}" data-toggle="modal">
-						<button class="my-button"><i class="fa fa-qrcode"> <b>QR</b></i></button></td>
+					<button class="my-button"><i class="fa fa-qrcode"> <b>QR</b></i></button></td>
 					<td><a href="" data-target="#modal-delete-{{$r->idreserva}}" data-toggle="modal">
-						<button class="my-button"><i class="fa fa-trash"> <b>Eliminar</b></i></button></a></td>
+					<button class="my-button"><i class="fa fa-trash"> <b>Eliminar</b></i></button></a></td>
 				</tr>
 				@include('operacion.adminreservas.modal')
 				@include('operacion.adminreservas.qrmodal')

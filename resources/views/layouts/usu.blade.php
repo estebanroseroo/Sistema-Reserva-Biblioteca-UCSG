@@ -20,6 +20,8 @@
     <link rel="stylesheet" href="{{asset('datePicker/css/bootstrap-standalone.css')}}">
     <script src="{{asset('datePicker/js/bootstrap-datepicker.js')}}"></script>
     <script src="{{asset('datePicker/locales/bootstrap-datepicker.es.min.js')}}"></script>
+
+    <script src="{{asset('js/my-select.js')}}"></script>
   </head>
 
   <body class="hold-transition skin-blue sidebar-mini">
@@ -43,22 +45,16 @@
             </ul>
           </div>
         </nav>
-
         <a href="#" class="sidebar-toggle" data-toggle="offcanvas" role="button"></a>
-
-        <nav class="navbar my-navbar">
-          <span>Sistema de gestión de reserva de áreas de estudio de la Biblioteca General</span>
-        </nav>
       </header>
 
       <aside class="main-sidebar">
         <section class="sidebar">
           <ul class="sidebar-menu">
             <li class="treeview">
-               <a href="#"></a>
-               <a href="#"></a>
+             <a href="#"></a>
+             <a href="#"></a>
             </li>
-            
             <li class="treeview">
               <a href="#">
                 <i class="fa fa-graduation-cap"></i>
@@ -69,8 +65,7 @@
                 <li><a href="{{url('menu/reservas')}}"><i class="fa fa-circle-o"></i>Mis reservas</a></li>
                 <li><a href="{{url('menu/reservas/create')}}"><i class="fa fa-circle-o"></i>Nueva reserva</a></li>
               </ul>
-            </li>
-                        
+            </li>          
             <li class="treeview">
               <a href="#">
                 <i class="fa fa-user"></i>
@@ -82,13 +77,15 @@
                 <li><a href="{{URL::action('PerfilController@edit', Auth::user()->id)}}"><i class="fa fa-circle-o"></i>Editar perfil</a></li>
                 <li><a href="{{URL::action('ContrasenaController@edit', Auth::user()->id)}}"><i class="fa fa-circle-o"></i>Cambiar contraseña</a></li>
               </ul>
-            </li>
-                                                     
+            </li>                                       
           </ul>
         </section>
       </aside>
 
       <div class="content-wrapper">
+        <nav class="my-navbar">
+          <span>Sistema de gestión de reservas de áreas de estudio</span>
+        </nav>
         <section class="content">
           <div class="row">
             <div class="col-md-12">
@@ -107,6 +104,5 @@
     <script src="{{asset('js/bootstrap.min.js')}}"></script>
     <!-- AdminLTE App -->
     <script src="{{asset('js/app.min.js')}}"></script>
-    <script src="{{asset('js/my-select.js')}}"></script>
   </body>
 </html>

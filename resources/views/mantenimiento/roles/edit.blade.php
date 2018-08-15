@@ -31,7 +31,6 @@
     </div>
     <div class="form-group">
         <button class="my-button" type="submit"><i class="fa fa-save"><b> Guardar</b></i></button>
-        <button class="my-button" type="reset"><i class="fa fa-eraser"><b> Limpiar</b></i></button>
     </div>
 
     {!!Form::close()!!}

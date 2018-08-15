@@ -18,26 +18,22 @@
 </div>
 
 <div class="row">
-	<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+	<div class="col-lg-8 col-md-8 col-sm-8 col-xs-12">
 		<div class="table-responsive">
 			<table class="table table-striped table-bordered table-condensed table-hover">
 				<thead>
-					<th>Id</th>
-					<th>Nombre</th>
-					<th>Disponibilidad</th>
+					<th>Área de estudio</th>
 					<th>Capacidad</th>
-					<th></th>
+					<th colspan="2"></th>
 				</thead>
 
 				@foreach($areas as $a)
 				<tr>
-					<td>{{$a->idarea}}</td>
 					<td>{{$a->nombre}}</td>
-					<td>{{$a->disponibilidad}}</td>
 					<td>{{$a->capacidad}}</td>
-					<td><a href="{{URL::action('AreaController@edit', $a->idarea)}}"><button class="my-button"><i class="fa fa-pencil"> <b>Editar</b></i></button></a>
-						<a href="" data-target="#modal-delete-{{$a->idarea}}" data-toggle="modal">
-						<button class="my-button"><i class="fa fa-trash"> <b>Eliminar</b></i></button></a></td>
+					<td><a href="{{URL::action('AreaController@edit', $a->idarea)}}"><button class="my-button"><i class="fa fa-pencil"> <b>Editar</b></i></button></a></td>
+					<td><a href="" data-target="#modal-delete-{{$a->idarea}}" data-toggle="modal">
+					<button class="my-button"><i class="fa fa-trash"> <b>Eliminar</b></i></button></a></td>
 				</tr>
 				@include('mantenimiento.areas.modal')
 				@endforeach

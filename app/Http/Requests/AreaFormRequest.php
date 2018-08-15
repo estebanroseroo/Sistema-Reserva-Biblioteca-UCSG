@@ -25,7 +25,7 @@ class AreaFormRequest extends FormRequest
     {
          return [
             'nombre'=>'required|max:100',
-            'disponibilidad'=>'required|max:100',
+            'disponibilidad'=>'nullable',
             'capacidad'=>'required|max:2',
         ];
     }

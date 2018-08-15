@@ -22,20 +22,18 @@
 		<div class="table-responsive">
 			<table class="table table-striped table-bordered table-condensed table-hover">
 				<thead>
-					<th>Id</th>
-					<th>Nombre</th>
+					<th>Carrera</th>
 					<th>Facultad</th>
-					<th></th>
+					<th colspan="2"></th>
 				</thead>
 
 				@foreach($carreras as $c)
 				<tr>
-					<td>{{$c->idcarrera}}</td>
 					<td>{{$c->nombre}}</td>
 					<td>{{$c->facultad}}</td>
-					<td><a href="{{URL::action('CarreraController@edit', $c->idcarrera)}}"><button class="my-button"><i class="fa fa-pencil"> <b>Editar</b></i></button></a>
-						<a href="" data-target="#modal-delete-{{$c->idcarrera}}" data-toggle="modal">
-						<button class="my-button"><i class="fa fa-trash"> <b>Eliminar</b></i></button></a></td>
+					<td><a href="{{URL::action('CarreraController@edit', $c->idcarrera)}}"><button class="my-button"><i class="fa fa-pencil"> <b>Editar</b></i></button></a></td>
+					<td><a href="" data-target="#modal-delete-{{$c->idcarrera}}" data-toggle="modal">
+					<button class="my-button"><i class="fa fa-trash"> <b>Eliminar</b></i></button></a></td>
 				</tr>
 				@include('mantenimiento.carreras.modal')
 				@endforeach

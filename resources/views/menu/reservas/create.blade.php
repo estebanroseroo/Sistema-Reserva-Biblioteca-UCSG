@@ -12,14 +12,9 @@
 
 <div class="row">
 <div class="col-lg-8 col-md-8 col-sm-8 col-xs-12">
-<h2>Nueva reserva</h2>
-
- <div class="form-group row">
-    <div class="col-md-6"> 
-    </div>
-</div>
-
-    {!! Form::open(array('url'=>'menu/reservas/create','method'=>'GET','autocomplete'=>'off','role'=>'search')) !!}
+{!! Form::open(array('url'=>'menu/reservas/create','method'=>'GET','autocomplete'=>'off','role'=>'search')) !!}
+<h2>Nueva reserva   <button type="submit" class="my-button"><i class="fa fa-search"><b> Buscar</b></i></button></h2>
+   
     <div class="form-group row">
         <label for="fecha" class="col-md-2 col-form-label text-md-right">{{ __('Fecha') }}</label>
         <div class="col-md-6">  
@@ -30,9 +25,6 @@
             <input type="text" class="form-control datepicker" placeholder="Fecha" name="fecha" value="{{$fecha}}">
         </div>
         </div>
-        <span class="input-group-btn">
-            <button type="submit" class="my-button"><i class="fa fa-search"> <b>Buscar</b></i></button>
-        </span>
     </div>
 
     <div class="form-group row">
@@ -42,7 +34,6 @@
             <div class="input-group-addon">
             <i class="fa fa-clock-o"></i>
             </div>
-
             <select id="horarios" name="horarios" class="form-control">
             @foreach ($horarios as $hor)
             <option value="{{$hor->horainicio}}-{{$hor->horafinal}}" 
