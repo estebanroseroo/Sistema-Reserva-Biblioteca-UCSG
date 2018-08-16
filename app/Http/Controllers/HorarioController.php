@@ -9,6 +9,7 @@ use Illuminate\Support\Facades\Redirect;
 use sistemaReserva\Http\Requests\HorarioFormRequest;
 use sistemaReserva\Horario;
 use DB;
+use Auth;
 
 class HorarioController extends Controller
 {
@@ -26,12 +27,22 @@ class HorarioController extends Controller
       	->where('estado','=','A')
    		->orderBy('horainicio','asc')
    		->paginate(9);
-   		return view('mantenimiento.horarios.index',["horarios"=>$horarios,"searchText"=>$query]);
+      if(Auth::user()->idtipousuario<2){
+            return view('mantenimiento.horarios.index',["horarios"=>$horarios,"searchText"=>$query]);
+            }
+            else{
+            return Redirect::to('/logout');
+            }   
    	}
    }
 
     public function create(){
-        return view("mantenimiento.horarios.create");
+      if(Auth::user()->idtipousuario<2){
+            return view("mantenimiento.horarios.create");
+            }
+            else{
+            return Redirect::to('/logout');
+            } 
     }
 
    public function store(HorarioFormRequest $request){

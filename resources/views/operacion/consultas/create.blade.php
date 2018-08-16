@@ -1,4 +1,4 @@
-@extends ('layouts.admin')
+@extends(Auth::user()->idtipousuario==1 ? 'layouts.admin' : 'layouts.gestor')
 @section('contenido')
 <div class="box">
 <div class="box-header with-border">

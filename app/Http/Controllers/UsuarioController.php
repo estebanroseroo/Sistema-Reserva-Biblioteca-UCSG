@@ -10,6 +10,7 @@ use sistemaReserva\Http\Requests\UsuarioFormRequest;
 use sistemaReserva\Http\Requests\PerfilFormRequest;
 use sistemaReserva\User;
 use DB;
+use Auth;
 
 class UsuarioController extends Controller
 {
@@ -30,9 +31,15 @@ class UsuarioController extends Controller
       ->orwhere('f.nombre','LIKE','%'.$query.'%')
       ->orwhere('c.nombre','LIKE','%'.$query.'%')
       ->orwhere('t.nombre','LIKE','%'.$query.'%')
-      ->orderBy('u.id','asc')
+      ->orderBy('u.idtipousuario','asc')
       ->paginate(9);
-      return view('mantenimiento.usuarios.index',["usuarios"=>$usuarios,"searchText"=>$query]);
+
+      if(Auth::user()->idtipousuario<2){
+            return view('mantenimiento.usuarios.index',["usuarios"=>$usuarios,"searchText"=>$query]);
+            }
+            else{
+            return Redirect::to('/logout');
+            }  
     }
    }
 
@@ -51,7 +58,12 @@ class UsuarioController extends Controller
         $roles=DB::table('tipousuario')
         ->where('estado','=','A')
         ->pluck('nombre','idtipousuario');
-        return view("mantenimiento.usuarios.create",["facultades"=>$facultades,"roles"=>$roles]);
+        if(Auth::user()->idtipousuario<2){
+             return view("mantenimiento.usuarios.create",["facultades"=>$facultades,"roles"=>$roles]);
+            }
+            else{
+            return Redirect::to('/logout');
+            }
     }
 
    public function store(UsuarioFormRequest $request){
@@ -75,14 +87,18 @@ class UsuarioController extends Controller
       $usuapellido=$separa[1];
       $facultades=DB::table('facultad')->where('estado','=','A')->get();
       $carreras=DB::table('carrera as c')
-      ->join('facultad as f','f.idfacultad','=','c.idfacultad')
-      ->join('users as u', 'c.idcarrera','=','u.idcarrera')
-      ->select('c.idcarrera','c.nombre')
-      ->where('c.estado','=','A')->get();
-       $roles=DB::table('tipousuario')
-        ->where('estado','=','A')
-        ->pluck('nombre','idtipousuario');
-      return view("mantenimiento.usuarios.edit",["usuario"=>$usuario,"facultades"=>$facultades,"carreras"=>$carreras,"usunombre"=>$usunombre,"usuapellido"=>$usuapellido,"roles"=>$roles]);
+      ->select('c.idcarrera','c.nombre','c.idfacultad')
+      ->where('c.estado','=','A')
+      ->where('c.idfacultad','=',$usuario->idfacultad)->get();
+      $roles=DB::table('tipousuario')
+      ->where('estado','=','A')->get();
+
+      if(Auth::user()->idtipousuario<2){
+          return view("mantenimiento.usuarios.edit",["usuario"=>$usuario,"facultades"=>$facultades,"carreras"=>$carreras,"usunombre"=>$usunombre,"usuapellido"=>$usuapellido,"roles"=>$roles]);
+            }
+            else{
+            return Redirect::to('/logout');
+            }
    }
 
    public function update(PerfilFormRequest $request, $id){

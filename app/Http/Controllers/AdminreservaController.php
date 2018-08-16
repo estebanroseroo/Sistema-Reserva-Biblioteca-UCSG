@@ -48,7 +48,13 @@ class AdminreservaController extends Controller
         ->where('r.estado','=','A')
         ->orderBy('r.fecha','asc')
         ->paginate(9);
-      return view("operacion.adminreservas.index",["reservas"=>$reservas,"searchText"=>$query]);
+
+        if(Auth::user()->idtipousuario<3){
+            return view("operacion.adminreservas.index",["reservas"=>$reservas,"searchText"=>$query]);
+            }
+            else{
+            return Redirect::to('/logout');
+            } 
     }
    }
 
@@ -76,8 +82,13 @@ class AdminreservaController extends Controller
       
         //var_dump($horarioinicio);
         //die();
- 
-        return view("operacion.adminreservas.edit",["enombre"=>$qnombre,"ecapacidad"=>$qcapacidad,"efecha"=>$qfecha,"ehorainicio"=>$qhorainicio,"usuarios"=>$usuarios,"areas"=>$areas,"horarioinicio"=>$horarioinicio,"ehoraid"=>$qhoraid]);
+
+         if(Auth::user()->idtipousuario<3){
+            return view("operacion.adminreservas.edit",["enombre"=>$qnombre,"ecapacidad"=>$qcapacidad,"efecha"=>$qfecha,"ehorainicio"=>$qhorainicio,"usuarios"=>$usuarios,"areas"=>$areas,"horarioinicio"=>$horarioinicio,"ehoraid"=>$qhoraid]);
+            }
+            else{
+            return Redirect::to('/logout');
+            } 
       }
     }
 
@@ -111,7 +122,12 @@ class AdminreservaController extends Controller
         $diferentes->values()->all();
         //print_r($diferentes);
 
-        return view("operacion.adminreservas.create",["fecha"=>$query,"inicio"=>$queryinicio,"horarios"=>$horarios,"reservas"=>$reservas,"areas"=>$areas,"diferentes"=>$diferentes,"horaid"=>$horaid]);
+        if(Auth::user()->idtipousuario<3){
+            return view("operacion.adminreservas.create",["fecha"=>$query,"inicio"=>$queryinicio,"horarios"=>$horarios,"reservas"=>$reservas,"areas"=>$areas,"diferentes"=>$diferentes,"horaid"=>$horaid]);
+            }
+            else{
+            return Redirect::to('/logout');
+            } 
       }
     }
 

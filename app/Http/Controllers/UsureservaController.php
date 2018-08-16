@@ -36,13 +36,18 @@ class UsureservaController extends Controller
       }
       
       $reservas=DB::table('reserva as r')
-        ->leftjoin('users as u','u.id','=','r.id')
-        ->leftjoin('area as a','a.idarea','=','r.idarea')
-        ->select('r.idreserva','u.name as nombreusuario','a.nombre as nombrearea','r.fecha','r.horainicio','r.horafinal','r.cantidad','r.codigoqr')
-        ->where('u.email','=',Auth::user()->email)
-        ->where('r.estado','=','A')->get();
+      ->leftjoin('users as u','u.id','=','r.id')
+      ->leftjoin('area as a','a.idarea','=','r.idarea')
+      ->select('r.idreserva','u.name as nombreusuario','a.nombre as nombrearea','r.fecha','r.horainicio','r.horafinal','r.cantidad','r.codigoqr')
+      ->where('u.email','=',Auth::user()->email)
+      ->where('r.estado','=','A')->get();
 
-        return view('menu.reservas.index',["reservas"=>$reservas]);
+      if(Auth::user()->idtipousuario>2){
+      return view('menu.reservas.index',["reservas"=>$reservas]);
+      }
+      else{
+      return Redirect::to('/logout');
+      }  
     }
    }
 
@@ -68,8 +73,12 @@ class UsureservaController extends Controller
       
         //var_dump($horarioinicio);
         //die();
- 
-        return view("menu.reservas.edit",["enombre"=>$qnombre,"ecapacidad"=>$qcapacidad,"efecha"=>$qfecha,"ehorainicio"=>$qhorainicio,"areas"=>$areas,"horarioinicio"=>$horarioinicio,"ehoraid"=>$qhoraid]);
+      if(Auth::user()->idtipousuario>2){
+      return view("menu.reservas.edit",["enombre"=>$qnombre,"ecapacidad"=>$qcapacidad,"efecha"=>$qfecha,"ehorainicio"=>$qhorainicio,"areas"=>$areas,"horarioinicio"=>$horarioinicio,"ehoraid"=>$qhoraid]);
+      }
+      else{
+      return Redirect::to('/logout');
+      }  
       }
     }
 
@@ -103,7 +112,12 @@ class UsureservaController extends Controller
         $diferentes->values()->all();
         //print_r($reservas);
 
-        return view("menu.reservas.create",["fecha"=>$query,"inicio"=>$queryinicio,"horarios"=>$horarios,"reservas"=>$reservas,"areas"=>$areas,"diferentes"=>$diferentes,"horaid"=>$horaid]);
+      if(Auth::user()->idtipousuario>2){
+      return view("menu.reservas.create",["fecha"=>$query,"inicio"=>$queryinicio,"horarios"=>$horarios,"reservas"=>$reservas,"areas"=>$areas,"diferentes"=>$diferentes,"horaid"=>$horaid]);
+      }
+      else{
+      return Redirect::to('/logout');
+      }  
       }
     }
 

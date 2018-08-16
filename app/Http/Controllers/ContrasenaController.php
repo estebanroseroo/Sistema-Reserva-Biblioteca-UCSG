@@ -32,7 +32,16 @@ class ContrasenaController extends Controller
 
    public function edit($id){
    $usuario=User::findOrFail($id);
-   return view("menu.change",["usuario"=>$usuario]);
+   if(Auth::user()->idtipousuario==1){
+    $layout='layouts.admin';
+   }
+   else if (Auth::user()->idtipousuario==2){
+    $layout='layouts.gestor';
+   }
+   else{
+    $layout='layouts.usu';
+   }
+   return view("menu.change",["usuario"=>$usuario,"layout"=>$layout]);
    }
 
    public function update(ContrasenaFormRequest $request, $id){
@@ -47,7 +56,7 @@ class ContrasenaController extends Controller
       ->where('u.id','=', $id)
       ->where('u.estado','=','A')->get();
 
-      if(Auth::user()->idtipousuario==1){
+      if(Auth::user()->idtipousuario<3){
          $query='';
          $reservas=DB::table('reserva as r')
         ->leftjoin('users as u','u.id','=','r.id')

@@ -35,7 +35,13 @@ class QrLoginController extends Controller
         ->where('r.estado','=','A')
    		  ->orderBy('r.fecha','asc')
    		  ->paginate(9);
-   		return view("operacion.consultas.index",["reservas"=>$reservas,"searchText"=>$query]);
+
+        if(Auth::user()->idtipousuario<3){
+            return view("operacion.consultas.index",["reservas"=>$reservas,"searchText"=>$query]);
+            }
+            else{
+            return Redirect::to('/logout');
+            }  
    	}
    }
 
@@ -55,7 +61,12 @@ class QrLoginController extends Controller
     $codnombre=$reservas->nombreusuario;
     $codarea=$reservas->nombrearea;
 
-    return view("operacion.consultas.create",["codfecha"=>$codfecha,"codcantidad"=>$codcantidad,"codhorario"=>$codhorario,"codnombre"=>$codnombre,"codarea"=>$codarea]);
+    if(Auth::user()->idtipousuario<3){
+            return view("operacion.consultas.create",["codfecha"=>$codfecha,"codcantidad"=>$codcantidad,"codhorario"=>$codhorario,"codnombre"=>$codnombre,"codarea"=>$codarea]);
+            }
+            else{
+            return Redirect::to('/logout');
+            }  
    }
 
   function check(Request $request) {  

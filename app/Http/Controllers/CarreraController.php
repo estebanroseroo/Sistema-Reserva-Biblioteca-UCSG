@@ -9,6 +9,7 @@ use Illuminate\Support\Facades\Redirect;
 use Illuminate\Support\Facades\Input;
 use sistemaReserva\Http\Requests\CarreraFormRequest;
 use DB;
+use Auth;
 
 class CarreraController extends Controller
 {
@@ -29,13 +30,25 @@ class CarreraController extends Controller
 			->orderBy('f.nombre','asc')
 			->paginate(9);
 
-			return view('mantenimiento.carreras.index',["carreras"=>$carreras, "searchText"=>$query]);
+            if(Auth::user()->idtipousuario<2){
+            return view('mantenimiento.carreras.index',["carreras"=>$carreras, "searchText"=>$query]);
+            }
+            else{
+            return Redirect::to('/logout');
+            }	
     	}
     }
+
     public function create(){
-    	$facultades=DB::table('facultad')->where('estado','=','A')->get(); /*solo coge facultades activas*/
-    	return view("mantenimiento.carreras.create",["facultades"=>$facultades]);
+    	$facultades=DB::table('facultad')->where('estado','=','A')->get(); 
+        if(Auth::user()->idtipousuario<2){
+            return view("mantenimiento.carreras.create",["facultades"=>$facultades]);
+            }
+        else{
+            return Redirect::to('/logout');
+            }   
     }
+
     public function store(CarreraFormRequest $request){
     	$carrera=new Carrera;
     	$carrera->idfacultad=$request->get('idfacultad');
@@ -44,14 +57,18 @@ class CarreraController extends Controller
     	$carrera->save();
     	return Redirect::to('mantenimiento/carreras');
     }
-    public function show($id){
-    	return view("mantenimiento.carreras.show",["carrera"=>Carrera::findOrFail($id)]);
-    }
+    
     public function edit($id){
     	$carrera=Carrera::findOrFail($id);
     	$facultades=DB::table('facultad')->where('estado','=','A')->get();
-    	return view("mantenimiento.carreras.edit",["carrera"=>$carrera,"facultades"=>$facultades]);
+        if(Auth::user()->idtipousuario<2){
+            return view("mantenimiento.carreras.edit",["carrera"=>$carrera,"facultades"=>$facultades]);
+            }
+        else{
+            return Redirect::to('/logout');
+            }   
     }
+
     public function update(CarreraFormRequest $request, $id){
     	$carrera=Carrera::findOrFail($id);
 		$carrera->idfacultad=$request->get('idfacultad');
@@ -59,6 +76,7 @@ class CarreraController extends Controller
     	$carrera->update();
     	return Redirect::to('mantenimiento/carreras');
     }
+
     public function destroy($id){
     	$carrera=Carrera::findOrFail($id);
     	$carrera->estado='I';

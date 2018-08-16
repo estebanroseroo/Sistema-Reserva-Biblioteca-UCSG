@@ -36,7 +36,13 @@ class AdminreservaconfirmadaController extends Controller
         ->where('r.estado','=','C')
         ->orderBy('r.fecha','asc')
         ->paginate(9);
-      return view("operacion.reservasconfirmadas.index",["reservas"=>$reservas,"searchText"=>$query]);
+
+        if(Auth::user()->idtipousuario<3){
+             return view("operacion.reservasconfirmadas.index",["reservas"=>$reservas,"searchText"=>$query]);
+            }
+            else{
+            return Redirect::to('/logout');
+            }  
     }
    }
 

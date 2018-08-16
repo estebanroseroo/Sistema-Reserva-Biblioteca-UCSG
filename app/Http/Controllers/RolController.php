@@ -7,6 +7,7 @@ use sistemaReserva\Rol;
 use Illuminate\Support\Facades\Redirect;
 use sistemaReserva\Http\Requests\RolFormRequest;
 use DB;
+use Auth;
 
 
 class RolController extends Controller
@@ -24,12 +25,22 @@ class RolController extends Controller
 			->orderBy('idtipousuario','asc')
 			->paginate(9);
 
-			return view('mantenimiento.roles.index',["roles"=>$roles, "searchText"=>$query]);
+            if(Auth::user()->idtipousuario<2){
+            return view('mantenimiento.roles.index',["roles"=>$roles, "searchText"=>$query]);
+            }
+            else{
+            return Redirect::to('/logout');
+            }   
     	}
     }
 
     public function create(){
-    	return view("mantenimiento.roles.create");
+        if(Auth::user()->idtipousuario<2){
+            return view("mantenimiento.roles.create");
+            }
+            else{
+            return Redirect::to('/logout');
+            }
     }
 
     public function store(RolFormRequest $request){
@@ -40,12 +51,13 @@ class RolController extends Controller
     	return Redirect::to('mantenimiento/roles');
     }
 
-    public function show($id){
-    	return view("mantenimiento.roles.show",["tipousuario"=>Rol::findOrFail($id)]);
-    }
-
     public function edit($id){
-    	return view("mantenimiento.roles.edit",["tipousuario"=>Rol::findOrFail($id)]);
+          if(Auth::user()->idtipousuario<2){
+            return view("mantenimiento.roles.edit",["tipousuario"=>Rol::findOrFail($id)]);
+            }
+            else{
+            return Redirect::to('/logout');
+            }
     }
 
     public function update(RolFormRequest $request, $id){

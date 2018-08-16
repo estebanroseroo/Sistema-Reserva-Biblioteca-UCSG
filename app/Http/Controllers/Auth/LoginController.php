@@ -24,7 +24,7 @@ class LoginController extends Controller
     use AuthenticatesUsers;
 
     protected function authenticated(Request $request, $user){
-        if($user->idtipousuario == '1') {
+        if($user->idtipousuario < 3) {
             return redirect('/operacion/adminreservas');
         }
             return redirect('/menu/perfiles');

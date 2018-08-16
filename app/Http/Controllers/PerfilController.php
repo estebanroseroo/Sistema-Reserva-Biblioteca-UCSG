@@ -25,7 +25,12 @@ class PerfilController extends Controller
       ->select('u.id','u.name','u.email','u.telefono','f.nombre as facultad','c.nombre as carrera')
       ->where('u.email','=', Auth::user()->email)
       ->where('u.estado','=','A')->get();
+      if(Auth::user()->idtipousuario>2){
    		return view('menu.perfiles.index',["usuarios"=>$usuarios]);
+      }
+      else{
+      return Redirect::to('/logout');
+      }
    	}
    }
 
@@ -47,7 +52,12 @@ class PerfilController extends Controller
       ->select('c.idcarrera','c.nombre','c.idfacultad')
       ->where('c.estado','=','A')
       ->where('c.idfacultad','=',$usuario->idfacultad)->get();
+      if(Auth::user()->idtipousuario>2){
       return view("menu.perfiles.edit",["usuario"=>$usuario,"facultades"=>$facultades,"carreras"=>$carreras,"usunombre"=>$usunombre,"usuapellido"=>$usuapellido]);
+      }
+      else{
+      return Redirect::to('/logout');
+      }
    }
 
    public function update(PerfilFormRequest $request, $id){

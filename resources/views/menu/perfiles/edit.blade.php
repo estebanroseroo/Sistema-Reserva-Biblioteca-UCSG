@@ -64,6 +64,7 @@
 
     <div class="form-group row">
         <label class="col-md-3 col-form-label text-md-right">Carrera</label>
+        <span id="loader"><i class="fa fa-spinner fa-2x fa-spin"></i></span>
         <div class="col-md-8">
         <select id="idcarreraedit" name="idcarreraedit" class="form-control">
                 @foreach ($carreras as $car)
@@ -75,7 +76,6 @@
                 @endforeach
         </select>
         </div>
-        <span id="loader"><i class="fa fa-spinner fa-2x fa-spin"></i></span>
     </div>
 
 	<div class="form-group">

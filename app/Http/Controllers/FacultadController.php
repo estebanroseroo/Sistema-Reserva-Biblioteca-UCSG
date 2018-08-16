@@ -7,6 +7,7 @@ use sistemaReserva\Facultad;
 use Illuminate\Support\Facades\Redirect;
 use sistemaReserva\Http\Requests\FacultadFormRequest;
 use DB;
+use Auth;
 
 class FacultadController extends Controller
 {
@@ -23,12 +24,22 @@ class FacultadController extends Controller
 			->orderBy('idfacultad','asc')
 			->paginate(9);
 
-			return view('mantenimiento.facultades.index',["facultades"=>$facultades, "searchText"=>$query]);
+            if(Auth::user()->idtipousuario<2){
+            return view('mantenimiento.facultades.index',["facultades"=>$facultades, "searchText"=>$query]);
+            }
+            else{
+            return Redirect::to('/logout');
+            }   
     	}
     }
 
     public function create(){
-    	return view("mantenimiento.facultades.create");
+         if(Auth::user()->idtipousuario<2){
+            return view("mantenimiento.facultades.create");
+            }
+            else{
+            return Redirect::to('/logout');
+            }
     }
 
     public function store(FacultadFormRequest $request){
@@ -39,12 +50,13 @@ class FacultadController extends Controller
     	return Redirect::to('mantenimiento/facultades');
     }
 
-    public function show($id){
-    	return view("mantenimiento.facultades.show",["facultad"=>Facultad::findOrFail($id)]);
-    }
-
     public function edit($id){
-    	return view("mantenimiento.facultades.edit",["facultad"=>Facultad::findOrFail($id)]);
+        if(Auth::user()->idtipousuario<2){
+            return view("mantenimiento.facultades.edit",["facultad"=>Facultad::findOrFail($id)]);
+            }
+            else{
+            return Redirect::to('/logout');
+            }
     }
 
     public function update(FacultadFormRequest $request, $id){

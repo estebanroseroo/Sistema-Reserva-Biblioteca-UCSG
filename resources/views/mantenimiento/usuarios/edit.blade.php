@@ -56,8 +56,12 @@
         <label class="col-md-4 col-form-label text-md-right">Rol</label>
         <div class="col-md-6">
         <select id="idtipousuario" name="idtipousuario" class="form-control">
-            @foreach ($roles as $rol=>$value)
-            <option value="{{$rol}}">{{$value}}</option>
+            @foreach ($roles as $rol)
+                @if($rol->idtipousuario==$usuario->idtipousuario)
+                <option value="{{$rol->idtipousuario}}" selected>{{$rol->nombre}}</option>
+                @else
+                <option value="{{$rol->idtipousuario}}">{{$rol->nombre}}</option>
+                @endif
             @endforeach
         </select>
         </div>
@@ -67,13 +71,13 @@
         <label class="col-md-4 col-form-label text-md-right">Facultad</label>
         <div class="col-md-6">
         <select id="idfacultadedit" name="idfacultadedit" class="form-control">
-                @foreach ($facultades as $fac)
-                @if($fac->idfacultad==$usuario->idfacultad)
+            @foreach ($facultades as $fac)
+            @if($fac->idfacultad==$usuario->idfacultad)
                 <option value="{{$fac->idfacultad}}" selected>{{$fac->nombre}}</option>
                 @else
                 <option value="{{$fac->idfacultad}}">{{$fac->nombre}}</option>
-                @endif
-                @endforeach
+            @endif
+            @endforeach
         </select>
         </div>
     </div>
