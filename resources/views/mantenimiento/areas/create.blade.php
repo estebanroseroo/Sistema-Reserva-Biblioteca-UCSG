@@ -27,12 +27,11 @@
 	{{Form::token()}}
 	<div class="form-group">
 		<label for="nombre">Nombre</label>
-		<input type="Text" name="nombre" class="form-control" placeholder="Nombre" 
-		onkeyup="this.value = this.value.replace(/\b\w/g, l => l.toUpperCase());">
+		<input id="nombre" type="text" class="form-control" name="nombre" onkeyup="this.value = this.value.replace(/\b\w/g, l => l.toUpperCase());" oncopy="return false" onpaste="return false" placeholder="Nombre" value="{{ old('nombre') }}">
 	</div>
 	<div class="form-group">
 		<label for="capacidad">Capacidad</label>
-		<input type="number" min="0" name="capacidad" class="form-control" placeholder="Capacidad">
+		<input id="capacidad" type="text" placeholder="Capacidad" oncopy="return false" onpaste="return false" class="form-control" name="capacidad" onkeypress="return isNumberKey(event)" maxlength="3" value="{{ old('capacidad') }}">
 	</div>
 	<div class="form-group">
 		<button class="my-button" type="submit"><i class="fa fa-save"><b> Guardar</b></i></button>
@@ -46,4 +45,22 @@
 </div>
 </div>
 </div><!-- /.box -->
+<script>
+$(document).on('keypress', '#nombre', function (event) {
+    var regex = new RegExp("^[a-zA-Z ]+$");
+    var key = String.fromCharCode(!event.charCode ? event.which : event.charCode);
+    if (!regex.test(key)) {
+        event.preventDefault();
+        return false;
+    }
+});
+
+function isNumberKey(evt){
+        var charCode = (evt.which) ? evt.which : event.keyCode
+        if (charCode > 31 && (charCode < 48 || charCode > 57))
+            return false;
+        else
+            return true; 
+        }
+</script>
 @endsection

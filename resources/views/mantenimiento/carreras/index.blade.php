@@ -32,8 +32,12 @@
 					<td>{{$c->nombre}}</td>
 					<td>{{$c->facultad}}</td>
 					<td><a href="{{URL::action('CarreraController@edit', $c->idcarrera)}}"><button class="my-button"><i class="fa fa-pencil"> <b>Editar</b></i></button></a></td>
+					@if($c->temporal=='vacio')
 					<td><a href="" data-target="#modal-delete-{{$c->idcarrera}}" data-toggle="modal">
 					<button class="my-button"><i class="fa fa-trash"> <b>Eliminar</b></i></button></a></td>
+					@else
+					<td></td>
+					@endif
 				</tr>
 				@include('mantenimiento.carreras.modal')
 				@endforeach

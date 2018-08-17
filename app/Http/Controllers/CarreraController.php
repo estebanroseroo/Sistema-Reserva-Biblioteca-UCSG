@@ -22,7 +22,13 @@ class CarreraController extends Controller
     		$query=trim($request->get('searchText'));
     		$carreras=DB::table('carrera as c')
 			->join('facultad as f','c.idfacultad','=','f.idfacultad')
-			->select('c.idcarrera','c.nombre','f.nombre as facultad')
+            ->leftjoin('users as u','u.idcarrera','=','c.idcarrera')
+			->select('c.idcarrera','c.nombre','f.nombre as facultad', 
+            DB::raw('(CASE 
+            WHEN c.idcarrera=u.idcarrera
+            THEN "lleno"
+            ELSE "vacio"
+            END) AS temporal'))
             ->where('c.nombre','LIKE','%'.$query.'%') 
             ->where('c.estado','=','A')
             ->orwhere('f.nombre','LIKE','%'.$query.'%')

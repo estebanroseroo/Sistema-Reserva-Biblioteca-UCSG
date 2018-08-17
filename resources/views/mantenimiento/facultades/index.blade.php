@@ -30,8 +30,12 @@
 				<tr>
 					<td>{{$f->nombre}}</td>
 					<td><a href="{{URL::action('FacultadController@edit', $f->idfacultad)}}"><button class="my-button"><i class="fa fa-pencil"> <b>Editar</b></i></button></a></td>
+					@if($f->temporal=='vacio')
 					<td><a href="" data-target="#modal-delete-{{$f->idfacultad}}" data-toggle="modal">
 					<button class="my-button"><i class="fa fa-trash"> <b>Eliminar</b></i></button></a></td>
+					@else
+					<td></td>
+					@endif
 				</tr>
 				@include('mantenimiento.facultades.modal')
 				@endforeach

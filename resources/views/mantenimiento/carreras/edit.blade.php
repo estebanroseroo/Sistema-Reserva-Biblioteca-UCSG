@@ -27,7 +27,7 @@
 	{{Form::token()}}
 	<div class="form-group">
 		<label for="nombre">Nombre</label>
-		<input type="Text" name="nombre" required value="{{$carrera->nombre}}" class="form-control" placeholder="Nombre" onkeyup="this.value = this.value.replace(/\b\w/g, l => l.toUpperCase());">
+		<input id="nombre" type="text" name="nombre" required value="{{$carrera->nombre}}" class="form-control" placeholder="Nombre" onkeyup="this.value = this.value.replace(/\b\w/g, l => l.toUpperCase());" oncopy="return false" onpaste="return false">
 	</div>
 
 	<div class="form-group">
@@ -55,4 +55,14 @@
 </div>
 </div>
 </div><!-- /.box -->
+<script>
+$(document).on('keypress', '#nombre', function (event) {
+    var regex = new RegExp("^[a-zA-Z ]+$");
+    var key = String.fromCharCode(!event.charCode ? event.which : event.charCode);
+    if (!regex.test(key)) {
+        event.preventDefault();
+        return false;
+    }
+});
+</script>
 @endsection

@@ -30,8 +30,12 @@
 				<tr>
 					<td>{{$r->nombre}}</td>
 					<td><a href="{{URL::action('RolController@edit', $r->idtipousuario)}}"><button class="my-button"><i class="fa fa-pencil"> <b>Editar</b></i></button></a></td>
+					@if($r->idtipousuario>2 && $r->temporal=='vacio')
 					<td><a href="" data-target="#modal-delete-{{$r->idtipousuario}}" data-toggle="modal">
 					<button class="my-button"><i class="fa fa-trash"> <b>Eliminar</b></i></button></a></td>
+					@else
+					<td></td>
+					@endif
 				</tr>
 				@include('mantenimiento.roles.modal')
 				@endforeach

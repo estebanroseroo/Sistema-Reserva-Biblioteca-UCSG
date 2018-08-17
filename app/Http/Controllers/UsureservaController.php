@@ -11,6 +11,7 @@ use Illuminate\Support\Collection;
 use sistemaReserva\Http\Requests\UsureservaFormRequest;
 use sistemaReserva\Reserva;
 use sistemaReserva\Horario;
+use sistemaReserva\Area;
 use DB;
 use Auth;
 use Carbon\Carbon;
@@ -96,7 +97,8 @@ class UsureservaController extends Controller
 
         $areas = DB::table("area as a")
         ->select("a.nombre","a.capacidad","a.disponibilidad","a.estado","a.idarea")
-        ->where('estado','=','A');
+        ->where('estado','=','A')
+        ->where('disponibilidad','=','Disponible');
 
         $reservas = DB::table("reserva as r")
         ->leftjoin('users as u','u.id','=','r.id')
@@ -132,7 +134,7 @@ class UsureservaController extends Controller
     $reserva->id=Auth::user()->id;
     $reserva->idarea=$request->get('idarea');
     $reserva->estado='A';
-    $reserva->codigoqr=str_random(40);
+    $reserva->codigoqr=str_random(10);
     $reserva->idhora=$request->get('horaid');
     $reserva->save();
 
@@ -147,10 +149,11 @@ class UsureservaController extends Controller
     $reserva->tiempoespera=$espera;
     $reserva->update();
 
+    $area=Area::findOrFail($reserva->idarea);
     $reservas=DB::table('reserva')->where('estado','=','A')->get();
     $qrcod = $reserva->codigoqr;
     $usu = User::where('email',Auth::user()->email)->where('estado','A')->first();
-    Mail::send('email.mensajeqr',['usu' => $usu,'reservas' => $reservas,'qrcod' => $qrcod],
+    Mail::send('email.mensajeqr',['usu' => $usu,'reservas' => $reservas,'qrcod' => $qrcod,'area'=>$area],
                     function ($m) use ($usu) {
                         $m->to($usu->email, $usu->name)
                           ->subject('Código QR de su reserva')

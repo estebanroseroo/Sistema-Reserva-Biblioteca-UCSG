@@ -19,10 +19,16 @@ class RolController extends Controller
     public function index(Request $request){
     	if($request){
     		$query=trim($request->get('searchText'));
-    		$roles=DB::table('tipousuario')
-            ->where('nombre','LIKE','%'.$query.'%')
-			->where('estado','=','A')
-			->orderBy('idtipousuario','asc')
+    		$roles=DB::table('tipousuario as t')
+            ->leftjoin('users as u','u.idtipousuario','=','t.idtipousuario')
+            ->select('t.nombre', 't.idtipousuario', DB::raw('(CASE 
+            WHEN t.idtipousuario=u.idtipousuario
+            THEN "lleno"
+            ELSE "vacio"
+            END) AS temporal'))
+            ->where('t.nombre','LIKE','%'.$query.'%')
+			->where('t.estado','=','A')
+			->orderBy('t.idtipousuario','asc')
 			->paginate(9);
 
             if(Auth::user()->idtipousuario<2){

@@ -4,6 +4,8 @@ namespace sistemaReserva\Http\Controllers;
 
 use Illuminate\Http\Request;
 use sistemaReserva\Facultad;
+use sistemaReserva\Carrera;
+use sistemaReserva\User;
 use Illuminate\Support\Facades\Redirect;
 use sistemaReserva\Http\Requests\FacultadFormRequest;
 use DB;
@@ -18,11 +20,17 @@ class FacultadController extends Controller
     public function index(Request $request){
     	if($request){
     		$query=trim($request->get('searchText'));
-    		$facultades=DB::table('facultad')
+            $facultades=DB::table('facultad as f')
+            ->leftjoin('users as u','u.idfacultad','=','f.idfacultad')
+            ->select('f.nombre', 'f.idfacultad', DB::raw('(CASE 
+            WHEN f.idfacultad=u.idfacultad
+            THEN "lleno"
+            ELSE "vacio"
+            END) AS temporal'))
             ->where('nombre','LIKE','%'.$query.'%')
-			->where('estado','=','A')
-			->orderBy('idfacultad','asc')
-			->paginate(9);
+            ->where('f.estado','=','A')
+            ->orderBy('f.nombre','asc')
+            ->paginate(9);
 
             if(Auth::user()->idtipousuario<2){
             return view('mantenimiento.facultades.index',["facultades"=>$facultades, "searchText"=>$query]);
@@ -70,6 +78,12 @@ class FacultadController extends Controller
     	$facultad=Facultad::findOrFail($id);
     	$facultad->estado='I';
     	$facultad->update();
+
+        $carrera=Carrera::where('estado','A')->where('idfacultad',$facultad->idfacultad)->get();
+        foreach($carrera as $c){
+            $c->estado='I';
+            $c->update();
+        }
     	return Redirect::to('mantenimiento/facultades');
     }
 }
