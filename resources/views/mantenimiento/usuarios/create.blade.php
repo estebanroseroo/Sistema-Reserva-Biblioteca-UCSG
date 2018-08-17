@@ -13,59 +13,46 @@
 <div class="row">
 	<div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
 		<h2>Nuevo usuario</h2>
-		@if (count($errors)>0)
-		<div class="my-alert">
-			<ul>
-				@foreach ($errors->all() as $error)
-				<li>{{$error}}</li>
-				@endforeach
-			</ul>
-		</div>
-		@endif
 
 	{!!Form::open(array('url'=>'mantenimiento/usuarios', 'method'=>'POST', 'autocomplete'=>'off'))!!}
 	{{Form::token()}}
     {{ csrf_field() }}
 	<div class="form-group row">
         <label for="name" class="col-md-4 col-form-label text-md-right">{{ __('Nombre') }}</label>
-
          <div class="col-md-6">
          <input id="name" type="text" placeholder="Nombre" 
-        onkeyup="this.value = this.value.replace(/\b\w/g, l => l.toUpperCase());" class="form-control{{ $errors->has('name') ? ' is-invalid' : '' }}" name="name">
+        onkeyup="this.value = this.value.replace(/\b\w/g, l => l.toUpperCase());" class="form-control" name="name" oncopy="return false" onpaste="return false" onkeypress="return lettersOnly(event)" value="{{ old('name') }}">
         </div>
      </div>
 
     <div class="form-group row">
         <label for="apellido" class="col-md-4 col-form-label text-md-right">{{ __('Apellido') }}</label>
-
          <div class="col-md-6">
          <input id="apellido" type="text" placeholder="Apellido" 
-        onkeyup="this.value = this.value.replace(/\b\w/g, l => l.toUpperCase());" class="form-control" name="apellido">
+        onkeyup="this.value = this.value.replace(/\b\w/g, l => l.toUpperCase());" class="form-control" name="apellido" oncopy="return false" onpaste="return false" onkeypress="return lettersOnly(event)" value="{{ old('apellido') }}">
         </div>
      </div>
 
     <div class="form-group row">
         <label for="email" class="col-md-4 col-form-label text-md-right">{{ __('Correo') }}</label>
-
         <div class="col-md-6">
-        <input id="email" type="email" placeholder="Correo" class="form-control{{ $errors->has('email') ? ' is-invalid' : '' }}" name="email">
+        <input id="email" type="email" placeholder="Correo" class="form-control" name="email" oncopy="return false" onpaste="return false" value="{{ old('email')}}">
         </div>
     </div>
 
      <div class="form-group row">
         <label for="telefono" class="col-md-4 col-form-label text-md-right">{{ __('Teléfono') }}</label>
-
         <div class="col-md-6">
-        <input id="telefono" type="number" placeholder="Teléfono" class="form-control" name="telefono">
+        <input id="telefono" type="text" oncopy="return false" onpaste="return false" placeholder="Teléfono" class="form-control" name="telefono" onkeypress="return isNumberKey(event)" maxlength="10" value="{{ old('telefono') }}">
         </div>
     </div>
 
     <div class="form-group row">
         <label class="col-md-4 col-form-label text-md-right">Rol</label>
         <div class="col-md-6">
-        <select id="idtipousuario" name="idtipousuario" class="form-control">
-            @foreach ($roles as $rol=>$value)
-            <option value="{{$rol}}">{{$value}}</option>
+        <select id="idtipousuariousu" name="idtipousuariousu" class="form-control">
+            @foreach ($roles as $r)
+            <option value="{{$r->idtipousuario}}">{{$r->nombre}}</option>
             @endforeach
         </select>
         </div>
@@ -74,7 +61,7 @@
     <div class="form-group row">
         <label class="col-md-4 col-form-label text-md-right">Facultad</label>
         <div class="col-md-6">
-        <select id="idfacultad" name="idfacultad" class="form-control">
+        <select id="idfacultadusu" name="idfacultadusu" class="form-control">
             @foreach ($facultades as $fac=>$value)
             <option value="{{$fac}}">{{$value}}</option>
             @endforeach
@@ -86,30 +73,34 @@
         <label class="col-md-4 col-form-label text-md-right">Carrera</label>
         <span id="loader"><i class="fa fa-spinner fa-2x fa-spin"></i></span>
         <div class="col-md-6">
-        <select id="idcarrera" name="idcarrera" class="form-control">
+        <select id="idcarrerausu" name="idcarrerausu" class="form-control">
         </select>
         </div>
     </div>
 
     <div class="form-group row">
         <label for="password" class="col-md-4 col-form-label text-md-right">{{ __('Contraseña') }}</label>
-
         <div class="col-md-6">
-        <input id="password" type="password" placeholder="Contraseña" class="form-control{{ $errors->has('password') ? ' is-invalid' : '' }}" name="password">
+        <input id="password" type="password" placeholder="Contraseña" class="form-control" name="password" oncopy="return false" onpaste="return false">
         </div>
     </div>
 
     <div class="form-group row">
         <label for="password-confirm" class="col-md-4 col-form-label text-md-right">{{ __('Confirmar Contraseña') }}</label>
-
         <div class="col-md-6">
-        <input id="password-confirm" type="password" placeholder="Confirmar contraseña" class="form-control" name="password_confirmation">
+        <input id="password-confirm" type="password" placeholder="Confirmar contraseña" class="form-control" name="password_confirmation" oncopy="return false" onpaste="return false">
+        </div>
+    </div>
+
+    <div class="form-group row">
+        <label class="col-md-4 col-form-label text-md-right"></label>
+        <div class="col-md-6">
+        <label id="mensaje" style="font-size: 12px; color:red; font-weight:bold;"></label>
         </div>
     </div>
 
 	<div class="form-group">
-		<button class="my-button" type="submit"><i class="fa fa-save"><b> Guardar</b></i></button>
-		<button class="my-button" type="reset" id="bt_limpiar"><i class="fa fa-eraser"><b> Limpiar</b></i></button>
+		<button class="my-button" type="submit" onclick="return validateForm()"><i class="fa fa-save"><b> Guardar</b></i></button>
 	</div>
 
 	{!!Form::close()!!}
@@ -120,5 +111,54 @@
 </div>
 </div>
 </div><!-- /.box -->
+<script>
+    function lettersOnly(){
+        var charCode = event.keyCode;
+        if ((charCode > 64 && charCode < 91) || (charCode > 96 && charCode < 123) || charCode == 8)
+            return true;
+        else
+            return false;
+        }
+    function isNumberKey(evt){
+        var charCode = (evt.which) ? evt.which : event.keyCode
+        if (charCode > 31 && (charCode < 48 || charCode > 57))
+            return false;
+        else
+            return true; 
+        }
+        function validateForm() {
+    if(document.getElementById('name').value==""){
+        document.getElementById('mensaje').innerHTML = 'El campo nombre es obligatorio';
+        return false;
+        }
+    if(document.getElementById('apellido').value==""){
+        document.getElementById('mensaje').innerHTML = 'El campo apellido es obligatorio';
+        return false;
+        }
+    if(document.getElementById('password').value==""){
+        document.getElementById('mensaje').innerHTML = 'El campo contraseña es obligatorio';
+        return false;
+        }
+    if(document.getElementById('password').value.length<6){
+        document.getElementById('mensaje').innerHTML = 'El campo contraseña debe tener mínimo 6 caracteres';
+        return false;
+        }
+    if(document.getElementById('password').value!=document.getElementById('password-confirm').value){
+        document.getElementById('mensaje').innerHTML = 'El campo contraseña no es igual a confirmar contraseña';
+        return false;
+        }
+    if(!document.getElementById('email').value.endsWith('@cu.ucsg.edu.ec')){
+        document.getElementById('mensaje').innerHTML = 'El campo correo debe terminar en @cu.ucsg.edu.ec';
+        return false;
+        }
+    }
+    if(document.getElementById('name').value!="" &&
+    document.getElementById('apellido').value!="" &&
+    document.getElementById('password').value==document.getElementById('password-confirm').value &&
+    document.getElementById('email').value.endsWith('@cu.ucsg.edu.ec') &&
+    validateForm()==false){
+        document.getElementById('mensaje').innerHTML = 'El campo correo ya existe';
+    }
+</script>
 @endsection
 

@@ -30,7 +30,7 @@ class UsuarioFormRequest extends FormRequest
             'telefono' => 'nullable|min:7|max:10',
             'idfacultad'=>'nullable',
             'idcarrera'=>'nullable',
-            'idtipousuario'=>'required',
+            'idtipousuario'=>'nullable',
         ];
     }
 }

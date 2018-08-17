@@ -1,4 +1,4 @@
- $(document).ready(function() {
+$(document).ready(function() {
 
         var ID = $('select[name="idfacultad"] option:selected').val();
         if(ID) {

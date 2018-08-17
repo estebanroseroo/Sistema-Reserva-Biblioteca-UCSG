@@ -8,7 +8,7 @@
 <body>
 <h3>Hola {{ $usu->name }}!</h3>
 
-<p>Este es el código QR de tu reserva</p>
+<p>Este es el código QR de su reserva</p>
 
 @foreach($reservas as $r)
 			@if($r->codigoqr==$qrcod)

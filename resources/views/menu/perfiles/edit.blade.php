@@ -13,16 +13,6 @@
 <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
 <h2>Editar perfil</h2>
 
-		@if (count($errors)>0)
-		<div class="my-alert">
-			<ul>
-				@foreach ($errors->all() as $error)
-				<li>{{$error}}</li>
-				@endforeach
-			</ul>
-		</div>
-		@endif
-
 	{!!Form::model($usuario,['method'=>'PATCH','route'=>['perfiles.update', Auth::user()->id]])!!}
 	{{Form::token()}}
     {{ csrf_field() }}
@@ -78,8 +68,15 @@
         </div>
     </div>
 
+    <div class="form-group row">
+        <label class="col-md-4 col-form-label text-md-right"></label>
+        <div class="col-md-6">
+        <label id="mensaje" style="font-size: 12px; color:red; font-weight:bold;"></label>
+        </div>
+    </div>
+
 	<div class="form-group">
-		<button class="my-button" type="submit"><i class="fa fa-save"><b> Guardar</b></i></button>
+		<button class="my-button" type="submit" onclick="return validateForm()"><i class="fa fa-save"><b> Guardar</b></i></button>
 	</div>
 	{!!Form::close()!!}
 	</div>
@@ -104,5 +101,15 @@
         else
             return true; 
         }
+    function validateForm() {
+    if(document.getElementById('name').value==""){
+        document.getElementById('mensaje').innerHTML = 'El campo nombre es obligatorio';
+        return false;
+        }
+    if(document.getElementById('apellido').value==""){
+        document.getElementById('mensaje').innerHTML = 'El campo apellido es obligatorio';
+        return false;
+        }
+    }
 </script>
 @endsection

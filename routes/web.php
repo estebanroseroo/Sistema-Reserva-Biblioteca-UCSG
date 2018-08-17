@@ -28,6 +28,7 @@ Route::resource('operacion/reservasconfirmadas', 'AdminreservaconfirmadaControll
 Auth::routes();
 Route::get('mantenimiento/usuarios/create', 'UsuarioController@create');
 Route::get('get/{id}', 'UsuarioController@getStates');
+Route::get('facu/get/{idtipousu}', 'UsuarioController@getFacu');
 Route::get('states/get/{id}', 'Auth\RegisterController@getStates');
 Route::get('/home', 'HomeController@index')->name('home');
 Route::get('/logout','Auth\LoginController@logout');

@@ -8,8 +8,11 @@ use sistemaReserva\Http\Requests;
 use Illuminate\Support\Facades\Redirect;
 use sistemaReserva\Http\Requests\PerfilFormRequest;
 use sistemaReserva\User;
+use sistemaReserva\Facultad;
+use sistemaReserva\Carrera;
 use Auth;
 use DB;
+use Mail;
 
 class PerfilController extends Controller
 {
@@ -67,6 +70,17 @@ class PerfilController extends Controller
       $usuario->idfacultad=$request->get('idfacultadedit');
       $usuario->idcarrera=$request->get('idcarreraedit');
       $usuario->update();
+
+      $facultad=Facultad::findOrFail($usuario->idfacultad);
+      $carrera=Carrera::findOrFail($usuario->idcarrera);
+      Mail::send('email.mensajeusuedit',['usuario' => $usuario,'facultad'=>$facultad,'carrera'=>$carrera],
+        function ($m) use ($usuario) {
+          $m->to($usuario->email, $usuario->name)
+            ->subject('Actualización exitosa')
+            ->from('roseroesteban@gmail.com', 'Administrador');
+        }
+      );
+      
       return Redirect::to('menu/perfiles');
    }
 }

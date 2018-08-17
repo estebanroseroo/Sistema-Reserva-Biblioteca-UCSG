@@ -9,8 +9,13 @@ use Illuminate\Support\Facades\Redirect;
 use sistemaReserva\Http\Requests\UsuarioFormRequest;
 use sistemaReserva\Http\Requests\PerfilFormRequest;
 use sistemaReserva\User;
+use sistemaReserva\Area;
+use sistemaReserva\Reserva;
+use sistemaReserva\Facultad;
+use sistemaReserva\Carrera;
 use DB;
 use Auth;
+use Mail;
 
 class UsuarioController extends Controller
 {
@@ -25,12 +30,15 @@ class UsuarioController extends Controller
       ->leftjoin('facultad as f','u.idfacultad','=','f.idfacultad')
       ->leftjoin('carrera as c','u.idcarrera','=','c.idcarrera')
       ->leftjoin('tipousuario as t','u.idtipousuario','=','t.idtipousuario')
-      ->select('u.id','u.name','u.email','u.telefono','f.nombre as facultad','c.nombre as carrera','t.nombre as rol')
+      ->select('u.id','u.name','u.email','u.telefono','f.nombre as facultad','c.nombre as carrera','t.nombre as rol','u.idtipousuario')
       ->where('u.name','LIKE','%'.$query.'%')
       ->where('u.estado','=','A')
       ->orwhere('f.nombre','LIKE','%'.$query.'%')
+      ->where('u.estado','=','A')
       ->orwhere('c.nombre','LIKE','%'.$query.'%')
+      ->where('u.estado','=','A')
       ->orwhere('t.nombre','LIKE','%'.$query.'%')
+      ->where('u.estado','=','A')
       ->orderBy('u.idtipousuario','asc')
       ->paginate(9);
 
@@ -51,13 +59,19 @@ class UsuarioController extends Controller
         return json_encode($carreras);
     }
 
+    public function getFacu($idtipousu) {
+        $facultades = DB::table('facultad')
+        ->where('estado','=','A')
+        ->pluck('nombre','idfacultad');
+        return json_encode($facultades);
+    }
+
     public function create(){
         $facultades=DB::table('facultad')
         ->where('estado','=','A')
         ->pluck('nombre','idfacultad');
         $roles=DB::table('tipousuario')
-        ->where('estado','=','A')
-        ->pluck('nombre','idtipousuario');
+        ->where('estado','=','A')->get();
         if(Auth::user()->idtipousuario<2){
              return view("mantenimiento.usuarios.create",["facultades"=>$facultades,"roles"=>$roles]);
             }
@@ -72,11 +86,32 @@ class UsuarioController extends Controller
     $usuario->email=$request->get('email');
     $usuario->password=bcrypt($request->get('password'));
     $usuario->telefono=$request->get('telefono');
-    $usuario->idfacultad=$request->get('idfacultad');
-    $usuario->idcarrera=$request->get('idcarrera');
-    $usuario->idtipousuario=$request->get('idtipousuario');
+    if($request->get('idtipousuariousu')<3){
+      $idfac=$request->get('idfacultad');//NULL
+      $idcar=$request->get('idcarrera');//NULL
+    }
+    else{
+      $idfac=$request->get('idfacultadusu');
+      $idcar=$request->get('idcarrerausu');
+    }
+    $usuario->idfacultad=$idfac;
+    $usuario->idcarrera=$idcar;
+    $usuario->idtipousuario=$request->get('idtipousuariousu');
     $usuario->estado='A';
     $usuario->save();
+
+    if($usuario->idtipousuario>2){
+    $facultad=Facultad::findOrFail($usuario->idfacultad);
+    $carrera=Carrera::findOrFail($usuario->idcarrera);
+    Mail::send('email.mensajeusu',['usuario' => $usuario,'facultad'=>$facultad,'carrera'=>$carrera],
+        function ($m) use ($usuario) {
+          $m->to($usuario->email, $usuario->name)
+            ->subject('Registro exitoso')
+            ->from('roseroesteban@gmail.com', 'Administrador');
+        }
+    );
+    }
+
     return Redirect::to('mantenimiento/usuarios');
    }
 
@@ -105,10 +140,31 @@ class UsuarioController extends Controller
       $usuario=User::findOrFail($id);
       $usuario->name=$request->get('name').".".$request->get('apellido');
       $usuario->telefono=$request->get('telefono');
-      $usuario->idfacultad=$request->get('idfacultadedit');
-      $usuario->idcarrera=$request->get('idcarreraedit');
-      $usuario->idtipousuario=$request->get('idtipousuario');
+      if($request->get('idtipousuariousu')<3){
+      $idfac=$request->get('idfacultad');//NULL
+      $idcar=$request->get('idcarrera');//NULL
+      }
+      else{
+      $idfac=$request->get('idfacultadusu');
+      $idcar=$request->get('idcarrerausu');
+      }
+      $usuario->idfacultad=$idfac;
+      $usuario->idcarrera=$idcar;
+      $usuario->idtipousuario=$request->get('idtipousuariousu');
       $usuario->update();
+
+      if($usuario->idtipousuario>2){
+      $facultad=Facultad::findOrFail($usuario->idfacultad);
+      $carrera=Carrera::findOrFail($usuario->idcarrera);
+      Mail::send('email.mensajeusuedit',['usuario' => $usuario,'facultad'=>$facultad,'carrera'=>$carrera],
+        function ($m) use ($usuario) {
+          $m->to($usuario->email, $usuario->name)
+            ->subject('Actualización exitosa')
+            ->from('roseroesteban@gmail.com', 'Administrador');
+        }
+      );
+      }
+
       return Redirect::to('mantenimiento/usuarios');
    }
 
@@ -116,6 +172,29 @@ class UsuarioController extends Controller
       $usuario=User::findOrFail($id);
       $usuario->estado='I';
       $usuario->update();
+
+      Mail::send('email.mensajeusueli',['usuario' => $usuario],
+        function ($m) use ($usuario) {
+          $m->to($usuario->email, $usuario->name)
+            ->subject('Usuario eliminado')
+            ->from('roseroesteban@gmail.com', 'Administrador');
+        }
+      );
+
+      $reserva=Reserva::where('estado','A')->where('id',$usuario->id)->get();
+      foreach($reserva as $r){
+      $r->estado='I';
+      $r->update();
+      $area=Area::findOrFail($r->idarea);
+      Mail::send('email.mensajeusuario',['usuario' => $usuario,'r' => $r,'area'=>$area],
+        function ($m) use ($usuario) {
+          $m->to($usuario->email, $usuario->name)
+            ->subject('Reserva cancelada')
+            ->from('roseroesteban@gmail.com', 'Administrador');
+        }
+      );
+      }
+
       return Redirect::to('mantenimiento/usuarios');
    }
 }

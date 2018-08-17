@@ -10,6 +10,7 @@ use sistemaReserva\Http\Requests\ContrasenaFormRequest;
 use sistemaReserva\User;
 use DB;
 use Auth;
+use Mail;
 
 class ContrasenaController extends Controller
 {
@@ -48,6 +49,14 @@ class ContrasenaController extends Controller
       $usuario=User::findOrFail($id);
       $usuario->password=bcrypt($request->get('password'));
       $usuario->update();
+
+      Mail::send('email.mensajecontrasena',['usuario' => $usuario],
+        function ($m) use ($usuario) {
+          $m->to($usuario->email, $usuario->name)
+            ->subject('Cambio de contraseña exitoso')
+            ->from('roseroesteban@gmail.com', 'Administrador');
+        }
+      );
 
       $usuarios=DB::table('users as u')
       ->leftjoin('facultad as f','u.idfacultad','=','f.idfacultad')

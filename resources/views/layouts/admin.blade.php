@@ -125,6 +125,7 @@
     <!-- AdminLTE App -->
     <script src="{{asset('js/app.min.js')}}"></script>
     <script src="{{asset('js/my-select.js')}}"></script>
+    <script src="{{asset('js/my-select-usuario.js')}}"></script>
 
   </body>
 </html>

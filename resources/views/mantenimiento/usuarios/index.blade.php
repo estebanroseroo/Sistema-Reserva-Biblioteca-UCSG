@@ -39,9 +39,27 @@
 					<td>{{$u->facultad}}</td>
 					<td>{{$u->carrera}}</td>
 					<td>{{$u->rol}}</td>
+					@if(Auth::user()->email=='roseroesteban@gmail.com')
 					<td><a href="{{URL::action('UsuarioController@edit', $u->id)}}"><button class="my-button"><i class="fa fa-pencil"> <b>Editar</b></i></button></a></td>
+					@else
+					@if(Auth::user()->email==$u->email || $u->idtipousuario>'1')
+					<td><a href="{{URL::action('UsuarioController@edit', $u->id)}}"><button class="my-button"><i class="fa fa-pencil"> <b>Editar</b></i></button></a></td>
+					@else
+					<td></td>
+					@endif
+					@endif
+
+					@if(Auth::user()->email=='roseroesteban@gmail.com' && $u->email!='roseroesteban@gmail.com' )
 					<td><a href="" data-target="#modal-delete-{{$u->id}}" data-toggle="modal">
 					<button class="my-button"><i class="fa fa-trash"> <b>Eliminar</b></i></button></a></td>
+					@else
+					@if($u->idtipousuario>'1')
+					<td><a href="" data-target="#modal-delete-{{$u->id}}" data-toggle="modal">
+					<button class="my-button"><i class="fa fa-trash"> <b>Eliminar</b></i></button></a></td>
+					@else
+					<td></td>
+					@endif
+					@endif
 				</tr>
 				@include('mantenimiento.usuarios.modal')
 				@endforeach
