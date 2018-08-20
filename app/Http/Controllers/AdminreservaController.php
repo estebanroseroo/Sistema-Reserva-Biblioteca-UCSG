@@ -44,7 +44,8 @@ class AdminreservaController extends Controller
           $dcrea=$vcrea[0];
           $mcrea=$vcrea[1];
           $acrea=$vcrea[2];
-          if(($ahoy>$aquery) || ($ahoy==$aquery && $mhoy>$mquery) || ($ahoy==$aquery && $mhoy==$mquery && $dhoy>$dquery) || ($ahoy==$aquery && $mhoy==$mquery && $dhoy==$dquery && $m->horacrea<$m->tiempoespera && $hora>=$m->tiempoespera && is_null($m->horallegada)==1) || ($ahoy>=$acrea && $mhoy>=$mcrea && $dhoy>$dcrea && $hora>=$m->tiempoespera && is_null($m->horallegada)==1)){
+          if(($ahoy>$aquery) || ($ahoy==$aquery && $mhoy>$mquery) || ($ahoy==$aquery && $mhoy==$mquery && $dhoy>$dquery) || ($ahoy==$aquery && $mhoy==$mquery && $dhoy==$dquery && $m->horacrea<$m->tiempoespera && $hora>=$m->tiempoespera && $m->estado=='A')){
+            //($ahoy>=$acrea && $mhoy>=$mcrea && $dhoy>$dcrea && $hora>=$m->tiempoespera && is_null($m->horallegada)==1)
             $m->estado='I';
             $m->update();
             $area=Area::findOrFail($m->idarea);
@@ -146,6 +147,10 @@ class AdminreservaController extends Controller
         ->where('r.horainicio','<=',$queryinicio)
         ->where('r.horafinal','>',$queryinicio)
         ->where('r.estado','!=','I')
+        ->orWhere('r.fecha','=',$query)
+        ->where('r.horainicio','<',$queryfinal)
+        ->where('r.horafinal','>=',$queryfinal)
+        ->where('r.estado','!=','I')
         ->union($areas)
         ->get();
         $diferentes=$reservas->unique('nombre');
@@ -238,6 +243,28 @@ class AdminreservaController extends Controller
           if($sum>5){
           $sms='No se puede reservar más de cinco horas al día';
           }
+          if($request->get('id')>0){
+          $variable=$request->get('id');
+          }
+          else{
+          $variable=Auth::user()->id;
+          }
+          $resval = DB::table('reserva')
+          ->where('id', '=', Auth::user()->id)
+          ->where('estado','!=','I')
+          ->where('fecha','=',$query)
+          ->where('horainicio','<=',$queryinicio)
+          ->where('horafinal','>',$queryinicio)
+          ->orWhere('id', '=', $variable)
+          ->where('estado','!=','I')
+          ->where('fecha','=',$query)
+          ->where('horainicio','<',$queryfinal)
+          ->where('horafinal','>=',$queryfinal)
+          ->get();
+          $contval = $resval->count();
+          if($contval>0){
+          $sms='Ya dispone de una reserva en el horario seleccionado';
+          }
         }
 
         if(Auth::user()->idtipousuario<3){
@@ -250,8 +277,10 @@ class AdminreservaController extends Controller
     }
 
     public function store(AdminreservaFormRequest $request){
+    if($request){
     $hoy = Carbon::now()->format('d/m/Y');
     $hora = Carbon::now()->format('H:i:s');
+    $uid=User::where('name',$request->get('id'))->where('estado','=','A')->first();
     $reserva=new Reserva;
     $reserva->fecha=$request->get('fecha');
     $reserva->horainicio=$request->get('horainicio');
@@ -259,7 +288,7 @@ class AdminreservaController extends Controller
     $reserva->horallegada=$request->get('horallegada');
     $reserva->tiempoespera=$request->get('tiempoespera');
     $reserva->cantidad=$request->get('cantidad');
-    $reserva->id=$request->get('id');
+    $reserva->id=$uid->id;
     $reserva->idarea=$request->get('idarea');
     $reserva->estado='A';
     $reserva->codigoqr=str_random(10);
@@ -317,7 +346,7 @@ class AdminreservaController extends Controller
     $area=Area::findOrFail($reserva->idarea);
     $reservas=DB::table('reserva')->where('estado','=','A')->get();
     $qrcod = $reserva->codigoqr;
-    $usu = User::findOrFail($request->get('id'));
+    $usu=User::where('name',$request->get('id'))->where('estado','=','A')->first();
     Mail::send('email.mensajeqr',['usu' => $usu,'reservas' => $reservas,'qrcod' => $qrcod,'area'=>$area],
                     function ($m) use ($usu) {
                         $m->to($usu->email, $usu->name)
@@ -325,8 +354,9 @@ class AdminreservaController extends Controller
                           ->from('roseroesteban@gmail.com', 'Administrador');
                       }
                     );
-    
+
     return Redirect::to('operacion/adminreservas');
+    }
    }
 
 
@@ -334,6 +364,17 @@ class AdminreservaController extends Controller
       $reserva=Reserva::findOrFail($id);
       $reserva->estado='I';
       $reserva->update();
+
+      $area=Area::findOrFail($reserva->idarea);
+      $usu = User::where('id',$reserva->id)->where('estado','A')->first();
+      Mail::send('email.mensajereserva',['usu' => $usu,'reserva' => $reserva,'area'=>$area],
+                    function ($m) use ($usu) {
+                        $m->to($usu->email, $usu->name)
+                          ->subject('Código QR eliminado')
+                          ->from('roseroesteban@gmail.com', 'Administrador');
+                      }
+                    );
+
       return Redirect::to('operacion/adminreservas');
    }
 }

@@ -27,7 +27,7 @@ class UsureservaController extends Controller
 
   public function index(Request $request){
     if($request){
-      $monitorear=Reserva::where('estado','A')->get();
+      $monitorear=Reserva::where('estado','!=','I')->get();
       $hoy = Carbon::now()->format('d/m/Y');
       $hora = Carbon::now()->format('H:i:s');
 
@@ -44,7 +44,7 @@ class UsureservaController extends Controller
           $dcrea=$vcrea[0];
           $mcrea=$vcrea[1];
           $acrea=$vcrea[2];
-          if(($ahoy>$aquery) || ($ahoy==$aquery && $mhoy>$mquery) || ($ahoy==$aquery && $mhoy==$mquery && $dhoy>$dquery) || ($ahoy==$aquery && $mhoy==$mquery && $dhoy==$dquery && $m->horacrea<$m->tiempoespera && $hora>=$m->tiempoespera && is_null($m->horallegada)==1) || ($ahoy>=$acrea && $mhoy>=$mcrea && $dhoy>$dcrea && $hora>=$m->tiempoespera && is_null($m->horallegada)==1)){
+          if(($ahoy>$aquery) || ($ahoy==$aquery && $mhoy>$mquery) || ($ahoy==$aquery && $mhoy==$mquery && $dhoy>$dquery) || ($ahoy==$aquery && $mhoy==$mquery && $dhoy==$dquery && $m->horacrea<$m->tiempoespera && $hora>=$m->tiempoespera && $m->estado=='A')){
             $m->estado='I';
             $m->update();
             $area=Area::findOrFail($m->idarea);
@@ -57,6 +57,22 @@ class UsureservaController extends Controller
                           ->from('roseroesteban@gmail.com', 'Administrador');
                       }
                     );
+          }
+          else{
+            if($m->estado=='C' && $hora>=$m->horafinal){
+            $m->estado='I';
+            $m->update();
+            $area=Area::findOrFail($m->idarea);
+            $usu = User::where('email',Auth::user()->email)->where('estado','A')->first();
+            $reservas=Reserva::findOrFail($m->idreserva);
+            Mail::send('email.mensajeresfinalizo',['usu' => $usu,'reservas' => $reservas,'area'=>$area],
+                    function ($m) use ($usu) {
+                        $m->to($usu->email, $usu->name)
+                          ->subject('Reserva finalizada')
+                          ->from('roseroesteban@gmail.com', 'Administrador');
+                      }
+                    );
+            }
           }
       }
 
@@ -129,6 +145,10 @@ class UsureservaController extends Controller
         ->where('r.fecha','=',$query)
         ->where('r.horainicio','<=',$queryinicio)
         ->where('r.horafinal','>',$queryinicio)
+        ->where('r.estado','!=','I')
+        ->orWhere('r.fecha','=',$query)
+        ->where('r.horainicio','<',$queryfinal)
+        ->where('r.horafinal','>=',$queryfinal)
         ->where('r.estado','!=','I')
         ->union($areas)
         ->get();
@@ -210,6 +230,22 @@ class UsureservaController extends Controller
           $sum=$difsh+$contador;
           if($sum>5){
           $sms='No se puede reservar más de cinco horas al día';
+          }
+          $resval = DB::table('reserva')
+          ->where('id', '=', Auth::user()->id)
+          ->where('estado','!=','I')
+          ->where('fecha','=',$query)
+          ->where('horainicio','<=',$queryinicio)
+          ->where('horafinal','>',$queryinicio)
+          ->orWhere('id', '=', Auth::user()->id)
+          ->where('estado','!=','I')
+          ->where('fecha','=',$query)
+          ->where('horainicio','<',$queryfinal)
+          ->where('horafinal','>=',$queryfinal)
+          ->get();
+          $contval = $resval->count();
+          if($contval>0){
+          $sms='Ya dispone de una reserva en el horario seleccionado';
           }
         }
         
@@ -307,6 +343,17 @@ class UsureservaController extends Controller
       $reserva=Reserva::findOrFail($id);
       $reserva->estado='I';
       $reserva->update();
+
+    $area=Area::findOrFail($reserva->idarea);
+    $usu = User::where('email',Auth::user()->email)->where('estado','A')->first();
+    Mail::send('email.mensajereseli',['usu' => $usu,'reserva' => $reserva,'area'=>$area],
+                    function ($m) use ($usu) {
+                        $m->to($usu->email, $usu->name)
+                          ->subject('Eliminación exitosa')
+                          ->from('roseroesteban@gmail.com', 'Administrador');
+                      }
+                    );
+
       return Redirect::to('menu/reservas');
    }
         
