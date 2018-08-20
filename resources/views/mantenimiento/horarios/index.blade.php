@@ -11,28 +11,29 @@
 <div class="col-md-12">
 	
 <div class="row">
-<div class="col-lg-8 col-md-8 col-sm-8 col-xs-12">
+<div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
 <h2>Horarios	<a href="horarios/create"><button class="my-button"><i class="fa fa-plus"><b> Agregar</b></i></button></a></h2>
 @include('mantenimiento.horarios.search')
 </div>
 </div>
 
 <div class="row">
-	<div class="col-lg-8 col-md-8 col-sm-8 col-xs-12">
+	<div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
 		<div class="table-responsive">
 			<table class="table table-striped table-bordered table-condensed table-hover">
 				<thead>
-					<th>Hora Inicio</th>
-					<th>Hora Final</th>
+					<th>Hora</th>
 					<th></th>
 				</thead>
-
 				@foreach($horarios as $h)
 				<tr>
-					<td>{{$h->horainicio}}</td>
-					<td>{{$h->horafinal}}</td>
+					<td>{{$hora=substr($h->hora,0,5)}}</td>
+					@if($h->temporal=='vacio')
 					<td><a href="" data-target="#modal-delete-{{$h->idhora}}" data-toggle="modal">
 						<button class="my-button"><i class="fa fa-trash"> <b>Eliminar</b></i></button></a></td>
+					@else
+					<td></td>
+					@endif
 				</tr>
 				@include('mantenimiento.horarios.modal')
 				@endforeach

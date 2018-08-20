@@ -23,7 +23,8 @@
 			<table class="table table-striped table-bordered table-condensed table-hover">
 				<thead>
 					<th>Área de estudio</th>
-					<th>Capacidad</th>
+					<th>Capacidad máxima</th>
+					<th>Capacidad mínima</th>
 					<th>Disponibilidad</th>
 					<th colspan="2"></th>
 				</thead>
@@ -32,6 +33,7 @@
 				<tr>
 					<td>{{$a->nombre}}</td>
 					<td>{{$a->capacidad}}</td>
+					<td>{{$a->minimo}}</td>
 					<td>{{$a->disponibilidad}}</td>
 					@if($a->disponibilidad=='Disponible')
 					<td><a href="{{URL::action('AreaController@edit', $a->idarea)}}"><button class="my-button"><i class="fa fa-pencil"> <b>Editar</b></i></button></a></td>

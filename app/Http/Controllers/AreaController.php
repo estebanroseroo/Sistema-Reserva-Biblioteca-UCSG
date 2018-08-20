@@ -52,6 +52,7 @@ class AreaController extends Controller
     	$area->nombre=$request->get('nombre');
     	$area->disponibilidad='Disponible';
         $area->capacidad=$request->get('capacidad');
+        $area->minimo=$request->get('minimo');
     	$area->estado='A';
     	$area->save();
     	return Redirect::to('mantenimiento/areas');
@@ -71,6 +72,7 @@ class AreaController extends Controller
     	$area->nombre=$request->get('nombre');
     	$area->disponibilidad=$request->get('disponibilidad');
         $area->capacidad=$request->get('capacidad');
+        $area->minimo=$request->get('minimo');
     	$area->update();
 
         if($area->disponibilidad=='No Disponible'){

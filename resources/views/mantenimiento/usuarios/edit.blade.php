@@ -89,7 +89,7 @@
     <div class="form-group row">
         <label class="col-md-4 col-form-label text-md-right"></label>
         <div class="col-md-6">
-        <label id="mensaje" style="font-size: 12px; color:red; font-weight:bold;"></label>
+        <label id="mensaje" style="font-size: 14px; color:red; font-weight:bold;"></label>
         </div>
     </div>
 

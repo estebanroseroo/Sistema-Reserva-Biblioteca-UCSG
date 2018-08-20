@@ -10,7 +10,9 @@ use sistemaReserva\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Foundation\Auth\RegistersUsers;
-
+use sistemaReserva\Facultad;
+use sistemaReserva\Carrera;
+use Mail;
 
 
 class RegisterController extends Controller
@@ -40,7 +42,7 @@ class RegisterController extends Controller
 
     protected function create(array $data)
     {
-        return User::create([
+        $usuario=User::create([
             'name' => $data['name'].".".$data['apellido'],
             'email' => $data['email'],
             'password' => Hash::make($data['password']),
@@ -50,6 +52,18 @@ class RegisterController extends Controller
             'idtipousuario' => $data['idtipousuario'],
             'estado'=>$data['estado'],
         ]);
+
+        $facultad=Facultad::findOrFail($usuario->idfacultad);
+        $carrera=Carrera::findOrFail($usuario->idcarrera);
+        Mail::send('email.mensajeusu',['usuario' => $usuario,'facultad'=>$facultad,'carrera'=>$carrera],
+        function ($m) use ($usuario) {
+          $m->to($usuario->email, $usuario->name)
+            ->subject('Registro exitoso')
+            ->from('roseroesteban@gmail.com', 'Administrador');
+        }
+        );
+
+        return $usuario;
     }
 
     public function showRegistrationForm(){

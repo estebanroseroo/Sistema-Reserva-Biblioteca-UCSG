@@ -24,6 +24,7 @@ class FacultadController extends Controller
             ->leftjoin('users as u','u.idfacultad','=','f.idfacultad')
             ->select('f.nombre', 'f.idfacultad', DB::raw('(CASE 
             WHEN f.idfacultad=u.idfacultad
+            AND u.estado="A"
             THEN "lleno"
             ELSE "vacio"
             END) AS temporal'))

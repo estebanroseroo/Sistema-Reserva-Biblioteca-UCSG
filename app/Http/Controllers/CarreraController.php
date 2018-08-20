@@ -26,6 +26,7 @@ class CarreraController extends Controller
 			->select('c.idcarrera','c.nombre','f.nombre as facultad', 
             DB::raw('(CASE 
             WHEN c.idcarrera=u.idcarrera
+            AND u.estado="A"
             THEN "lleno"
             ELSE "vacio"
             END) AS temporal'))

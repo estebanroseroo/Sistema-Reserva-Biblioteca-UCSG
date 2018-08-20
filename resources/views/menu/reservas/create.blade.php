@@ -22,45 +22,69 @@
             <div class="input-group-addon">
             <i class="fa fa-calendar"></i>
             </div>  
-            <input type="text" class="form-control datepicker" placeholder="Fecha" name="fecha" value="{{$fecha}}">
+            <input type="text" class="form-control datepicker" id="fecha" placeholder="Fecha" name="fecha" value="{{$fecha}}">
         </div>
         </div>
     </div>
 
     <div class="form-group row">
-        <label for="horarios" class="col-md-2 col-form-label text-md-right">{{ __('Horario') }}</label>
+        <label for="horainicio" class="col-md-2 col-form-label text-md-right">{{ __('Hora inicio') }}</label>
         <div class="col-md-6">  
             <div class="input-group">
             <div class="input-group-addon">
             <i class="fa fa-clock-o"></i>
             </div>
-            <select id="horarios" name="horarios" class="form-control">
+            <select id="horainicio" name="horainicio" class="form-control">
             @foreach ($horarios as $hor)
-            <option value="{{$hor->horainicio}}-{{$hor->horafinal}}" 
-            @if($hor->horainicio."-".$hor->horafinal==$inicio) selected="selected" @endif>
-            {{$horainicio=substr($hor->horainicio,0,5)}}-{{$horafinal=substr($hor->horafinal,0,5)}}
+            <option value="{{$hor->hora}}" 
+            @if($hor->hora==$inicio) selected="selected" @endif>
+            {{$horainicio=substr($hor->hora,0,5)}}
             </option>
              @endforeach
             </select>
             </div> 
         </div>
     </div>
-    {{Form::close()}}
+
+    <div class="form-group row">
+        <label for="horafinal" class="col-md-2 col-form-label text-md-right">{{ __('Hora final') }}</label>
+        <div class="col-md-6">  
+            <div class="input-group">
+            <div class="input-group-addon">
+            <i class="fa fa-clock-o"></i>
+            </div>
+            <select id="horafinal" name="horafinal" class="form-control">
+            @foreach ($horariosf as $hor)
+            <option value="{{$hor->hora}}" 
+            @if($hor->hora==$final) selected="selected" @endif>
+            {{$horafinal=substr($hor->hora,0,5)}}
+            </option>
+             @endforeach
+            </select>
+            </div> 
+        </div>
+    </div>
+
+    <div class="form-group row">
+        <label class="col-md-2 col-form-label text-md-right"></label>
+        <div class="col-md-6">
+        <label id="mensaje" style="font-size: 14px; color:red; font-weight:bold;">{{$sms}}</label>
+        </div>
+    </div>
+    {{Form::close()}} 
 
 </div>
 </div>
 
 <div class="row">
-    <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+    <div class="col-lg-8 col-md-8 col-sm-8 col-xs-12">
         <div class="table-responsive">
             <table class="table table-striped table-bordered table-condensed table-hover">
-                @if($inicio!="" && $fecha!="")
+                @if($inicio!=="" && $fecha!=="" && $sms=="")
                 <thead>
                     <th>Área</th>
                     <th>Capacidad</th>
                     <th>Disponibilidad</th>
-                    <th>Hora Inicio</th>
-                    <th>Hora Final</th>
                 </thead>
                 @foreach($diferentes as $d)
         {!! Form::open(array('url'=>'menu/reservas/edit','method'=>'GET','autocomplete'=>'off','role'=>'search')) !!}
@@ -69,19 +93,17 @@
                     <td>{{$d->capacidad}}<input name="ecapacidad" value="{{$d->capacidad}}" type="hidden"></td>
 
                     @if($d->fecha==$fecha)
-                    <td>Ocupado</td>
-                    <td>{{$d->horainicio}}</td>
-                    <td>{{$d->horafinal}}</td>
+                    <td><label style="font-size: 14px; color:red; font-weight:bold;">Ocupado</label></td>
                     @else
                     <td>
-                        Disponible<input name="efecha" value="{{$fecha}}" type="hidden">
+                        <label style="font-size: 14px; color:green; font-weight:bold;">Disponible</label>
+                        <input name="efecha" value="{{$fecha}}" type="hidden">
                         <input name="ehoraid" value="{{$horaid->idhora}}" type="hidden">
+                        <input name="ehorainicio" value="{{$inicio}}" type="hidden">
+                        <input name="ehorafinal" value="{{$final}}" type="hidden">
                         <button type="submit" class="my-button"><b>Reservar</b></button>
                     </td>
-                    <td>-<input name="ehorainicio" value="{{$inicio}}" type="hidden"></td>
-                    <td>-</td>
                     @endif
-
                 </tr>
                 {{Form::close()}}
                 @endforeach

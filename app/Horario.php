@@ -10,7 +10,7 @@ class Horario extends Model
     protected $primaryKey='idhora';
     public $timestamps=false;
     protected $fillable=[
-	'horainicio','horafinal','estado'
+	'hora','estado'
     ];
     protected $guarded=[
     	

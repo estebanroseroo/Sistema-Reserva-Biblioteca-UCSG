@@ -24,8 +24,7 @@ class HorarioFormRequest extends FormRequest
     public function rules()
     {
         return [
-            'horainicio' => 'required',
-            'horafinal' => 'required',
+            'hora' => 'required',
         ];
     }
 }

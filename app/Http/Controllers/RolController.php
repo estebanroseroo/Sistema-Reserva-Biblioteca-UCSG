@@ -23,6 +23,7 @@ class RolController extends Controller
             ->leftjoin('users as u','u.idtipousuario','=','t.idtipousuario')
             ->select('t.nombre', 't.idtipousuario', DB::raw('(CASE 
             WHEN t.idtipousuario=u.idtipousuario
+            AND u.estado="A"
             THEN "lleno"
             ELSE "vacio"
             END) AS temporal'))

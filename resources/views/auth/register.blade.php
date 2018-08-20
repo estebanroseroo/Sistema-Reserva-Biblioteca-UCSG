@@ -88,7 +88,7 @@
 
     <input id="estado" name="estado" type="hidden" value="A">
     <div class="col-md-6 offset-md-4">
-    <label id="mensaje" style="font-size: 12px; color:red; font-weight:bold;"></label>
+    <label id="mensaje" style="font-size: 14px; color:red; font-weight:bold;"></label>
     </div>
 
     <div class="form-group row mb-0">
