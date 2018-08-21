@@ -17,6 +17,7 @@ use Auth;
 use Carbon\Carbon;
 use sistemaReserva\User;
 use Mail;
+use DateTime;
 
 class AdminreservaController extends Controller
 {
@@ -29,11 +30,34 @@ class AdminreservaController extends Controller
       $monitorear=Reserva::where('estado','A')->get();
       $hoy = Carbon::now()->format('d/m/Y');
       $hora = Carbon::now()->format('H:i:s');
+
       foreach ($monitorear as $m) {
-         if ($m->fecha==$hoy && $m->tiempoespera<$hora && is_null($m->horallegada)==1){
-             $m->estado='I';
-             $m->update();
-         }
+          $vhoy=explode("/",$hoy);
+          $vquery=explode("/",$m->fecha);
+          $vcrea=explode("/",$m->fechacrea);
+          $dhoy=$vhoy[0];
+          $mhoy=$vhoy[1];
+          $ahoy=$vhoy[2];
+          $dquery=$vquery[0];
+          $mquery=$vquery[1];
+          $aquery=$vquery[2];
+          $dcrea=$vcrea[0];
+          $mcrea=$vcrea[1];
+          $acrea=$vcrea[2];
+          if(($ahoy>$aquery) || ($ahoy==$aquery && $mhoy>$mquery) || ($ahoy==$aquery && $mhoy==$mquery && $dhoy>$dquery) || ($ahoy==$aquery && $mhoy==$mquery && $dhoy==$dquery && $m->horacrea<$m->tiempoespera && $hora>=$m->tiempoespera && is_null($m->horallegada)==1) || ($ahoy>=$acrea && $mhoy>=$mcrea && $dhoy>$dcrea && $hora>=$m->tiempoespera && is_null($m->horallegada)==1)){
+            $m->estado='I';
+            $m->update();
+            $area=Area::findOrFail($m->idarea);
+            $usu = User::where('id',$m->id)->where('estado','A')->first();
+            $reservas=Reserva::findOrFail($m->idreserva);
+            Mail::send('email.mensajeresexpiro',['usu' => $usu,'reservas' => $reservas,'area'=>$area],
+                    function ($m) use ($usu) {
+                        $m->to($usu->email, $usu->name)
+                          ->subject('Código QR expiró')
+                          ->from('roseroesteban@gmail.com', 'Administrador');
+                      }
+                    );
+          }
       }
       
       $query=trim($request->get('searchText'));
@@ -65,13 +89,20 @@ class AdminreservaController extends Controller
 
     public function show(Request $request){
     if($request){
+        $idquery=trim($request->get('eid'));
+        if($idquery>0){
+          $usuarios= User::where('estado','=','A')->where('id','=',$idquery)->first();
+        }
+        else{
+          $usuarios= User::where('estado','=','A')->where('id','=',Auth::user()->id)->first();
+        }
+        
         $qnombre=trim($request->get('enombre'));
         $qcapacidad=trim($request->get('ecapacidad'));
         $qfecha=trim($request->get('efecha'));
         $qhorainicio=trim($request->get('ehorainicio'));
         $qhorafinal=trim($request->get('ehorafinal'));
         $qhoraid=trim($request->get('ehoraid'));
-        $usuarios=DB::table('users')->where('estado','=','A')->orderBy('idtipousuario','asc')->get();
         $areas=DB::table("area")
         ->where('estado','=','A')
         ->where('nombre','=',$qnombre)->first();
@@ -92,6 +123,8 @@ class AdminreservaController extends Controller
 
    public function create(Request $request){
     if($request){
+        $usuarios=DB::table('users')->where('estado','=','A')->where('idtipousuario','>',2)->orderBy('idtipousuario','asc')->get();
+        $idquery=trim($request->get('id'));
         $query=trim($request->get('fecha'));
         $queryinicio=trim($request->get('horainicio'));
         $queryfinal=trim($request->get('horafinal'));//12:00:00
@@ -110,13 +143,13 @@ class AdminreservaController extends Controller
         ->leftjoin('area as a','a.idarea','=','r.idarea')
         ->select("a.nombre","a.capacidad","r.fecha","r.horainicio","r.horafinal")
         ->where('r.fecha','=',$query)
-        ->where('r.horainicio','=',$queryinicio)
-        ->where('r.estado','=','A')
+        ->where('r.horainicio','<=',$queryinicio)
+        ->where('r.horafinal','>',$queryinicio)
+        ->where('r.estado','!=','I')
         ->union($areas)
         ->get();
         $diferentes=$reservas->unique('nombre');
         $diferentes->values()->all();
-        //print_r($diferentes);
 
         $sms='';
         if($query=='' && $queryinicio!=''){//si fecha vacia
@@ -130,11 +163,21 @@ class AdminreservaController extends Controller
         $hvqfinal=$vqfinal[0];
         $hvhora=$vhora[0];
         $hmin=$hvqfinal-$hvqinicio;
+        if($request->get('id')>0){
+          $r = Reserva::where('id', '=', $request->get('id'))->where('estado','!=','I')->get();
+        }
+        else{
+          $r = Reserva::where('id', '=', Auth::user()->id)->where('estado','!=','I')->get();
+        }
+        $rcont = $r->count();
+        if($rcont>=5){
+          $sms='No se puede realizar más de cinco reservas';
+        }
         if($hmin<1){//hora final antes de hora inicio
           $sms='Se puede reservar mínimo una hora';
         }
-        if($hmin>6){
-          $sms='Se puede reservar máximo seis horas';
+        if($hmin>5){
+          $sms='Se puede reservar máximo cinco horas';
         }
         if($query==$hoy && $hvqinicio<$hvhora){//si hoy hora inicio es pasado
           $sms='La hora seleccionada no es válida';
@@ -171,10 +214,34 @@ class AdminreservaController extends Controller
               }
             }
           }
+
+          $contador=0;
+          $contselect=0;
+          $shi=(int)$queryinicio;
+          $shf=(int)$queryfinal;
+          $difsh=$shf-$shi;
+          if($request->get('id')>0){
+          $reshora = Reserva::where('id', '=', $request->get('id'))
+          ->where('estado','!=','I')->where('fecha','=',$query)->get();
+          }
+          else{
+          $reshora = Reserva::where('id', '=', Auth::user()->id)
+          ->where('estado','!=','I')->where('fecha','=',$query)->get();
+          }
+          foreach ($reshora as $rh) {
+          $hi=(int)$rh->horainicio;
+          $hf=(int)$rh->horafinal;
+          $difh=$hf-$hi;
+          $contador=$contador+$difh;
+          }
+          $sum=$difsh+$contador;
+          if($sum>5){
+          $sms='No se puede reservar más de cinco horas al día';
+          }
         }
 
         if(Auth::user()->idtipousuario<3){
-            return view("operacion.adminreservas.create",["fecha"=>$query,"inicio"=>$queryinicio,"final"=>$queryfinal,"horarios"=>$horarios,"horariosf"=>$horariosf,"reservas"=>$reservas,"areas"=>$areas,"diferentes"=>$diferentes,"horaid"=>$horaid,"sms"=>$sms]);
+            return view("operacion.adminreservas.create",["fecha"=>$query,"inicio"=>$queryinicio,"final"=>$queryfinal,"horarios"=>$horarios,"horariosf"=>$horariosf,"reservas"=>$reservas,"areas"=>$areas,"diferentes"=>$diferentes,"horaid"=>$horaid,"sms"=>$sms,"usuarios"=>$usuarios,"idquery"=>$idquery]);
             }
             else{
             return Redirect::to('/logout');
@@ -183,6 +250,8 @@ class AdminreservaController extends Controller
     }
 
     public function store(AdminreservaFormRequest $request){
+    $hoy = Carbon::now()->format('d/m/Y');
+    $hora = Carbon::now()->format('H:i:s');
     $reserva=new Reserva;
     $reserva->fecha=$request->get('fecha');
     $reserva->horainicio=$request->get('horainicio');
@@ -195,6 +264,8 @@ class AdminreservaController extends Controller
     $reserva->estado='A';
     $reserva->codigoqr=str_random(10);
     $reserva->idhora=$request->get('horaid');
+    $reserva->fechacrea=$hoy;
+    $reserva->horacrea=$hora;
     $reserva->save();
 
     $fin = $reserva->horainicio;
@@ -204,9 +275,44 @@ class AdminreservaController extends Controller
     $quince = strtotime("+15 minutes", strtotime($ms));//:15:00
     $uno=date(':i:s', $quince);
     $espera=$separa[0].$uno;//16:15:00
-
     $reserva->tiempoespera=$espera;
     $reserva->update();
+
+    if($hoy==$reserva->fecha && $reserva->horacrea>=$espera){
+      $fin = $reserva->horacrea;
+      $separa=explode(":",$fin);
+      if($separa[0]>11 && $separa[1]>44){
+      $nuevote= date('h:i:s',strtotime($fin . ' +15 minutes'));
+      $separan=explode(":",$nuevote);
+      $nhora=$separa[0]+1;
+      $nnuevote=$nhora.":".$separan[1].":00";
+      if($nnuevote>=$reserva->horafinal){
+      $reserva->tiempoespera=$reserva->horafinal;
+      $reserva->update();
+      }
+      else{
+      $reserva->tiempoespera=$nnuevote;
+      $reserva->update();
+      }
+      }
+      else{
+      if($separa[0]>11){
+      $nuevote= date('h:i:s',strtotime($fin . ' +15 minutes'));
+      $separan=explode(":",$nuevote);
+      $nhora=$separa[0];
+      $nnuevote=$nhora.":".$separan[1].":00";
+      $reserva->tiempoespera=$nnuevote;
+      $reserva->update();
+      }
+      else{
+      $nuevote= date('h:i:s',strtotime($fin . ' +15 minutes'));
+      $separan=explode(":",$nuevote);
+      $nnuevote=$separan[0].":".$separan[1].":00";
+      $reserva->tiempoespera=$nnuevote;
+      $reserva->update();
+      }
+      }
+    }
 
     $area=Area::findOrFail($reserva->idarea);
     $reservas=DB::table('reserva')->where('estado','=','A')->get();

@@ -42,8 +42,12 @@
 					<td><a href="" data-target="#modal-qr-{{$cod=$r->idreserva}}" data-toggle="modal">
 						<button class="my-button"><i class="fa fa-qrcode"> <b>QR</b></i></button>
 					</td>
+					@if($r->estado=='A')
 					<td><a href="" data-target="#modal-delete-{{$r->idreserva}}" data-toggle="modal">
 						<button class="my-button"><i class="fa fa-trash"> <b>Eliminar</b></i></button></a></td>
+					@else
+					<td></td>
+					@endif
 				</tr>
 				@include('menu.reservas.modal')
 				@include('menu.reservas.qrmodal')

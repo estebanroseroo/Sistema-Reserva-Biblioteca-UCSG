@@ -22,15 +22,10 @@
 	{!!Form::open(array('url'=>'operacion/adminreservas', 'method'=>'POST', 'autocomplete'=>'off'))!!}
 	{{Form::token()}}
     {{ csrf_field() }}
-
     <div class="form-group row">
-        <label class="col-md-4 col-form-label text-md-right">{{ __('Usuario') }}</label>
-        <div class="col-md-6">
-        <select id="id" name="id" class="form-control">
-            @foreach ($usuarios as $u)
-            <option value="{{$u->id}}">{{$u->name}}</option>
-            @endforeach
-        </select>
+        <label for="fecha" class="col-md-4 col-form-label text-md-right">{{ __('Usuario') }}</label>
+        <div class="col-md-6">  
+        <input type="text" id="id" readonly="readonly" class="form-control" name="id" value="{{$usuarios->name}}">
         </div>
     </div>
 
@@ -104,18 +99,7 @@
 </div>
 </div>
 </div><!-- /.box -->
-
-<script src="//cdnjs.cloudflare.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.3/js/select2.min.js"></script>
-
 <script type="text/javascript">
-    $("#id").select2({
-    language: {
-        noResults: function (params) {
-            return "No se encontraron resultados";
-            }
-        }
-    });
 function isNumberKey(evt){
         var charCode = (evt.which) ? evt.which : event.keyCode
         if (charCode > 31 && (charCode < 48 || charCode > 57))

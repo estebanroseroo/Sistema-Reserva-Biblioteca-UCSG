@@ -14,7 +14,18 @@
 <div class="col-lg-8 col-md-8 col-sm-8 col-xs-12">
 {!! Form::open(array('url'=>'operacion/adminreservas/create','method'=>'GET','autocomplete'=>'off','role'=>'search')) !!}
 <h2>Nueva reserva   <button type="submit" class="my-button"><i class="fa fa-search"><b> Buscar</b></i></button></h2>
-    
+     <div class="form-group row">
+        <label class="col-md-2 col-form-label text-md-right">{{ __('Usuario') }}</label>
+        <div class="col-md-6">
+        <select id="id" name="id" class="form-control">
+            @foreach ($usuarios as $u)
+            <option value="0" @if(0==$idquery) selected="selected" @endif>N/A</option>
+            <option value="{{$u->id}}" @if($u->id==$idquery) selected="selected" @endif>{{$u->name}}</option>
+            @endforeach
+        </select>
+        </div>
+    </div>
+
     <div class="form-group row">
         <label for="fecha" class="col-md-2 col-form-label text-md-right">{{ __('Fecha') }}</label>
         <div class="col-md-6">  
@@ -101,6 +112,7 @@
                         <input name="ehoraid" value="{{$horaid->idhora}}" type="hidden">
                         <input name="ehorainicio" value="{{$inicio}}" type="hidden">
                         <input name="ehorafinal" value="{{$final}}" type="hidden">
+                        <input name="eid" value="{{$idquery}}" type="hidden">
                         <button type="submit" class="my-button"><b>Reservar</b></button>
                     </td>
                     @endif
@@ -118,16 +130,30 @@
 </div>
 </div>
 </div><!-- /.box -->
+<script src="//cdnjs.cloudflare.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.3/js/select2.min.js"></script>
+
+
+<script type="text/javascript">
+var jQuery_1_1_3 = $.noConflict(true);
+jQuery_1_1_3("#id").select2({
+    language: {
+        noResults: function (params) {
+            return "No se encontraron resultados";
+            }
+        }
+    });
+</script>
+
 <script>
-    $('.datepicker').datepicker({
+var jQuery_1_3_2 = $.noConflict(true);
+jQuery_1_3_2('.datepicker').datepicker({
         format: "dd/mm/yyyy",
         language: "es",
         autoclose: true,
         orientation: "bottom",
         todayHighlight: true,
-        setDate: null,
-        minDate: null,
-        maxDate: null
-    }); 
+        daysOfWeekDisabled: [0,6],
+    });
 </script>
 @endsection

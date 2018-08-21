@@ -119,15 +119,13 @@
 </div>
 </div><!-- /.box -->
 <script>
-    $('.datepicker').datepicker({
+$('.datepicker').datepicker({
         format: "dd/mm/yyyy",
         language: "es",
         autoclose: true,
         orientation: "bottom",
         todayHighlight: true,
-        setDate: null,
-        minDate: null,
-        maxDate: null
+        daysOfWeekDisabled: [0,6],
     }); 
 </script>
 @endsection
