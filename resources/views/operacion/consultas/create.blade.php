@@ -19,6 +19,14 @@
     </div>
 </div>
 
+    {!! Form::open(array('url'=>'operacion/consultas/edit','method'=>'GET','autocomplete'=>'off','role'=>'search')) !!}
+    <div class="form-group row">
+        <label for="cod" class="col-md-3 col-form-label text-md-right"></label>
+        <div class="col-md-6">  
+        <input type="hidden" id="cod" readonly="readonly" class="form-control" name="cod" value="{{$cod}}">
+        </div>
+    </div>
+
     <div class="form-group row">
         <label for="usuario" class="col-md-3 col-form-label text-md-right">{{ __('Usuario') }}</label>
         <div class="col-md-6">  
@@ -44,7 +52,6 @@
         <label for="area" class="col-md-3 col-form-label text-md-right">{{ __('Área') }}</label>
         <div class="col-md-6">  
         <input type="text" id="area" readonly="readonly" class="form-control" name="area" value="{{$codarea}}">
-        <input type="hidden" name="idarea">
         </div>
     </div>
 
@@ -55,6 +62,26 @@
         </div>
     </div>
 
+    <div class="form-group row">
+        <label class="col-md-3 col-form-label text-md-right"></label>
+        <div class="col-md-6">
+        <label id="mensaje" style="font-size: 14px; color:red; font-weight:bold;">{{$sms}}</label>
+        </div>
+    </div>
+
+    <div class="form-group">
+        <label class="col-md-3 col-form-label text-md-right"></label>
+        <div class="col-md-4">
+        <button class="my-button" type="submit"><i class="fa fa-check"><b> Validar</b></i></button>
+        {!!Form::close()!!}
+        </div>
+        <div class="col-md-3">
+        {!! Form::open(array('url'=>'operacion/consultas','method'=>'GET','autocomplete'=>'off','role'=>'search')) !!}
+        <button class="my-button" type="submit"><i class="fa fa-home"><b> Regresar</b></i></button>
+        {!!Form::close()!!}
+        </div>
+    </div>
+   
 </div>
 </div>
 

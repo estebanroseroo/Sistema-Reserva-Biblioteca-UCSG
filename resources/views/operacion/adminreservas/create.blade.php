@@ -18,8 +18,8 @@
         <label class="col-md-2 col-form-label text-md-right">{{ __('Usuario') }}</label>
         <div class="col-md-6">
         <select id="id" name="id" class="form-control">
-            @foreach ($usuarios as $u)
             <option value="0" @if(0==$idquery) selected="selected" @endif>N/A</option>
+            @foreach ($usuarios as $u)
             <option value="{{$u->id}}" @if($u->id==$idquery) selected="selected" @endif>{{$u->name}}</option>
             @endforeach
         </select>

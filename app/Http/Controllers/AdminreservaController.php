@@ -124,7 +124,12 @@ class AdminreservaController extends Controller
 
    public function create(Request $request){
     if($request){
-        $usuarios=DB::table('users')->where('estado','=','A')->where('idtipousuario','>',2)->orderBy('idtipousuario','asc')->get();
+        if(Auth::user()->idtipousuario==1){
+          $usuarios=DB::table('users')->where('estado','=','A')->where('idtipousuario','>',1)->orderBy('idtipousuario','asc')->get();
+        }
+        else{
+          $usuarios=DB::table('users')->where('estado','=','A')->where('idtipousuario','>',2)->orderBy('name','asc')->get();
+        }
         $idquery=trim($request->get('id'));
         $query=trim($request->get('fecha'));
         $queryinicio=trim($request->get('horainicio'));
