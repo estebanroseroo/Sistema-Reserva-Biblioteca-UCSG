@@ -2,7 +2,7 @@
 @section('contenido')
 <div class="box">
 <div class="box-header with-border">
-<i class="fa fa-graduation-cap"></i>
+<i class="fa fa-graduation-cap" style="color: #000;"></i>
 <h3 class="box-title"><b>Menú</b></h3>
 </div>
 <!-- /.box-header -->
@@ -13,28 +13,29 @@
 <div class="row">
 <div class="col-lg-8 col-md-8 col-sm-8 col-xs-12">
 {!! Form::open(array('url'=>'menu/reservas/create','method'=>'GET','autocomplete'=>'off','role'=>'search')) !!}
-<h2>Nueva reserva   <button type="submit" class="my-button"><i class="fa fa-search"><b> Buscar</b></i></button></h2>
+<h2><b>Nueva reserva</b></h2>
+<br>
    
     <div class="form-group row">
-        <label for="fecha" class="col-md-2 col-form-label text-md-right">{{ __('Fecha') }}</label>
+        <label for="fecha" class="col-md-2 col-form-label text-md-right" style="color: #000;">{{ __('Fecha') }}</label>
         <div class="col-md-6">  
         <div class="input-group">
             <div class="input-group-addon">
-            <i class="fa fa-calendar"></i>
+            <i class="fa fa-calendar" style="color: #000;"></i>
             </div>  
-            <input type="text" class="form-control datepicker" id="fecha" placeholder="Fecha" name="fecha" value="{{$fecha}}">
+            <input type="text" class="form-control datepicker" id="fecha" placeholder="Fecha" name="fecha" value="{{$fecha}}" style="color: #000;">
         </div>
         </div>
     </div>
 
     <div class="form-group row">
-        <label for="horainicio" class="col-md-2 col-form-label text-md-right">{{ __('Hora inicio') }}</label>
+        <label for="horainicio" class="col-md-2 col-form-label text-md-right" style="color: #000;">{{ __('Hora inicio') }}</label>
         <div class="col-md-6">  
             <div class="input-group">
             <div class="input-group-addon">
-            <i class="fa fa-clock-o"></i>
+            <i class="fa fa-clock-o" style="color: #000;"></i>
             </div>
-            <select id="horainicio" name="horainicio" class="form-control">
+            <select id="horainicio" name="horainicio" class="form-control" style="color: #000;">
             @foreach ($horarios as $hor)
             <option value="{{$hor->hora}}" 
             @if($hor->hora==$inicio) selected="selected" @endif>
@@ -47,13 +48,13 @@
     </div>
 
     <div class="form-group row">
-        <label for="horafinal" class="col-md-2 col-form-label text-md-right">{{ __('Hora final') }}</label>
+        <label for="horafinal" class="col-md-2 col-form-label text-md-right" style="color: #000;">{{ __('Hora final') }}</label>
         <div class="col-md-6">  
             <div class="input-group">
             <div class="input-group-addon">
-            <i class="fa fa-clock-o"></i>
+            <i class="fa fa-clock-o" style="color: #000;"></i>
             </div>
-            <select id="horafinal" name="horafinal" class="form-control">
+            <select id="horafinal" name="horafinal" class="form-control" style="color: #000;">
             @foreach ($horariosf as $hor)
             <option value="{{$hor->hora}}" 
             @if($hor->hora==$final) selected="selected" @endif>
@@ -65,10 +66,19 @@
         </div>
     </div>
 
+    @if($sms!='')
     <div class="form-group row">
         <label class="col-md-2 col-form-label text-md-right"></label>
         <div class="col-md-6">
-        <label id="mensaje" style="font-size: 14px; color:red; font-weight:bold;">{{$sms}}</label>
+        <label id="mensaje" style="font-size: 14px; color:red; font-weight:bold;" type="hidden">{{$sms}}</label>
+        </div>
+    </div>
+    @endif
+
+    <div class="form-group row">
+        <label class="col-md-2 col-form-label text-md-right"></label>
+        <div class="col-md-6">
+        <button type="submit" class="my-button"><i class="fa fa-search"><b> Buscar</b></i></button>
         </div>
     </div>
     {{Form::close()}} 
@@ -81,14 +91,14 @@
         <div class="table-responsive">
             <table class="table table-striped table-bordered table-condensed table-hover">
                 @if($inicio!=="" && $fecha!=="" && $sms=="")
-                <thead>
+                <thead class="my-thead">
                     <th>Área</th>
                     <th>Capacidad</th>
                     <th>Disponibilidad</th>
                 </thead>
                 @foreach($diferentes as $d)
         {!! Form::open(array('url'=>'menu/reservas/edit','method'=>'GET','autocomplete'=>'off','role'=>'search')) !!}
-                <tr>
+                <tr class="my-td">
                     <td>{{$d->nombre}}<input name="enombre" value="{{$d->nombre}}" type="hidden"></td>
                     <td>{{$d->capacidad}}<input name="ecapacidad" value="{{$d->capacidad}}" type="hidden"></td>
 

@@ -2,7 +2,7 @@
 @section('contenido')
 <div class="box">
 <div class="box-header with-border">
-<i class="fa fa-wrench"></i>
+<i class="fa fa-wrench" style="color: #000;"></i>
 <h3 class="box-title"><b>Mantenimiento</b></h3>
 </div>
 <!-- /.box-header -->
@@ -12,7 +12,8 @@
 	
 <div class="row">
 	<div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
-		<h2>Nueva carrera</h2>
+		<h2><b>Nueva carrera</b></h2>
+		<br>
 		@if (count($errors)>0)
 		<div class="my-alert">
 			<ul>
@@ -26,14 +27,14 @@
 	{!!Form::open(array('url'=>'mantenimiento/carreras', 'method'=>'POST', 'autocomplete'=>'off'))!!}
 	{{Form::token()}}
 	<div class="form-group">
-		<label for="nombre">Nombre</label>
+		<label for="nombre" style="color: #000;">Nombre</label>
 		<input id="nombre" type="text" name="nombre" class="form-control" placeholder="Nombre" 
-		onkeyup="this.value = this.value.replace(/\b\w/g, l => l.toUpperCase());" oncopy="return false" onpaste="return false" value="{{ old('nombre') }}">
+		onkeyup="this.value = this.value.replace(/\b\w/g, l => l.toUpperCase());" oncopy="return false" onpaste="return false" value="{{ old('nombre') }}" style="color: #000;" maxlength="50">
 	</div>
 
 	<div class="form-group">
-		<label>Facultad</label>
-		<select name="idfacultad" class="form-control">
+		<label style="color: #000;">Facultad</label>
+		<select name="idfacultad" class="form-control" style="color: #000;">
 			@foreach ($facultades as $fac)
 			<option value="{{$fac->idfacultad}}">{{$fac->nombre}}</option>
 			@endforeach

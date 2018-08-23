@@ -157,7 +157,7 @@ class QrLoginController extends Controller
       if($hmin>5){
         $sms='Se puede reservar máximo cinco horas';
       }
-      if($codfecha==$hoy && $hvqinicio<$hvhora){
+      if($codfecha==$hoy && $hvqinicio<$hvhora && $hvqfinal<$hvhora){
         $sms='La hora seleccionada no es válida';
       }
 
