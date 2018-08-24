@@ -2,7 +2,7 @@
 @section('contenido')
 <div class="box">
 <div class="box-header with-border">
-<i class="fa fa-wrench"></i>
+<i class="fa fa-wrench" style="color: #000;"></i>
 <h3 class="box-title"><b>Mantenimiento</b></h3>
 </div>
 <!-- /.box-header -->
@@ -12,7 +12,8 @@
 	
 <div class="row">
 <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
-<h2>Roles	<a href="roles/create"><button class="my-button"><i class="fa fa-plus"><b> Agregar</b></i></button></a></h2>
+<h2><b>Roles </b><a href="roles/create"><button class="my-button"><i class="fa fa-plus"><b> Agregar</b></i></button></a></h2>
+<br>	
 @include('mantenimiento.roles.search')
 </div>
 </div>
@@ -21,13 +22,13 @@
 	<div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
 		<div class="table-responsive">
 			<table class="table table-striped table-bordered table-condensed table-hover">
-				<thead>
+				<thead class="my-thead">
 					<th>Rol</th>
-					<th colspan="2"></th>
+					<th colspan="2">Opciones</th>
 				</thead>
 
 				@foreach($roles as $r)
-				<tr>
+				<tr class="my-td">
 					<td>{{$r->nombre}}</td>
 					<td><a href="{{URL::action('RolController@edit', $r->idtipousuario)}}"><button class="my-button"><i class="fa fa-pencil"> <b>Editar</b></i></button></a></td>
 					@if($r->idtipousuario>2 && $r->temporal=='vacio')

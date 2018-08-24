@@ -60,6 +60,24 @@ class AdminreservaController extends Controller
                     );
           }
       }
+
+      $monitorear=Reserva::where('estado','=','C')->get();
+      foreach ($monitorear as $m) {
+        if($hora>=$m->horafinal){
+            $m->estado='I';
+            $m->update();
+            $area=Area::findOrFail($m->idarea);
+            $usu = User::where('id',$m->id)->where('estado','A')->first();
+            $reservas=Reserva::findOrFail($m->idreserva);
+            Mail::send('email.mensajeresfinalizo',['usu' => $usu,'reservas' => $reservas,'area'=>$area],
+                    function ($m) use ($usu) {
+                        $m->to($usu->email, $usu->name)
+                          ->subject('Reserva finalizada')
+                          ->from('roseroesteban@gmail.com', 'Administrador');
+                      }
+                    );
+        }
+      }
       
       $query=trim($request->get('searchText'));
       $reservas=DB::table('reserva as r')

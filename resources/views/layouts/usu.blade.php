@@ -33,7 +33,7 @@
             <ul class="nav navbar-nav">
               <li class="user-menu">
                 <a href="#" class="dropdown-toggle my-div" data-toggle="dropdown">
-                  <span><b>{{ Auth::user()->name }}</b></span>
+                  <img src="{{asset('img/logouser.png')}}" alt class="img-circle" width="30px"><span><b> {{ Auth::user()->name }}</b></span>
                 </a>
                 <ul class="dropdown-menu">
                   <li class="treeview-menu">
@@ -55,6 +55,13 @@
              <a href="#"></a>
              <a href="#"></a>
             </li>
+            <li class="treeview">
+              <a href="{{url('menu/reservas')}}">
+                <i class="fa fa-home"></i>
+                <span>Inicio</span>
+              </a>
+            </li>
+            
             <li class="treeview">
               <a href="#">
                 <i class="fa fa-graduation-cap"></i>

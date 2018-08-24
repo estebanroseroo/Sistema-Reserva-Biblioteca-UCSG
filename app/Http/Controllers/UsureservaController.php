@@ -30,7 +30,8 @@ class UsureservaController extends Controller
       $monitorear=Reserva::where('estado','!=','I')->get();
       $hoy = Carbon::now()->format('d/m/Y');
       $hora = Carbon::now()->format('H:i:s');
-
+      $query=trim($request->get('searchText'));
+      
       foreach ($monitorear as $m) {
           $vhoy=explode("/",$hoy);
           $vquery=explode("/",$m->fecha);
@@ -79,13 +80,18 @@ class UsureservaController extends Controller
       $reservas=DB::table('reserva as r')
       ->leftjoin('users as u','u.id','=','r.id')
       ->leftjoin('area as a','a.idarea','=','r.idarea')
-      ->select('r.idreserva','u.name as nombreusuario','a.nombre as nombrearea','r.fecha','r.horainicio','r.horafinal','r.cantidad','r.codigoqr','r.estado')
+      ->select('r.idreserva','u.name as nombreusuario','a.nombre as nombrearea','r.fecha','r.horainicio','r.horafinal','r.cantidad','r.codigoqr','r.estado','r.fecha')
+      ->where('r.fecha','LIKE','%'.$query.'%')
       ->where('u.email','=',Auth::user()->email)
       ->where('r.estado','!=','I')
-      ->orderBy('r.horainicio','asc')->get();
+      ->orwhere('a.nombre','LIKE','%'.$query.'%')
+      ->where('u.email','=',Auth::user()->email)
+      ->where('r.estado','!=','I')
+      ->orderBy('r.fecha','asc')
+      ->paginate(9);
 
       if(Auth::user()->idtipousuario>2){
-      return view('menu.reservas.index',["reservas"=>$reservas]);
+      return view('menu.reservas.index',["reservas"=>$reservas,"searchText"=>$query]);
       }
       else{
       return Redirect::to('/logout');

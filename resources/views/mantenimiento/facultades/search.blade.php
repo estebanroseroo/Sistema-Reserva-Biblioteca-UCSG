@@ -1,7 +1,7 @@
 {!! Form::open(array('url'=>'mantenimiento/facultades','method'=>'GET','autocomplete'=>'off','role'=>'search')) !!}
 <div class="form-group">
 	<div class="input-group">
-		<input type="text" class="form-control" id="searchText" name="searchText" placeholder="Búsqueda por facultad" value="{{$searchText}}" onkeyup="this.value = this.value.replace(/\b\w/g, l => l.toUpperCase());" oncopy="return false" onpaste="return false" maxlength="20">
+		<input type="text" class="form-control" id="searchText" name="searchText" placeholder="Búsqueda por facultad" value="{{$searchText}}" onkeyup="this.value = this.value.toUpperCase();" oncopy="return false" onpaste="return false" maxlength="20" style="color: #000;">
 		<span class="input-group-btn">
 			<button type="submit" class="my-button"><i class="fa fa-search"> <b>Buscar</b></i></button>
 		</span>

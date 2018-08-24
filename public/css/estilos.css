@@ -5,10 +5,22 @@
   color: #FFFFFF;
   line-height: 50px;
   max-height: 45px;
+  padding-left: 20px;
+  font-weight:bold;
+}
+
+.my-thead{
+  background-color: #8c0026; 
+  color:#fff;
+}
+
+.my-td{
+  color:#000; 
+  font-weight:bold;
 }
 
 .my-div{
-  width:160px;
+  width:200px;
   height:55px;
   background-color:#ffffff;
 }

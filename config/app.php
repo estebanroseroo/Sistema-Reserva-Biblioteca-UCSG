@@ -161,6 +161,7 @@ return [
         sistemaReserva\Providers\EventServiceProvider::class,
         sistemaReserva\Providers\RouteServiceProvider::class,
         SimpleSoftwareIO\QrCode\QrCodeServiceProvider::class, 
+        Fx3costa\LaravelChartJs\Providers\ChartjsServiceProvider::class,
 
     ],
 

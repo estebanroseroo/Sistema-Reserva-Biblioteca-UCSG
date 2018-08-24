@@ -27,7 +27,7 @@ class LoginController extends Controller
         if($user->idtipousuario < 3) {
             return redirect('/operacion/adminreservas');
         }
-            return redirect('/menu/perfiles');
+            return redirect('/menu/reservas');
     }
 
     //protected $redirectTo = '/mantenimiento/areas';
