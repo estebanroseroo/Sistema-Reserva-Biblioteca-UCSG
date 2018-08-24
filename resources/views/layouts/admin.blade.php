@@ -82,6 +82,7 @@
 
             <li class="treeview">
               <a href="#">
+
                 <i class="fa fa-bar-chart"></i>
                 <span>Reporte</span>
                  <i class="fa fa-angle-down pull-right"></i>
@@ -93,6 +94,7 @@
 
             <li class="treeview">
               <a href="#">
+
                 <i class="fa fa-wrench"></i>
                 <span>Mantenimiento</span>
                 <i class="fa fa-angle-down pull-right"></i>

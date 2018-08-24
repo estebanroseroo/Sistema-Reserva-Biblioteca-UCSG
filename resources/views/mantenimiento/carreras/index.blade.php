@@ -16,6 +16,15 @@
 <br>	
 @include('mantenimiento.carreras.search')
 </div>
+<div class="col-lg-2 col-md-2 col-sm-2 col-xs-12">
+<h2><label value="."></label></h2>
+<br>
+<div class="form-group">
+	<div class="input-group">
+	<a href="carreras/create"><button class="my-button"><i class="fa fa-plus"><b> Agregar</b></i></button></a>
+	</div>
+</div>
+</div>
 </div>
 
 <div class="row">

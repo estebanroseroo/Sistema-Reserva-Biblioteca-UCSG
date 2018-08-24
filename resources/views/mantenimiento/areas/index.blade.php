@@ -12,9 +12,18 @@
 	
 <div class="row">
 <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
-<h2><b>Áreas de estudio </b><a href="areas/create"><button class="my-button"><i class="fa fa-plus"><b> Agregar</b></i></button></a></h2></h2>
+<h2><b>Áreas de estudio </b><a href="areas/create"><button class="my-button"><i class="fa fa-plus"><b> Agregar</b></i></button></a></h2>
 <br>	
 @include('mantenimiento.areas.search')
+</div>
+<div class="col-lg-2 col-md-2 col-sm-2 col-xs-12">
+<h2><label value="."></label></h2>
+<br>
+<div class="form-group">
+	<div class="input-group">
+	<a href="areas/create"><button class="my-button"><i class="fa fa-plus"><b> Agregar</b></i></button></a></h2>
+	</div>
+</div>
 </div>
 </div>
 

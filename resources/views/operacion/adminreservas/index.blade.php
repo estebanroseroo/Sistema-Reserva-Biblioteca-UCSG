@@ -15,6 +15,17 @@
 <br>
 @include('operacion.adminreservas.search')
 </div>
+<div class="col-lg-2 col-md-2 col-sm-2 col-xs-12">
+	<h2><label value="."></label></h2>
+	<br>
+	<div class="form-group">
+	<div class="input-group">
+		<span class="input-group-btn">
+		<a href="{{url('operacion/adminreservas/create')}}"><button class="my-button"><i class="fa fa-university"><b>Nueva reserva</b></i></button></a>
+		</span>
+	</div>
+	</div>
+</div>
 </div>
 
 <div class="row">
