@@ -24,11 +24,14 @@ Route::resource('operacion/adminreservas','AdminreservaController');
 Route::resource('menu/reservas','UsureservaController');
 Route::resource('operacion/consultas', 'QrLoginController');
 Route::resource('operacion/reservasconfirmadas', 'AdminreservaconfirmadaController');
+Route::resource('reporte/chart', 'ChartController');
 
+Route::get('reporte/chart/create', 'ChartController@displayReport');
 Auth::routes();
 Route::get('mantenimiento/usuarios/create', 'UsuarioController@create');
 Route::get('get/{id}', 'UsuarioController@getStates');
 Route::get('facu/get/{idtipousu}', 'UsuarioController@getFacu');
+Route::get('carre/get/{idfacu}', 'ChartController@getCarre');
 Route::get('states/get/{id}', 'Auth\RegisterController@getStates');
 Route::get('/home', 'HomeController@index')->name('home');
 Route::get('/logout','Auth\LoginController@logout');
@@ -39,6 +42,5 @@ Route::post('/test/save', ['as' => 'save-date',
                             function () {
                                 return '';
                             }]);
-
 Route::post('qrLogin', ['uses' => 'QrLoginController@check']);
 

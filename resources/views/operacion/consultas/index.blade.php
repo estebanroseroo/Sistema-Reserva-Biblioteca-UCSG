@@ -2,7 +2,7 @@
 @section('contenido')
 <div class="box">
 <div class="box-header with-border">
-<i class="fa fa-university"></i>
+<i class="fa fa-university" style="color: #000;"></i>
 <h3 class="box-title"><b>Reserva</b></h3>
 </div>
 <!-- /.box-header -->
@@ -11,10 +11,11 @@
 <div class="col-md-12">
 <div class="row">
 <div class="col-lg-3 col-md-3 col-sm-3 col-xs-12">
-<h2>Consulta QR</h2>
+<h2><b>Consulta QR</b></h2>
+<br>
 {!! Form::open(array('url'=>'operacion/consultas/create','method'=>'GET','autocomplete'=>'off','role'=>'search')) !!}
 <div class="input-group">
-<input type="text" class="form-control" name="cod" placeholder="Búsqueda por código QR" value="{{$cod}}" id="cod" onkeypress="return alpha(event);" oncopy="return false" onpaste="return false" maxlength="10">
+<input type="text" class="form-control" name="cod" placeholder="Búsqueda por código QR" value="{{$cod}}" id="cod" onkeypress="return alpha(event);" oncopy="return false" onpaste="return false" maxlength="10" style="color: #000;">
 <span class="input-group-btn">
 <button type="submit" class="my-button" onclick="return validateForm();"><i class="fa fa-search"> <b>Buscar</b></i></button>
 </span>
@@ -71,7 +72,7 @@
         }
     },
     function(error){
-       $('#message').html('<b>Esperando código QR existente</b>'  );
+       $('#message').html('<b><span style="color: #000;">Esperando código QR existente</span></b>'  );
     }, function(videoError){
        $('#message').html('<span class="text-danger camera_problem"><b>Hubo un problema con su cámara</b></span>');
     }

@@ -56,7 +56,7 @@ class HorarioController extends Controller
 
     public function create(){
       $sms='';
-      $qhora='';
+      $qhora='00:00';
       if(Auth::user()->idtipousuario<2){
             return view("mantenimiento.horarios.create",["sms"=>$sms,"qhora"=>$qhora]);
             }
@@ -68,6 +68,10 @@ class HorarioController extends Controller
    public function store(HorarioFormRequest $request){
       $qhora=trim($request->get('hora')).':00';
       $horaexiste= Horario::where('estado','=','A')->where('hora','=',$qhora)->first();
+      if($qhora=='00:00:00'){
+      $sms='El campo hora es obligatorio';
+      return view("mantenimiento.horarios.create",["sms"=>$sms,"qhora"=>$qhora]);
+      }
       if($horaexiste){
       $sms='La hora ya existe';
       return view("mantenimiento.horarios.create",["sms"=>$sms,"qhora"=>$qhora]);

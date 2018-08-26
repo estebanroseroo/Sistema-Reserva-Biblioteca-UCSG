@@ -27,6 +27,7 @@ class AdminreservaconfirmadaController extends Controller
 
    public function index(Request $request){
     if($request){
+      $hoy = Carbon::now()->format('d/m/Y');
       $hora = Carbon::now()->format('H:i:s');
       $query=trim($request->get('searchText'));
       $monitorear=Reserva::where('estado','=','C')->get();
@@ -46,6 +47,37 @@ class AdminreservaconfirmadaController extends Controller
                       }
                     );
         }
+      }
+
+      $monitorear=Reserva::where('estado','A')->get();
+      foreach ($monitorear as $m) {
+          $vhoy=explode("/",$hoy);
+          $vquery=explode("/",$m->fecha);
+          $vcrea=explode("/",$m->fechacrea);
+          $dhoy=$vhoy[0];
+          $mhoy=$vhoy[1];
+          $ahoy=$vhoy[2];
+          $dquery=$vquery[0];
+          $mquery=$vquery[1];
+          $aquery=$vquery[2];
+          $dcrea=$vcrea[0];
+          $mcrea=$vcrea[1];
+          $acrea=$vcrea[2];
+          if(($ahoy>$aquery) || ($ahoy==$aquery && $mhoy>$mquery) || ($ahoy==$aquery && $mhoy==$mquery && $dhoy>$dquery) || ($ahoy==$aquery && $mhoy==$mquery && $dhoy==$dquery && $m->horacrea<$m->tiempoespera && $hora>=$m->tiempoespera && $m->estado=='A')){
+            //($ahoy>=$acrea && $mhoy>=$mcrea && $dhoy>$dcrea && $hora>=$m->tiempoespera && is_null($m->horallegada)==1)
+            $m->estado='I';
+            $m->update();
+            $area=Area::findOrFail($m->idarea);
+            $usu = User::where('id',$m->id)->where('estado','A')->first();
+            $reservas=Reserva::findOrFail($m->idreserva);
+            Mail::send('email.mensajeresexpiro',['usu' => $usu,'reservas' => $reservas,'area'=>$area],
+                    function ($m) use ($usu) {
+                        $m->to($usu->email, $usu->name)
+                          ->subject('Código QR expiró')
+                          ->from('roseroesteban@gmail.com', 'Administrador');
+                      }
+                    );
+          }
       }
 
       $reservas=DB::table('reserva as r')

@@ -161,6 +161,9 @@ return [
         sistemaReserva\Providers\EventServiceProvider::class,
         sistemaReserva\Providers\RouteServiceProvider::class,
         SimpleSoftwareIO\QrCode\QrCodeServiceProvider::class, 
+        Fx3costa\LaravelChartJs\Providers\ChartjsServiceProvider::class,
+        Jimmyjs\ReportGenerator\ServiceProvider::class,
+        Barryvdh\DomPDF\ServiceProvider::class,
 
     ],
 
@@ -213,6 +216,10 @@ return [
         'Form'=>Collective\Html\FormFacade::class, 
         'Html'=>Collective\HtmlFacade::class,
         'QrCode' => SimpleSoftwareIO\QrCode\Facades\QrCode::class,
+        'PdfReport' => Jimmyjs\ReportGenerator\Facades\PdfReportFacade::class,
+        'ExcelReport' => Jimmyjs\ReportGenerator\Facades\ExcelReportFacade::class,
+        'CSVReport' => Jimmyjs\ReportGenerator\Facades\CSVReportFacade::class,
+        'PDF' => Barryvdh\DomPDF\Facade::class,
 
     ],
 

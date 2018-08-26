@@ -3,8 +3,12 @@
   <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <title>UCSG en Línea | Servicios en Línea de la Universidad Católica de Santiago de Guayaquil</title>
     <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.2/Chart.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.2/Chart.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.2/Chart.bundle.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.2/Chart.bundle.js"></script>
+    <title>UCSG en Línea | Servicios en Línea de la Universidad Católica de Santiago de Guayaquil</title>
     <link rel="stylesheet" href="{{asset('css/bootstrap.min.css')}}">
     <link rel="stylesheet" href="{{asset('css/font-awesome.css')}}">
     <link rel="stylesheet" href="{{asset('css/AdminLTE.min.css')}}">
@@ -33,7 +37,7 @@
             <ul class="nav navbar-nav">
               <li class="user-menu">
                 <a href="#" class="dropdown-toggle my-div" data-toggle="dropdown">
-                  <span><b>{{ Auth::user()->name }}</b></span>
+                  <img src="{{asset('img/logouser.png')}}" alt class="img-circle" width="29px"><span><b> {{ Auth::user()->name }}</b></span>
                 </a>
                 <ul class="dropdown-menu">
                   <li class="treeview-menu">
@@ -55,6 +59,38 @@
                <a href="#"></a>
                <a href="#"></a>
             </li>
+             <li class="treeview">
+              <a href="{{url('operacion/adminreservas')}}">
+                <i class="fa fa-home"></i>
+                <span>Inicio</span>
+              </a>
+            </li>
+
+            <li class="treeview">
+              <a href="#">
+                <i class="fa fa-university"></i>
+                <span>Reserva</span>
+                 <i class="fa fa-angle-down pull-right"></i>
+              </a>
+              <ul class="treeview-menu">
+                <li><a href="{{url('operacion/adminreservas')}}"><i class="fa fa-circle-o"></i>Reservas pendientes</a></li>
+                <li><a href="{{url('operacion/reservasconfirmadas')}}"><i class="fa fa-circle-o"></i>Reservas validadas</a></li>
+                <li><a href="{{url('operacion/adminreservas/create')}}"><i class="fa fa-circle-o"></i>Nueva reserva</a></li>
+                <li><a href="{{url('operacion/consultas')}}"><i class="fa fa-circle-o"></i>Consulta QR</a></li>
+              </ul>
+            </li>
+
+            <li class="treeview">
+              <a href="#">
+                <i class="fa fa-bar-chart"></i>
+                <span>Reporte</span>
+                 <i class="fa fa-angle-down pull-right"></i>
+              </a>
+              <ul class="treeview-menu">
+                <li><a href="{{url('reporte/chart')}}"><i class="fa fa-circle-o"></i>Número de usuarios</a></li>
+              </ul>
+            </li>
+
             <li class="treeview">
               <a href="#">
                 <i class="fa fa-wrench"></i>
@@ -68,20 +104,6 @@
                 <li><a href="{{url('mantenimiento/usuarios')}}"><i class="fa fa-circle-o"></i>Usuarios</a></li>
                 <li><a href="{{url('mantenimiento/roles')}}"><i class="fa fa-circle-o"></i>Roles</a></li>
                 <li><a href="{{url('mantenimiento/horarios')}}"><i class="fa fa-circle-o"></i>Horarios</a></li>
-              </ul>
-            </li>
-                        
-            <li class="treeview">
-              <a href="#">
-                <i class="fa fa-university"></i>
-                <span>Reserva</span>
-                 <i class="fa fa-angle-down pull-right"></i>
-              </a>
-              <ul class="treeview-menu">
-                <li><a href="{{url('operacion/adminreservas')}}"><i class="fa fa-circle-o"></i>Reservas pendientes</a></li>
-                <li><a href="{{url('operacion/reservasconfirmadas')}}"><i class="fa fa-circle-o"></i>Reservas confirmadas</a></li>
-                <li><a href="{{url('operacion/adminreservas/create')}}"><i class="fa fa-circle-o"></i>Nueva reserva</a></li>
-                <li><a href="{{url('operacion/consultas')}}"><i class="fa fa-circle-o"></i>Consulta QR</a></li>
               </ul>
             </li>
 
@@ -126,6 +148,6 @@
     <script src="{{asset('js/app.min.js')}}"></script>
     <script src="{{asset('js/my-select.js')}}"></script>
     <script src="{{asset('js/my-select-usuario.js')}}"></script>
-
+    <script src="{{asset('js/my-select-usuchart.js')}}"></script>
   </body>
 </html>

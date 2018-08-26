@@ -33,7 +33,7 @@
             <ul class="nav navbar-nav">
               <li class="user-menu">
                 <a href="#" class="dropdown-toggle my-div" data-toggle="dropdown">
-                  <span><b>{{ Auth::user()->name }}</b></span>
+                  <img src="{{asset('img/logouser.png')}}" alt class="img-circle" width="30px"><span><b> {{ Auth::user()->name }}</b></span>
                 </a>
                 <ul class="dropdown-menu">
                   <li class="treeview-menu">
@@ -54,7 +54,14 @@
             <li class="treeview">
                <a href="#"></a>
                <a href="#"></a>
-            </li>            
+            </li>     
+            <li class="treeview">
+              <a href="{{url('operacion/adminreservas')}}">
+                <i class="fa fa-home"></i>
+                <span>Inicio</span>
+              </a>
+            </li>
+                   
             <li class="treeview">
               <a href="#">
                 <i class="fa fa-university"></i>
@@ -63,7 +70,7 @@
               </a>
               <ul class="treeview-menu">
                 <li><a href="{{url('operacion/adminreservas')}}"><i class="fa fa-circle-o"></i>Reservas pendientes</a></li>
-                <li><a href="{{url('operacion/reservasconfirmadas')}}"><i class="fa fa-circle-o"></i>Reservas confirmadas</a></li>
+                <li><a href="{{url('operacion/reservasconfirmadas')}}"><i class="fa fa-circle-o"></i>Reservas validadas</a></li>
                 <li><a href="{{url('operacion/adminreservas/create')}}"><i class="fa fa-circle-o"></i>Nueva reserva</a></li>
                 <li><a href="{{url('operacion/consultas')}}"><i class="fa fa-circle-o"></i>Consulta QR</a></li>
               </ul>

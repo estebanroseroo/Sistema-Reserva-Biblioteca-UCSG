@@ -1,7 +1,7 @@
 {!! Form::open(array('url'=>'operacion/reservasconfirmadas','method'=>'GET','autocomplete'=>'off','role'=>'search')) !!}
 <div class="form-group">
 	<div class="input-group">
-		<input type="text" class="form-control" name="searchText" placeholder="Búsqueda por usuario, área o fecha" value="{{$searchText}}" onkeypress="return alpha(event);" oncopy="return false" onpaste="return false" maxlength="20">
+		<input type="text" class="form-control" name="searchText" placeholder="Búsqueda por usuario, área o fecha" value="{{$searchText}}" onkeypress="return alpha(event);" oncopy="return false" onpaste="return false" maxlength="20" style="color: #000;">
 		<span class="input-group-btn">
 			<button type="submit" class="my-button"><i class="fa fa-search"> <b>Buscar</b></i></button>
 		</span>

@@ -41,6 +41,8 @@ $app->singleton(
     sistemaReserva\Exceptions\Handler::class
 );
 
+
+
 /*
 |--------------------------------------------------------------------------
 | Return The Application
