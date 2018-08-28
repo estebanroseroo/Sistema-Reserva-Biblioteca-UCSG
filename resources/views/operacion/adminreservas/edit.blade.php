@@ -20,7 +20,8 @@
     <div class="form-group row">
         <label for="fecha" class="col-md-3 col-form-label text-md-right" style="color: #000;">{{ __('Usuario') }}</label>
         <div class="col-md-6">  
-        <input type="text" id="id" readonly="readonly" class="form-control" name="id" value="{{$usuarios->name}}">
+        <input type="text" id="nom" readonly="readonly" class="form-control" name="nom" value="{{$usuarios->name}}">
+        <input type="hidden" id="id" name="id" value="{{$usuarios->id}}">
         </div>
     </div>
 

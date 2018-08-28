@@ -59,7 +59,7 @@
                <a href="#"></a>
                <a href="#"></a>
             </li>
-             <li class="treeview">
+            <li class="treeview">
               <a href="{{url('operacion/adminreservas')}}">
                 <i class="fa fa-home"></i>
                 <span>Inicio</span>
@@ -73,6 +73,7 @@
                  <i class="fa fa-angle-down pull-right"></i>
               </a>
               <ul class="treeview-menu">
+                <li><a href="{{url('operacion/reservasespeciales')}}"><i class="fa fa-circle-o"></i>Reserva especial</a></li>
                 <li><a href="{{url('operacion/adminreservas')}}"><i class="fa fa-circle-o"></i>Reservas pendientes</a></li>
                 <li><a href="{{url('operacion/reservasconfirmadas')}}"><i class="fa fa-circle-o"></i>Reservas validadas</a></li>
                 <li><a href="{{url('operacion/adminreservas/create')}}"><i class="fa fa-circle-o"></i>Nueva reserva</a></li>
@@ -88,6 +89,7 @@
               </a>
               <ul class="treeview-menu">
                 <li><a href="{{url('reporte/chart')}}"><i class="fa fa-circle-o"></i>Número de usuarios</a></li>
+                <li><a href="{{url('reporte/chartreserva')}}"><i class="fa fa-circle-o"></i>Número de reservas</a></li>
               </ul>
             </li>
 
@@ -117,7 +119,13 @@
                 <li><a href="{{URL::action('ContrasenaController@edit', Auth::user()->id)}}"><i class="fa fa-circle-o"></i>Cambiar contraseña</a></li>
               </ul>
             </li>
-                                                     
+
+            <li class="treeview">
+              <a href="{{url('normativa/admin')}}">
+                <i class="fa fa-info-circle"></i>
+                <span>Normativa</span>
+              </a>
+            </li>                                     
           </ul>
         </section>
       </aside>
@@ -149,5 +157,6 @@
     <script src="{{asset('js/my-select.js')}}"></script>
     <script src="{{asset('js/my-select-usuario.js')}}"></script>
     <script src="{{asset('js/my-select-usuchart.js')}}"></script>
+    <script src="{{asset('js/my-select-resechart.js')}}"></script>
   </body>
 </html>

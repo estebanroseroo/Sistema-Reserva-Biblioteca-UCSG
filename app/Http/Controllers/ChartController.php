@@ -604,7 +604,7 @@ class ChartController extends Controller
     }
     }
     foreach ($n1 as $n) {
-    if($n->cantidad<$max1){
+    if($n->cantidad<$max1 || $min1==0){
     $min1=$n->cantidad;
     $nomin1=$n->nombre;
     }
@@ -662,7 +662,7 @@ class ChartController extends Controller
     }
     }
     foreach ($n3 as $n) {
-    if($n->cantidad<$max3){
+    if($n->cantidad<$max3 || $min3==0){
     $min3=$n->cantidad;
     $nomin3=$n->nombre;
     }
@@ -722,7 +722,7 @@ class ChartController extends Controller
     }
     }
     foreach ($n5 as $n) {
-    if($n->cantidad<$max5){
+    if($n->cantidad<$max5 || $min5==0){
     $min5=$n->cantidad;
     $nomin5=$n->nombre;
     }
@@ -784,7 +784,7 @@ class ChartController extends Controller
     }
     }
     foreach ($n7 as $n) {
-    if($n->cantidad<$max7){
+    if($n->cantidad<$max7 || $min7==0){
     $min7=$n->cantidad;
     $nomin7=$n->nombre;
     }
@@ -873,7 +873,7 @@ class ChartController extends Controller
     }
     }
     foreach ($n10 as $n) {
-    if($n->cantidad<$max10){
+    if($n->cantidad<$max10 || $min10==0){
     $min10=$n->cantidad;
     $nomin10=$n->nombre;
     }
@@ -893,15 +893,15 @@ class ChartController extends Controller
     if($palabra=='usurgfece'){$queryBuilder=$usurgfece; $columns=$cusurgfece; $tot=$tot8; $nomax=''; $nomin=''; $nombre='RolGen-FacultadGen-CarreraEsp';}
     if($palabra=='usurefece'){$queryBuilder=$usurefece; $columns=$cusurefece; $tot=$tot9; $nomax=''; $nomin=''; $nombre='RolEsp-FacultadEsp-CarreraEsp';}
     if($palabra=='usurefecg'){$queryBuilder=$usurefecg; $columns=$cusurefecg; $tot=$tot10; $nomax=$nomax10; $nomin=$nomin10; $nombre='RolEsp-FacultadEsp-CarreraGen';}
-
+    $op='usu';
     if($request->boton=='pdf'){
-    return PdfReport::of($title, $meta, $queryBuilder, $columns, $palabra, $tot, $nomax, $nomin,$hoy,$hora)               
+    return PdfReport::of($title, $meta, $queryBuilder, $columns, $palabra, $tot, $nomax, $nomin,$hoy,$hora,$op)
     ->setCss(['.head-content' => 'border-width: 1px',])
     ->limit(50)
     ->stream(); 
     }
     else{
-    return ExcelReport::of($title, $meta, $queryBuilder, $columns, $palabra, $tot, $nomax, $nomin,$hoy,$hora)               
+    return ExcelReport::of($title, $meta, $queryBuilder, $columns, $palabra, $tot, $nomax, $nomin,$hoy,$hora,$op)
     ->setCss(['.head-content' => 'border-width: 1px',])
     ->limit(50)
     ->simpleDownload($nombre); 

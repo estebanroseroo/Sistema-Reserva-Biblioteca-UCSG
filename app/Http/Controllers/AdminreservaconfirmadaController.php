@@ -27,6 +27,19 @@ class AdminreservaconfirmadaController extends Controller
 
    public function index(Request $request){
     if($request){
+      $mdisponibilidad=Area::where('estado','A')->where('disponibilidad','=','No Disponible')->get();
+            $hoy = Carbon::now()->format('Y-m-d');
+            $hora = Carbon::now()->format('H:i:s');
+            foreach ($mdisponibilidad as $m) {
+            $sff=explode(" ",$m->fechafin);
+                if($hoy==$sff[0] && $hora>=$sff[1]){
+                $m->disponibilidad='Disponible';
+                $m->fechainicio=$hola=NULL;
+                $m->fechafin=$hola=NULL;
+                $m->update();
+                }
+            }
+            
       $hoy = Carbon::now()->format('d/m/Y');
       $hora = Carbon::now()->format('H:i:s');
       $query=trim($request->get('searchText'));
@@ -90,7 +103,7 @@ class AdminreservaconfirmadaController extends Controller
         ->where('r.estado','=','C')
         ->orwhere('a.nombre','LIKE','%'.$query.'%')
         ->where('r.estado','=','C')
-        ->orderBy('r.fecha','asc')
+        ->orderBy('r.fechainicio','asc')
         ->paginate(9);
 
         if(Auth::user()->idtipousuario<3){

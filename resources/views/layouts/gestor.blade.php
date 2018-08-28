@@ -86,7 +86,13 @@
                 <li><a href="{{URL::action('ContrasenaController@edit', Auth::user()->id)}}"><i class="fa fa-circle-o"></i>Cambiar contraseña</a></li>
               </ul>
             </li>
-                                                     
+
+            <li class="treeview">
+              <a href="{{url('normativa/gestor')}}">
+                <i class="fa fa-info-circle"></i>
+                <span>Normativa</span>
+              </a>
+            </li>                                          
           </ul>
         </section>
       </aside>

@@ -27,6 +27,19 @@ class AdminreservaController extends Controller
 
    public function index(Request $request){
     if($request){
+      $mdisponibilidad=Area::where('estado','A')->where('disponibilidad','=','No Disponible')->get();
+            $hoy = Carbon::now()->format('Y-m-d');
+            $hora = Carbon::now()->format('H:i:s');
+            foreach ($mdisponibilidad as $m) {
+            $sff=explode(" ",$m->fechafin);
+                if($hoy==$sff[0] && $hora>=$sff[1]){
+                $m->disponibilidad='Disponible';
+                $m->fechainicio=$hola=NULL;
+                $m->fechafin=$hola=NULL;
+                $m->update();
+                }
+            }
+            
       $monitorear=Reserva::where('estado','A')->get();
       $hoy = Carbon::now()->format('d/m/Y');
       $hora = Carbon::now()->format('H:i:s');
@@ -90,7 +103,7 @@ class AdminreservaController extends Controller
         ->where('r.estado','=','A')
         ->orwhere('a.nombre','LIKE','%'.$query.'%')
         ->where('r.estado','=','A')
-        ->orderBy('r.fecha','asc')
+        ->orderBy('r.fechainicio','asc')
         ->paginate(9);
 
         if(Auth::user()->idtipousuario<3){
@@ -303,7 +316,7 @@ class AdminreservaController extends Controller
     if($request){
     $hoy = Carbon::now()->format('d/m/Y');
     $hora = Carbon::now()->format('H:i:s');
-    $uid=User::where('name',$request->get('id'))->where('estado','=','A')->first();
+    $uid=User::where('id',$request->get('id'))->first();
     $reserva=new Reserva;
     $reserva->fecha=$request->get('fecha');
     $reserva->horainicio=$request->get('horainicio');
@@ -318,6 +331,9 @@ class AdminreservaController extends Controller
     $reserva->idhora=$request->get('horaid');
     $reserva->fechacrea=$hoy;
     $reserva->horacrea=$hora;
+    $sfecha=explode("/",$request->get('fecha'));
+    $nfecha=$sfecha[2]."/".$sfecha[1]."/".$sfecha[0]." ".$request->get('horainicio');
+    $reserva->fechainicio=$nfecha;
     $reserva->save();
 
     $fin = $reserva->horainicio;
@@ -369,7 +385,7 @@ class AdminreservaController extends Controller
     $area=Area::findOrFail($reserva->idarea);
     $reservas=DB::table('reserva')->where('estado','=','A')->get();
     $qrcod = $reserva->codigoqr;
-    $usu=User::where('name',$request->get('id'))->where('estado','=','A')->first();
+    $usu=User::where('id',$request->get('id'))->first();
     Mail::send('email.mensajeqr',['usu' => $usu,'reservas' => $reservas,'qrcod' => $qrcod,'area'=>$area],
                     function ($m) use ($usu) {
                         $m->to($usu->email, $usu->name)

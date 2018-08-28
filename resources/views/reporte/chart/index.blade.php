@@ -32,7 +32,7 @@
 <div class="col-md-6"> 
 <div class="input-group">
 <div class="input-group-addon"><i class="fa fa-calendar" style="color: #000;"></i></div>  
-@if($sms=='') 
+@if($fechaini=='') 
 <input type="text" class="form-control datepicker" placeholder="Fecha inicio" name="fechaini" value="{{$limitefecha}}" style="color: #000;">
 @else
 <input type="text" class="form-control datepicker" placeholder="Fecha inicio" name="fechaini" value="{{$fechaini}}" style="color: #000;">
@@ -46,7 +46,7 @@
 <div class="col-md-6"> 
 <div class="input-group">
 <div class="input-group-addon"><i class="fa fa-calendar" style="color: #000;"></i></div> 
-@if($sms=='') 
+@if($fechafin=='') 
 <input type="text" class="form-control datepicker" placeholder="Fecha fin" name="fechafin" value="{{$hoy}}" style="color: #000;">
 @else
 <input type="text" class="form-control datepicker" placeholder="Fecha fin" name="fechafin" value="{{$fechafin}}" style="color: #000;">
