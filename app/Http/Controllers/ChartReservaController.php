@@ -29,7 +29,6 @@ class ChartReservaController extends Controller
 
     $hoy = Carbon::now()->format('d/m/Y');
     $hora = Carbon::now()->format('H:i:s');
-    $limitefecha='01/07/2018';
     $sms='';
     $diagrama='';
     $nfechaini='';
@@ -49,7 +48,6 @@ class ChartReservaController extends Controller
 
     if($fechaini!='' && $fechafin!=''){
   	$vhoy=explode("/",$hoy);
-    $vlimite=explode("/",$limitefecha);
 	$separa=explode("/",$fechaini);
 	$separaf=explode("/",$fechafin);
     $nfechaini=$separa[2]."/".$separa[1]."/".$separa[0]." "."00:00:00";
@@ -58,9 +56,6 @@ class ChartReservaController extends Controller
     $dhoy=$vhoy[0];
     $mhoy=$vhoy[1];
     $ahoy=$vhoy[2];
-    $dlimite=$vlimite[0];
-    $mlimite=$vlimite[1];
-    $alimite=$vlimite[2];
     $dsepara=$separa[0];
     $msepara=$separa[1];
     $asepara=$separa[2];
@@ -70,27 +65,11 @@ class ChartReservaController extends Controller
     if(($aseparaf<$asepara)||($aseparaf==$asepara && $mseparaf<$msepara)||($aseparaf==$asepara && $mseparaf==$msepara && $dseparaf<=$dsepara)){
 	$sms='La fecha seleccionada no es válida';
     }
-    if($asepara<$alimite || $aseparaf<$alimite){//2017
+    if($asepara<$ahoy || $aseparaf<$ahoy){//2017
     $sms='La fecha seleccionada no es válida';
     }
-    elseif($asepara>$ahoy || $aseparaf>$ahoy){//2019
+    if($asepara>$ahoy || $aseparaf>$ahoy){//2019
     $sms='La fecha seleccionada no es válida';
-    }
-    else{//2018
-        if($msepara<$mlimite || $mseparaf<$mlimite){//Junio
-        $sms='La fecha seleccionada no es válida';  
-        }  
-        elseif($msepara>$mhoy || $mseparaf>$mhoy) {//Septiembre
-        $sms='La fecha seleccionada no es válida'; 
-        } 
-        else{//Julio o Agosto
-            if(($msepara==$mlimite && $dsepara<$dlimite)||($mseparaf==$mlimite && $dseparaf<$dlimite)){//Jun31
-            $sms='La fecha seleccionada no es válida';
-            }
-            elseif(($msepara==$mhoy && $dsepara>$dhoy)||($mseparaf==$mhoy && $dseparaf>$dhoy)){//Manana
-            $sms='La fecha seleccionada no es válida'; 
-            }
-        }
     }
 	}
 
@@ -103,9 +82,6 @@ class ChartReservaController extends Controller
     $hhora=$vhora[0];
     $dif=$hfin-$hini;
     if($dif<1){
-    $sms='La hora seleccionada no es válida';
-    }
-	if(($fechafin==$hoy && $hini>$hhora)||($fechafin==$hoy && $hfin>$hhora)){
     $sms='La hora seleccionada no es válida';
     }
     }
@@ -357,8 +333,8 @@ class ChartReservaController extends Controller
     ->options([
     	'legend' => ['display' => false],
     	'scales' => [
-    		'yAxes' => [['ticks' => ['beginAtZero'=>true, 'fontSize'=>20, 'fontColor'=>'#000','stepSize'=>1]]],
-    		'xAxes' => [['ticks' => ['fontSize'=>20, 'fontColor'=>'#000']]]
+    		'yAxes' => [['ticks' => ['beginAtZero'=>true, 'fontSize'=>12, 'fontColor'=>'#000','stepSize'=>1]]],
+    		'xAxes' => [['ticks' => ['fontSize'=>12, 'fontColor'=>'#000']]]
     	]
     ]);
 
@@ -377,8 +353,8 @@ class ChartReservaController extends Controller
     ->options([
     	'legend' => ['display' => false],
     	'scales' => [
-    		'yAxes' => [['ticks' => ['beginAtZero'=>true, 'fontSize'=>20, 'fontColor'=>'#000','stepSize'=>1]]],
-    		'xAxes' => [['ticks' => ['fontSize'=>20, 'fontColor'=>'#000']]]
+    		'yAxes' => [['ticks' => ['beginAtZero'=>true, 'fontSize'=>12, 'fontColor'=>'#000','stepSize'=>1]]],
+    		'xAxes' => [['ticks' => ['fontSize'=>12, 'fontColor'=>'#000']]]
     	]
     ]);
 
@@ -397,8 +373,8 @@ class ChartReservaController extends Controller
     ->options([
     	'legend' => ['display' => false],
     	'scales' => [
-    		'yAxes' => [['ticks' => ['beginAtZero'=>true, 'fontSize'=>20, 'fontColor'=>'#000','stepSize'=>1]]],
-    		'xAxes' => [['ticks' => ['fontSize'=>20, 'fontColor'=>'#000']]]
+    		'yAxes' => [['ticks' => ['beginAtZero'=>true, 'fontSize'=>12, 'fontColor'=>'#000','stepSize'=>1]]],
+    		'xAxes' => [['ticks' => ['fontSize'=>12, 'fontColor'=>'#000']]]
     	]
     ]);
 
@@ -417,8 +393,8 @@ class ChartReservaController extends Controller
     ->options([
     	'legend' => ['display' => false],
     	'scales' => [
-    		'yAxes' => [['ticks' => ['beginAtZero'=>true, 'fontSize'=>20, 'fontColor'=>'#000','stepSize'=>1]]],
-    		'xAxes' => [['ticks' => ['fontSize'=>20, 'fontColor'=>'#000']]]
+    		'yAxes' => [['ticks' => ['beginAtZero'=>true, 'fontSize'=>12, 'fontColor'=>'#000','stepSize'=>1]]],
+    		'xAxes' => [['ticks' => ['fontSize'=>12, 'fontColor'=>'#000']]]
     	]
     ]);
 
@@ -437,8 +413,8 @@ class ChartReservaController extends Controller
     ->options([
     	'legend' => ['display' => false],
     	'scales' => [
-    		'yAxes' => [['ticks' => ['beginAtZero'=>true, 'fontSize'=>20, 'fontColor'=>'#000','stepSize'=>1]]],
-    		'xAxes' => [['ticks' => ['fontSize'=>20, 'fontColor'=>'#000']]]
+    		'yAxes' => [['ticks' => ['beginAtZero'=>true, 'fontSize'=>12, 'fontColor'=>'#000','stepSize'=>1]]],
+    		'xAxes' => [['ticks' => ['fontSize'=>12, 'fontColor'=>'#000']]]
     	]
     ]);
 
@@ -457,8 +433,8 @@ class ChartReservaController extends Controller
     ->options([
     	'legend' => ['display' => false],
     	'scales' => [
-    		'yAxes' => [['ticks' => ['beginAtZero'=>true, 'fontSize'=>20, 'fontColor'=>'#000','stepSize'=>1]]],
-    		'xAxes' => [['ticks' => ['fontSize'=>20, 'fontColor'=>'#000']]]
+    		'yAxes' => [['ticks' => ['beginAtZero'=>true, 'fontSize'=>12, 'fontColor'=>'#000','stepSize'=>1]]],
+    		'xAxes' => [['ticks' => ['fontSize'=>12, 'fontColor'=>'#000']]]
     	]
     ]);
 
@@ -477,8 +453,8 @@ class ChartReservaController extends Controller
     ->options([
     	'legend' => ['display' => false],
     	'scales' => [
-    		'yAxes' => [['ticks' => ['beginAtZero'=>true, 'fontSize'=>20, 'fontColor'=>'#000','stepSize'=>1]]],
-    		'xAxes' => [['ticks' => ['fontSize'=>20, 'fontColor'=>'#000']]]
+    		'yAxes' => [['ticks' => ['beginAtZero'=>true, 'fontSize'=>12, 'fontColor'=>'#000','stepSize'=>1]]],
+    		'xAxes' => [['ticks' => ['fontSize'=>12, 'fontColor'=>'#000']]]
     	]
     ]);
 
@@ -497,8 +473,8 @@ class ChartReservaController extends Controller
     ->options([
     	'legend' => ['display' => false],
     	'scales' => [
-    		'yAxes' => [['ticks' => ['beginAtZero'=>true, 'fontSize'=>20, 'fontColor'=>'#000','stepSize'=>1]]],
-    		'xAxes' => [['ticks' => ['fontSize'=>20, 'fontColor'=>'#000']]]
+    		'yAxes' => [['ticks' => ['beginAtZero'=>true, 'fontSize'=>12, 'fontColor'=>'#000','stepSize'=>1]]],
+    		'xAxes' => [['ticks' => ['fontSize'=>12, 'fontColor'=>'#000']]]
     	]
     ]);
 
@@ -517,8 +493,8 @@ class ChartReservaController extends Controller
     ->options([
     	'legend' => ['display' => false],
     	'scales' => [
-    		'yAxes' => [['ticks' => ['beginAtZero'=>true, 'fontSize'=>20, 'fontColor'=>'#000','stepSize'=>1]]],
-    		'xAxes' => [['ticks' => ['fontSize'=>20, 'fontColor'=>'#000']]]
+    		'yAxes' => [['ticks' => ['beginAtZero'=>true, 'fontSize'=>12, 'fontColor'=>'#000','stepSize'=>1]]],
+    		'xAxes' => [['ticks' => ['fontSize'=>12, 'fontColor'=>'#000']]]
     	]
     ]);
 
@@ -537,8 +513,8 @@ class ChartReservaController extends Controller
     ->options([
     	'legend' => ['display' => false],
     	'scales' => [
-    		'yAxes' => [['ticks' => ['beginAtZero'=>true, 'fontSize'=>20, 'fontColor'=>'#000','stepSize'=>1]]],
-    		'xAxes' => [['ticks' => ['fontSize'=>20, 'fontColor'=>'#000']]]
+    		'yAxes' => [['ticks' => ['beginAtZero'=>true, 'fontSize'=>12, 'fontColor'=>'#000','stepSize'=>1]]],
+    		'xAxes' => [['ticks' => ['fontSize'=>12, 'fontColor'=>'#000']]]
     	]
     ]);
 
@@ -595,7 +571,7 @@ class ChartReservaController extends Controller
 
     if(($request->boton=='') || ($request->boton=='consultar') || ($request->boton=='pdf' && $sms!='') || ($request->boton=='excel' && $sms!='')){
         if(Auth::user()->idtipousuario<2){
-        return view("reporte.chartreserva.index",["sms"=>$sms,"fechaini"=>$fechaini,"fechafin"=>$fechafin,"horaini"=>$horaini,"horafin"=>$horafin,"areas"=>$areas,"facultades"=>$facultades,"facu"=>$facu,"carre"=>$carre,"area"=>$area,"horarios"=>$horarios,"horariosf"=>$horariosf,"hoy"=>$hoy,"limitefecha"=>$limitefecha,"diagrama"=>$diagrama,"chartag"=>$chartag,"chartae"=>$chartae,"chartagfg"=>$chartagfg,"chartaefg"=>$chartaefg,"chartagfe"=>$chartagfe,"chartaefe"=>$chartaefe,"chartagfecg"=>$chartagfecg,"chartagfece"=>$chartagfece,"chartaefece"=>$chartaefece,"chartaefecg"=>$chartaefecg]);
+        return view("reporte.chartreserva.index",["sms"=>$sms,"fechaini"=>$fechaini,"fechafin"=>$fechafin,"horaini"=>$horaini,"horafin"=>$horafin,"areas"=>$areas,"facultades"=>$facultades,"facu"=>$facu,"carre"=>$carre,"area"=>$area,"horarios"=>$horarios,"horariosf"=>$horariosf,"hoy"=>$hoy,"diagrama"=>$diagrama,"chartag"=>$chartag,"chartae"=>$chartae,"chartagfg"=>$chartagfg,"chartaefg"=>$chartaefg,"chartagfe"=>$chartagfe,"chartaefe"=>$chartaefe,"chartagfecg"=>$chartagfecg,"chartagfece"=>$chartagfece,"chartaefece"=>$chartaefece,"chartaefecg"=>$chartaefecg]);
         }
         else{
         return Redirect::to('/logout');

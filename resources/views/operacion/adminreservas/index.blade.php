@@ -11,7 +11,7 @@
 <div class="col-md-12">
 <div class="row">
 <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
-<h2><b>Reservas pendientes </b><a href="{{url('operacion/adminreservas/create')}}"><button class="my-button"><i class="fa fa-plus"><b>Agregar</b></i></button></a></h2>
+<h2><b>Reservas pendientes </b><a href="{{url('operacion/adminreservas/create')}}"><button class="my-button"><i class="fa fa-plus"><b> Nueva reserva</b></i></button></a></h2>
 <br>
 @include('operacion.adminreservas.search')
 </div>

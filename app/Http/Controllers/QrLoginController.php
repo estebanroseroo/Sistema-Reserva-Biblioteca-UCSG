@@ -36,52 +36,90 @@ class QrLoginController extends Controller
    	}
    }
 
-   public function create(Request $request){
-    $r = Reserva::where('codigoqr', '=', $request->get('cod'))->get();
-    $rcont = $r->count();
+  public function create(Request $request){
+  $r = Reserva::where('codigoqr', '=', $request->get('cod'))->get();
+  $rcont = $r->count();
     if($rcont<1){
-            $query='';
-            $sms='El código QR ingresado no existe';
-            $cod='';
-            $reservas=DB::table('reserva as r')
-            ->leftjoin('users as u','u.id','=','r.id')
-            ->leftjoin('area as a','a.idarea','=','r.idarea')
-            ->select('r.idreserva','u.name as nombreusuario','a.nombre as nombrearea','r.fecha','r.horainicio','r.horafinal','r.horallegada','r.cantidad','r.codigoqr')
-            ->where('r.fecha','LIKE','%'.$query.'%')
-            ->where('r.estado','=','C')
-            ->orwhere('u.name','LIKE','%'.$query.'%')
-            ->where('r.estado','=','C')
-            ->orwhere('a.nombre','LIKE','%'.$query.'%')
-            ->where('r.estado','=','C')
-            ->orderBy('r.fecha','asc')
-            ->paginate(9);
-            return view("operacion.consultas.index",["reservas"=>$reservas,"searchText"=>$query,"cod"=>$cod,"sms"=>$sms]);
+    $query='';
+    $sms='El código QR ingresado no existe';
+    $cod='';
+    $reservas=DB::table('reserva as r')
+    ->leftjoin('users as u','u.id','=','r.id')
+    ->leftjoin('area as a','a.idarea','=','r.idarea')
+    ->select('r.idreserva','u.name as nombreusuario','a.nombre as nombrearea','r.fecha','r.horainicio','r.horafinal','r.horallegada','r.cantidad','r.codigoqr')
+    ->where('r.fecha','LIKE','%'.$query.'%')
+    ->where('r.estado','=','C')
+    ->orwhere('u.name','LIKE','%'.$query.'%')
+    ->where('r.estado','=','C')
+    ->orwhere('a.nombre','LIKE','%'.$query.'%')
+    ->where('r.estado','=','C')
+    ->orderBy('r.fecha','asc')
+    ->paginate(9);
+    return view("operacion.consultas.index",["reservas"=>$reservas,"searchText"=>$query,"cod"=>$cod,"sms"=>$sms]);
     }
     else{
     $sms='';
     $hoy = Carbon::now()->format('d/m/Y');
     $hora = Carbon::now()->format('H:i:s');
     $cod=$request->get('cod');
-    $reservas=DB::table('reserva as r')
+      if($rcont==1){
+      $reservas=DB::table('reserva as r')
         ->leftjoin('users as u','u.id','=','r.id')
         ->leftjoin('area as a','a.idarea','=','r.idarea')
         ->select('u.name as nombreusuario','r.fecha','r.horainicio','r.horafinal','a.nombre as nombrearea','r.cantidad','r.tiempoespera','r.estado','r.idarea','r.id','r.codigoqr')
         ->where('codigoqr',$cod)->first();
-
-    $codnombre=$reservas->nombreusuario;
-    $codfecha=$reservas->fecha;
-    $codhorario=$reservas->horainicio."-".$reservas->horafinal;
-    $codarea=$reservas->nombrearea;
-    $codcantidad=$reservas->cantidad;
-      
-    if(Auth::user()->idtipousuario<3){
-            return view("operacion.consultas.create",["sms"=>$sms,"cod"=>$cod,"codnombre"=>$codnombre,"codfecha"=>$codfecha,"codhorario"=>$codhorario,"codarea"=>$codarea,"codcantidad"=>$codcantidad]);
-            }
-            else{
-            return Redirect::to('/logout');
-            }  
+      $codnombre=$reservas->nombreusuario;
+      $codfecha=$reservas->fecha;
+      $codhorario=$reservas->horainicio."-".$reservas->horafinal;
+      $codarea=$reservas->nombrearea;
+      $codcantidad=$reservas->cantidad;
+      if(Auth::user()->idtipousuario<3){
+      return view("operacion.consultas.create",["sms"=>$sms,"cod"=>$cod,"codnombre"=>$codnombre,"codfecha"=>$codfecha,"codhorario"=>$codhorario,"codarea"=>$codarea,"codcantidad"=>$codcantidad]);
+      }
+      else{
+      return Redirect::to('/logout');
+      }  
+      }
+      else{
+      $reservas=DB::table('reserva as r')
+      ->leftjoin('users as u','u.id','=','r.id')
+      ->leftjoin('area as a','a.idarea','=','r.idarea')
+      ->select('u.name as nombreusuario','r.fecha','r.horainicio','r.horafinal','a.nombre as nombrearea','r.cantidad','r.tiempoespera','r.estado','r.idarea','r.id','r.codigoqr')
+      ->where('codigoqr',$cod)->where('fecha',$hoy)->first(); 
+        if($reservas==NULL){
+        $query='';
+        $sms='El código QR no se puede validar';
+        $cod='';
+        $reservas=DB::table('reserva as r')
+        ->leftjoin('users as u','u.id','=','r.id')
+        ->leftjoin('area as a','a.idarea','=','r.idarea')
+        ->select('r.idreserva','u.name as nombreusuario','a.nombre as nombrearea','r.fecha','r.horainicio','r.horafinal','r.horallegada','r.cantidad','r.codigoqr')
+        ->where('r.fecha','LIKE','%'.$query.'%')
+        ->where('r.estado','=','C')
+        ->orwhere('u.name','LIKE','%'.$query.'%')
+        ->where('r.estado','=','C')
+        ->orwhere('a.nombre','LIKE','%'.$query.'%')
+        ->where('r.estado','=','C')
+        ->orderBy('r.fecha','asc')
+        ->paginate(9);
+        return view("operacion.consultas.index",["reservas"=>$reservas,"searchText"=>$query,"cod"=>$cod,"sms"=>$sms]);
+        }
+        else{
+        $codnombre=$reservas->nombreusuario;
+        $codfecha=$reservas->fecha;
+        $codhorario=$reservas->horainicio."-".$reservas->horafinal;
+        $codarea=$reservas->nombrearea;
+        $codcantidad=$reservas->cantidad;
+        if(Auth::user()->idtipousuario<3){
+        return view("operacion.consultas.create",["sms"=>$sms,"cod"=>$cod,"codnombre"=>$codnombre,"codfecha"=>$codfecha,"codhorario"=>$codhorario,"codarea"=>$codarea,"codcantidad"=>$codcantidad]);
+        }
+        else{
+        return Redirect::to('/logout');
+        }  
+        } 
+      }
     }
-   }
+  }
 
   function check(Request $request) {  
      if(Auth::user()->idtipousuario<3){       
@@ -89,7 +127,7 @@ class QrLoginController extends Controller
         $hoy = Carbon::now()->format('d/m/Y');
         $hora = Carbon::now()->format('H:i:s');
         if ($request->data) {
-          $res = Reserva::where('codigoqr',$request->data)->first();
+          $res = Reserva::where('codigoqr',$request->data)->get();
           if($res){
             if ($res->fecha==$hoy && $res->tiempoespera>$hora && $res->estado=='A') {//llega antes de TE
               if($res->horainicio<$hora){//llega despues de HI
@@ -123,11 +161,12 @@ class QrLoginController extends Controller
     if($request){
       $sms='';
       $cod=$request->get('cod');
+      $fec=$request->get('fecha');
       $reservas=DB::table('reserva as r')
         ->leftjoin('users as u','u.id','=','r.id')
         ->leftjoin('area as a','a.idarea','=','r.idarea')
         ->select('u.name as nombreusuario','r.fecha','r.horainicio','r.horafinal','a.nombre as nombrearea','r.cantidad','r.id','r.estado','r.idarea','r.idreserva','r.horallegada','r.horacrea','r.tiempoespera')
-        ->where('codigoqr',$cod)->first();
+        ->where('codigoqr',$cod)->where('r.fecha',$fec)->first();
       $codnombre=$reservas->nombreusuario;
       $codfecha=$reservas->fecha;
       $codhorario=$reservas->horainicio."-".$reservas->horafinal;
