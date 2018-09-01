@@ -29,7 +29,7 @@
 				</tr>
 				<tr class="my-td">
 					<td>2)</td>
-					<td>El usuario que se registre en el sistema con un rol incorrecto será eliminado.</td>
+					<td>El usuario que se registre en el sistema con un rol, facultad o carrera incorrecto será eliminado.</td>
 				</tr>
 				<tr class="my-td">
 					<td>3)</td>

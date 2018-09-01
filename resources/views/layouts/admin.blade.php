@@ -104,6 +104,7 @@
                 <li><a href="{{url('mantenimiento/facultades')}}"><i class="fa fa-circle-o"></i>Facultades</a></li>
                 <li><a href="{{url('mantenimiento/carreras')}}"><i class="fa fa-circle-o"></i>Carreras</a></li>
                 <li><a href="{{url('mantenimiento/usuarios')}}"><i class="fa fa-circle-o"></i>Usuarios</a></li>
+                <li><a href="{{url('mantenimiento/usuarioseli')}}"><i class="fa fa-circle-o"></i>Usuarios eliminados</a></li>
                 <li><a href="{{url('mantenimiento/roles')}}"><i class="fa fa-circle-o"></i>Roles</a></li>
                 <li><a href="{{url('mantenimiento/horarios')}}"><i class="fa fa-circle-o"></i>Horarios</a></li>
               </ul>

@@ -43,7 +43,7 @@ class ChartController extends Controller
   	$vhoy=explode("/",$hoy);
 	$separa=explode("/",$fechaini);
 	$separaf=explode("/",$fechafin);
-    $nfechaini=$separa[2]."/".$separa[1]."/".$separa[0]." "."23:59:59";
+    $nfechaini=$separa[2]."/".$separa[1]."/".$separa[0]." "."00:00:00";
     $nfechafin=$separaf[2]."/".$separaf[1]."/".$separaf[0]." "."23:59:59";
 
     $dhoy=$vhoy[0];
@@ -55,7 +55,7 @@ class ChartController extends Controller
     $dseparaf=$separaf[0];
     $mseparaf=$separaf[1];
     $aseparaf=$separaf[2];
-    if(($aseparaf<$asepara)||($aseparaf==$asepara && $mseparaf<$msepara)||($aseparaf==$asepara && $mseparaf==$msepara && $dseparaf<=$dsepara)){
+    if(($aseparaf<$asepara)||($aseparaf==$asepara && $mseparaf<$msepara)||($aseparaf==$asepara && $mseparaf==$msepara && $dseparaf<$dsepara)){
 	$sms='La fecha seleccionada no es válida';
     }
     if($asepara<$ahoy || $aseparaf<$ahoy){//2017
@@ -76,7 +76,7 @@ class ChartController extends Controller
     ->groupBy('t.nombre')
     ->orderBy('cantidad', 'desc')
     ->get();
-
+    
     $usurole= DB::table('tipousuario as t')
     ->select(array('t.nombre', DB::raw('COUNT(u.idtipousuario) as cantidad')))
     ->where('t.estado', '=', 'A')
@@ -228,18 +228,20 @@ class ChartController extends Controller
     $urglabel[]=$urg->nombre;
     $urgdata[]=$urg->cantidad;
     }
+    $turglabel[]='Usuarios';
+    $turgdata[]=array_sum($urgdata);
     $charturg = app()->chartjs->name('DiagramaUsuarioRolDetalle')->type('bar')
-    ->labels($urglabel)
+    ->labels($turglabel)
     ->datasets([[
     	'label' => 'Usuarios',
     	'backgroundColor' => $bgcolor,
     	'borderWidth' => 1,
-    	'data' => $urgdata
+    	'data' => $turgdata
     ]])
     ->options([
     	'legend' => ['display' => false],
     	'scales' => [
-    		'yAxes' => [['ticks' => ['beginAtZero'=>true, 'fontSize'=>12, 'fontColor'=>'#000','stepSize'=>1]]],
+    		'yAxes' => [['ticks' => ['beginAtZero'=>true, 'min'=>0, 'fontSize'=>12, 'fontColor'=>'#000','fixedStepSize'=>5]]],
     		'xAxes' => [['ticks' => ['fontSize'=>12, 'fontColor'=>'#000']]]
     	]
     ]);
@@ -259,7 +261,7 @@ class ChartController extends Controller
     ->options([
     	'legend' => ['display' => false],
     	'scales' => [
-    		'yAxes' => [['ticks' => ['beginAtZero'=>true, 'fontSize'=>12, 'fontColor'=>'#000','stepSize'=>1]]],
+    		'yAxes' => [['ticks' => ['beginAtZero'=>true, 'min'=>0, 'fontSize'=>12, 'fontColor'=>'#000','fixedStepSize'=>5]]],
     		'xAxes' => [['ticks' => ['fontSize'=>12, 'fontColor'=>'#000']]]
     	]
     ]);
@@ -285,7 +287,7 @@ class ChartController extends Controller
     ->options([
     	'legend' => ['display' => false],
     	'scales' => [
-    		'yAxes' => [['ticks' => ['beginAtZero'=>true, 'fontSize'=>12, 'fontColor'=>'#000','stepSize'=>1]]],
+    		'yAxes' => [['ticks' => ['beginAtZero'=>true, 'min'=>0, 'fontSize'=>12, 'fontColor'=>'#000','fixedStepSize'=>5]]],
     		'xAxes' => [['ticks' => ['fontSize'=>12, 'fontColor'=>'#000']]]
     	]
     ]);
@@ -305,7 +307,7 @@ class ChartController extends Controller
     ->options([
     	'legend' => ['display' => false],
     	'scales' => [
-    		'yAxes' => [['ticks' => ['beginAtZero'=>true, 'fontSize'=>12, 'fontColor'=>'#000','stepSize'=>1]]],
+    		'yAxes' => [['ticks' => ['beginAtZero'=>true, 'min'=>0, 'fontSize'=>12, 'fontColor'=>'#000','fixedStepSize'=>5]]],
     		'xAxes' => [['ticks' => ['fontSize'=>12, 'fontColor'=>'#000']]]
     	]
     ]);
@@ -331,7 +333,7 @@ class ChartController extends Controller
     ->options([
     	'legend' => ['display' => false],
     	'scales' => [
-    		'yAxes' => [['ticks' => ['beginAtZero'=>true, 'fontSize'=>12, 'fontColor'=>'#000','stepSize'=>1]]],
+    		'yAxes' => [['ticks' => ['beginAtZero'=>true, 'min'=>0, 'fontSize'=>12, 'fontColor'=>'#000','fixedStepSize'=>5]]],
     		'xAxes' => [['ticks' => ['fontSize'=>12, 'fontColor'=>'#000']]]
     	]
     ]);
@@ -351,7 +353,8 @@ class ChartController extends Controller
     ->options([
     	'legend' => ['display' => false],
     	'scales' => [
-    		'yAxes' => [['ticks' => ['beginAtZero'=>true, 'fontSize'=>12, 'fontColor'=>'#000','stepSize'=>1]]],
+    		'yAxes' => [['ticks' => ['beginAtZero'=>true, 'min'=>0, 'fontSize'=>12, 'fontColor'=>'#000','fixedStepSize'=>5
+            ]]],
     		'xAxes' => [['ticks' => ['fontSize'=>12, 'fontColor'=>'#000']]]
     	]
     ]);
@@ -371,7 +374,7 @@ class ChartController extends Controller
     ->options([
     	'legend' => ['display' => false],
     	'scales' => [
-    		'yAxes' => [['ticks' => ['beginAtZero'=>true, 'fontSize'=>12, 'fontColor'=>'#000','stepSize'=>1]]],
+    		'yAxes' => [['ticks' => ['beginAtZero'=>true, 'min'=>0, 'fontSize'=>12, 'fontColor'=>'#000','fixedStepSize'=>5]]],
     		'xAxes' => [['ticks' => ['fontSize'=>12, 'fontColor'=>'#000']]]
     	]
     ]);
@@ -391,7 +394,7 @@ class ChartController extends Controller
     ->options([
     	'legend' => ['display' => false],
     	'scales' => [
-    		'yAxes' => [['ticks' => ['beginAtZero'=>true, 'fontSize'=>12, 'fontColor'=>'#000','stepSize'=>1]]],
+    		'yAxes' => [['ticks' => ['beginAtZero'=>true, 'min'=>0, 'fontSize'=>12, 'fontColor'=>'#000','fixedStepSize'=>5]]],
     		'xAxes' => [['ticks' => ['fontSize'=>12, 'fontColor'=>'#000']]]
     	]
     ]);
@@ -411,7 +414,7 @@ class ChartController extends Controller
     ->options([
     	'legend' => ['display' => false],
     	'scales' => [
-    		'yAxes' => [['ticks' => ['beginAtZero'=>true, 'fontSize'=>12, 'fontColor'=>'#000','stepSize'=>1]]],
+    		'yAxes' => [['ticks' => ['beginAtZero'=>true, 'min'=>0, 'fontSize'=>12, 'fontColor'=>'#000','fixedStepSize'=>5]]],
     		'xAxes' => [['ticks' => ['fontSize'=>12, 'fontColor'=>'#000']]]
     	]
     ]);
@@ -431,7 +434,7 @@ class ChartController extends Controller
     ->options([
     	'legend' => ['display' => false],
     	'scales' => [
-    		'yAxes' => [['ticks' => ['beginAtZero'=>true, 'fontSize'=>12, 'fontColor'=>'#000','stepSize'=>1]]],
+    		'yAxes' => [['ticks' => ['beginAtZero'=>true, 'min'=>0, 'fontSize'=>12, 'fontColor'=>'#000','fixedStepSize'=>5]]],
     		'xAxes' => [['ticks' => ['fontSize'=>12, 'fontColor'=>'#000']]]
     	]
     ]);
@@ -514,7 +517,7 @@ class ChartController extends Controller
     $hora = Carbon::now()->format('H:i:s');
     $ini=explode("/",$request->get('fechaini'));
     $fin=explode("/",$request->get('fechafin'));
-    $fechainicio=$ini[2]."/".$ini[1]."/".$ini[0]." "."23:59:59";
+    $fechainicio=$ini[2]."/".$ini[1]."/".$ini[0]." "."00:00:00";
     $fechafin=$fin[2]."/".$fin[1]."/".$fin[0]." "."23:59:59";
     $desde=$ini[0]."/".$ini[1]."/".$ini[2];
     $hasta=$fin[0]."/".$fin[1]."/".$fin[2];

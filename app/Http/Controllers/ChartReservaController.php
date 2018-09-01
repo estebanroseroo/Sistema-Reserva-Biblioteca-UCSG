@@ -62,7 +62,7 @@ class ChartReservaController extends Controller
     $dseparaf=$separaf[0];
     $mseparaf=$separaf[1];
     $aseparaf=$separaf[2];
-    if(($aseparaf<$asepara)||($aseparaf==$asepara && $mseparaf<$msepara)||($aseparaf==$asepara && $mseparaf==$msepara && $dseparaf<=$dsepara)){
+    if(($aseparaf<$asepara)||($aseparaf==$asepara && $mseparaf<$msepara)||($aseparaf==$asepara && $mseparaf==$msepara && $dseparaf<$dsepara)){
 	$sms='La fecha seleccionada no es válida';
     }
     if($asepara<$ahoy || $aseparaf<$ahoy){//2017
@@ -333,7 +333,7 @@ class ChartReservaController extends Controller
     ->options([
     	'legend' => ['display' => false],
     	'scales' => [
-    		'yAxes' => [['ticks' => ['beginAtZero'=>true, 'fontSize'=>12, 'fontColor'=>'#000','stepSize'=>1]]],
+    		'yAxes' => [['ticks' => ['beginAtZero'=>true, 'fontSize'=>12, 'fontColor'=>'#000', 'min'=>0,'fixedStepSize'=>5]]],
     		'xAxes' => [['ticks' => ['fontSize'=>12, 'fontColor'=>'#000']]]
     	]
     ]);
@@ -353,13 +353,19 @@ class ChartReservaController extends Controller
     ->options([
     	'legend' => ['display' => false],
     	'scales' => [
-    		'yAxes' => [['ticks' => ['beginAtZero'=>true, 'fontSize'=>12, 'fontColor'=>'#000','stepSize'=>1]]],
+    		'yAxes' => [['ticks' => ['beginAtZero'=>true, 'fontSize'=>12, 'fontColor'=>'#000', 'min'=>0,'fixedStepSize'=>5]]],
     		'xAxes' => [['ticks' => ['fontSize'=>12, 'fontColor'=>'#000']]]
     	]
     ]);
 
     foreach($areagfg as $agfg){
-    $agfglabel[]=$agfg->nombre;
+    $separa=explode(" ",$agfg->nombre);
+    if($agfg->nombre=='CIENCIAS ECONOMICAS Y ADMINISTRATIVAS'){
+    $agfglabel[]=$separa[1];
+    }
+    else{
+    $agfglabel[]=$separa[0];   
+    }
     $agfgdata[]=$agfg->cantidad;
     }
     $chartagfg = app()->chartjs->name('DiagramaReservaAreaGENFacultadGEN')->type('bar')
@@ -373,13 +379,19 @@ class ChartReservaController extends Controller
     ->options([
     	'legend' => ['display' => false],
     	'scales' => [
-    		'yAxes' => [['ticks' => ['beginAtZero'=>true, 'fontSize'=>12, 'fontColor'=>'#000','stepSize'=>1]]],
+    		'yAxes' => [['ticks' => ['beginAtZero'=>true, 'fontSize'=>12, 'fontColor'=>'#000', 'min'=>0,'fixedStepSize'=>5]]],
     		'xAxes' => [['ticks' => ['fontSize'=>12, 'fontColor'=>'#000']]]
     	]
     ]);
 
     foreach($areaefg as $aefg){
-    $aefglabel[]=$aefg->nombre;
+    $separa=explode(" ",$aefg->nombre);
+    if($aefg->nombre=='CIENCIAS ECONOMICAS Y ADMINISTRATIVAS'){
+    $aefglabel[]=$separa[1];
+    }
+    else{
+    $aefglabel[]=$separa[0];   
+    }
     $aefgdata[]=$aefg->cantidad;
     }
     $chartaefg = app()->chartjs->name('DiagramaReservaAreaESPFacultadGEN')->type('bar')
@@ -393,7 +405,7 @@ class ChartReservaController extends Controller
     ->options([
     	'legend' => ['display' => false],
     	'scales' => [
-    		'yAxes' => [['ticks' => ['beginAtZero'=>true, 'fontSize'=>12, 'fontColor'=>'#000','stepSize'=>1]]],
+    		'yAxes' => [['ticks' => ['beginAtZero'=>true, 'fontSize'=>12, 'fontColor'=>'#000', 'min'=>0,'fixedStepSize'=>5]]],
     		'xAxes' => [['ticks' => ['fontSize'=>12, 'fontColor'=>'#000']]]
     	]
     ]);
@@ -413,7 +425,7 @@ class ChartReservaController extends Controller
     ->options([
     	'legend' => ['display' => false],
     	'scales' => [
-    		'yAxes' => [['ticks' => ['beginAtZero'=>true, 'fontSize'=>12, 'fontColor'=>'#000','stepSize'=>1]]],
+    		'yAxes' => [['ticks' => ['beginAtZero'=>true, 'fontSize'=>12, 'fontColor'=>'#000', 'min'=>0,'fixedStepSize'=>5]]],
     		'xAxes' => [['ticks' => ['fontSize'=>12, 'fontColor'=>'#000']]]
     	]
     ]);
@@ -433,7 +445,7 @@ class ChartReservaController extends Controller
     ->options([
     	'legend' => ['display' => false],
     	'scales' => [
-    		'yAxes' => [['ticks' => ['beginAtZero'=>true, 'fontSize'=>12, 'fontColor'=>'#000','stepSize'=>1]]],
+    		'yAxes' => [['ticks' => ['beginAtZero'=>true, 'fontSize'=>12, 'fontColor'=>'#000', 'min'=>0,'fixedStepSize'=>5]]],
     		'xAxes' => [['ticks' => ['fontSize'=>12, 'fontColor'=>'#000']]]
     	]
     ]);
@@ -453,7 +465,7 @@ class ChartReservaController extends Controller
     ->options([
     	'legend' => ['display' => false],
     	'scales' => [
-    		'yAxes' => [['ticks' => ['beginAtZero'=>true, 'fontSize'=>12, 'fontColor'=>'#000','stepSize'=>1]]],
+    		'yAxes' => [['ticks' => ['beginAtZero'=>true, 'fontSize'=>12, 'fontColor'=>'#000', 'min'=>0,'fixedStepSize'=>5]]],
     		'xAxes' => [['ticks' => ['fontSize'=>12, 'fontColor'=>'#000']]]
     	]
     ]);
@@ -473,7 +485,7 @@ class ChartReservaController extends Controller
     ->options([
     	'legend' => ['display' => false],
     	'scales' => [
-    		'yAxes' => [['ticks' => ['beginAtZero'=>true, 'fontSize'=>12, 'fontColor'=>'#000','stepSize'=>1]]],
+    		'yAxes' => [['ticks' => ['beginAtZero'=>true, 'fontSize'=>12, 'fontColor'=>'#000', 'min'=>0,'fixedStepSize'=>5]]],
     		'xAxes' => [['ticks' => ['fontSize'=>12, 'fontColor'=>'#000']]]
     	]
     ]);
@@ -493,7 +505,7 @@ class ChartReservaController extends Controller
     ->options([
     	'legend' => ['display' => false],
     	'scales' => [
-    		'yAxes' => [['ticks' => ['beginAtZero'=>true, 'fontSize'=>12, 'fontColor'=>'#000','stepSize'=>1]]],
+    		'yAxes' => [['ticks' => ['beginAtZero'=>true, 'fontSize'=>12, 'fontColor'=>'#000', 'min'=>0,'fixedStepSize'=>5]]],
     		'xAxes' => [['ticks' => ['fontSize'=>12, 'fontColor'=>'#000']]]
     	]
     ]);
@@ -513,7 +525,7 @@ class ChartReservaController extends Controller
     ->options([
     	'legend' => ['display' => false],
     	'scales' => [
-    		'yAxes' => [['ticks' => ['beginAtZero'=>true, 'fontSize'=>12, 'fontColor'=>'#000','stepSize'=>1]]],
+    		'yAxes' => [['ticks' => ['beginAtZero'=>true, 'fontSize'=>12, 'fontColor'=>'#000', 'min'=>0,'fixedStepSize'=>5]]],
     		'xAxes' => [['ticks' => ['fontSize'=>12, 'fontColor'=>'#000']]]
     	]
     ]);
@@ -596,7 +608,7 @@ class ChartReservaController extends Controller
     $hora = Carbon::now()->format('H:i:s');
     $ini=explode("/",$request->get('fechaini'));
     $fin=explode("/",$request->get('fechafin'));
-    $nfechaini=$ini[2]."/".$ini[1]."/".$ini[0]." "."23:59:59";
+    $nfechaini=$ini[2]."/".$ini[1]."/".$ini[0]." "."00:00:00";
     $nfechafin=$fin[2]."/".$fin[1]."/".$fin[0]." "."23:59:59";
     $desde=$ini[0]."/".$ini[1]."/".$ini[2];
     $hasta=$fin[0]."/".$fin[1]."/".$fin[2];

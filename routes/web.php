@@ -30,6 +30,8 @@ Route::resource('operacion/reservasespeciales', 'ReservaEspecialController');
 Route::resource('normativa/usuario','NormativaUsuarioController');
 Route::resource('normativa/gestor','NormativaGestorController');
 Route::resource('normativa/admin','NormativaAdminController');
+Route::resource('mantenimiento/usuarioseli','UsuController');
+
 
 Route::get('reporte/chart/create', 'ChartController@displayReport');
 Route::get('reporte/chartreserva/create', 'ChartReservaController@displayReport');

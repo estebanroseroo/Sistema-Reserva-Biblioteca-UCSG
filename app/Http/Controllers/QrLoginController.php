@@ -127,7 +127,7 @@ class QrLoginController extends Controller
         $hoy = Carbon::now()->format('d/m/Y');
         $hora = Carbon::now()->format('H:i:s');
         if ($request->data) {
-          $res = Reserva::where('codigoqr',$request->data)->get();
+          $res = Reserva::where('codigoqr',$request->data)->first();
           if($res){
             if ($res->fecha==$hoy && $res->tiempoespera>$hora && $res->estado=='A') {//llega antes de TE
               if($res->horainicio<$hora){//llega despues de HI
